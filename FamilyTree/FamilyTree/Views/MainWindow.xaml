@@ -6,8 +6,17 @@
         xmlns:core="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
         Title="{Binding Title}" Height="350" Width="525" >
     <DockPanel>
-        <ContentControl MinWidth="100"
-            DockPanel.Dock="Left" prism:RegionManager.RegionName="{x:Static core:RegionNames.NavigationRegion}" />
+        <Grid DockPanel.Dock="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            
+            
+            
+            <ContentControl MinWidth="250" Grid.Row="1"
+                            prism:RegionManager.RegionName="{x:Static core:RegionNames.NavigationRegion}" />
+        </Grid>
         <ContentControl MinHeight="75"
             DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static core:RegionNames.FunctionRegion}" />
         <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
