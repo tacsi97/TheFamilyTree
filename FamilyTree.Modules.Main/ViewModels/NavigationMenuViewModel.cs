@@ -1,4 +1,6 @@
 ﻿using FamilyTree.Business;
+using FamilyTree.Core;
+using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Core.Mvvm;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -12,24 +14,51 @@ namespace FamilyTree.Modules.Main.ViewModels
 {
     public class NavigationMenuViewModel : RegionViewModelBase
     {
+        #region Fields
+
         private readonly IRegionManager _regionManager;
+        private readonly IApplicationCommand _applicationCommand;
+
+        #endregion
+
+        #region Properties
 
         public ObservableCollection<NavigationItem> MenuItems { get; set; }
 
-        public NavigationMenuViewModel(IRegionManager regionManager):
+        #endregion
+
+        #region Commands
+
+        private DelegateCommand<NavigationItem> _selectCommand;
+        public DelegateCommand<NavigationItem> SelectCommand =>
+            _selectCommand ?? (_selectCommand = new DelegateCommand<NavigationItem>(ExecuteSelectCommand));
+
+        #endregion
+        
+        public NavigationMenuViewModel(IRegionManager regionManager, IApplicationCommand applicationCommand) :
             base(regionManager)
         {
             _regionManager = regionManager;
+            _applicationCommand = applicationCommand;
+
             MenuItems = new ObservableCollection<NavigationItem>();
+            
             InitializeMenu();
         }
 
         private void InitializeMenu()
         {
-            MenuItems.Add(new NavigationItem() { Caption = "Főoldal" });
-            MenuItems.Add(new NavigationItem() { Caption = "Családfák" });
-            MenuItems.Add(new NavigationItem() { Caption = "Beállítások" });
-            MenuItems.Add(new NavigationItem() { Caption = "Kijelentkezés" });
+            //The navigation path should match with the .xaml name
+            MenuItems.Add(new NavigationItem() { Caption = "Főoldal", NavigationPath = "MainPage" });
+            MenuItems.Add(new NavigationItem() { Caption = "Családfák", NavigationPath = "FunctionView" });
+            MenuItems.Add(new NavigationItem() { Caption = "Beállítások", NavigationPath = "Settings" });
+            MenuItems.Add(new NavigationItem() { Caption = "Kijelentkezés", NavigationPath = "Logout" });
         }
+
+        void ExecuteSelectCommand(NavigationItem navigationItem)
+        {
+            _applicationCommand.NavigateCommand.Execute(navigationItem.NavigationPath);
+        }
+
     }
 }
