@@ -1,0 +1,15 @@
+﻿<Window x:Class="FamilyTree.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:core="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
+        Title="{Binding Title}" Height="350" Width="525" >
+    <DockPanel>
+        <ContentControl MinWidth="100"
+            DockPanel.Dock="Left" prism:RegionManager.RegionName="{x:Static core:RegionNames.NavigationRegion}" />
+        <ContentControl MinHeight="75"
+            DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static core:RegionNames.FunctionRegion}" />
+        <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+    </DockPanel>
+</Window>
