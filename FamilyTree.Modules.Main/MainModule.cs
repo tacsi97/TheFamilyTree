@@ -19,8 +19,6 @@ namespace FamilyTree.Modules.Main
         public void OnInitialized(IContainerProvider containerProvider)
         {
             _regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(NavigationMenu));
-            _regionManager.RegisterViewWithRegion(RegionNames.FunctionRegion, typeof(FunctionView));
-            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(MainPage));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
