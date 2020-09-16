@@ -1,8 +1,12 @@
 ﻿using FamilyTree.Modules.ModuleName.ViewModels;
+using FamilyTree.Modules.Person.Repository;
+using FamilyTree.Services;
 using FamilyTree.Services.Interfaces;
 using Moq;
 using Prism.Regions;
 using System;
+using System.Collections;
+using System.Linq;
 using Xunit;
 
 namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
@@ -37,6 +41,16 @@ namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
         {
             var vm = new ViewAViewModel(_regionManagerMock.Object, _messageServiceMock.Object);
             Assert.PropertyChanged(vm, nameof(vm.Message), () => vm.Message = "Changed");
+        }
+
+        [Fact]
+        public void asd()
+        {
+            PersonService service = new PersonService(new PersonRepository());
+
+            var res = service.GetPeople().Result;
+
+            Assert.Single(res.ToList());
         }
     }
 }

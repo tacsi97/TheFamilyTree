@@ -21,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\FamilyTree.Modules.Person\FamilyTree.Modules.Person.csproj" />
     <ProjectReference Include="..\..\Modules\FamilyTree.Modules.ModuleName\FamilyTree.Modules.ModuleName.csproj" />
+    <ProjectReference Include="..\..\Services\FamilyTree.Services\FamilyTree.Services.csproj" />
   </ItemGroup>
 
 </Project>

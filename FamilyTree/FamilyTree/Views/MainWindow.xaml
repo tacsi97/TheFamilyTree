@@ -10,6 +10,6 @@
             DockPanel.Dock="Left" prism:RegionManager.RegionName="{x:Static core:RegionNames.NavigationRegion}" />
         <ContentControl MinHeight="75"
             DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static core:RegionNames.FunctionRegion}" />
-        <ContentControl Background="Red" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
     </DockPanel>
 </Window>
