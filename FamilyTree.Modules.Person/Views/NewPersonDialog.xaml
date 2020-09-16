@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.NewPersonDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Width="200" Height="300" Background="White">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Content="Személy létrehozása"
+               FontSize="16" FontWeight="Bold"/>
+        <Label Grid.Row="1" 
+               Content="Vezetéknév"
+               FontSize="12"/>
+        <Label Grid.Row="3" 
+               Content="Utónév"
+               FontSize="12"/>
+        <Label Grid.Row="5" 
+               Content="Születési idő"
+               FontSize="12"/>
+        <Label Grid.Row="7" 
+               Content="Halálozási idő"
+               FontSize="12"/>
+
+        <TextBlock Grid.Row="2"
+            Text="Szöveg"/>
+        <TextBlock Grid.Row="4"
+            Text="Szöveg"/>
+        <DatePicker Grid.Row="6"/>
+        <DatePicker Grid.Row="8"/>
+    </Grid>
+</UserControl>

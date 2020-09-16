@@ -2,10 +2,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>FamilyTree.Core</AssemblyName>
+    <AssemblyName>FamilyTree.Modules.Person</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
+    <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
   </ItemGroup>
 </Project>

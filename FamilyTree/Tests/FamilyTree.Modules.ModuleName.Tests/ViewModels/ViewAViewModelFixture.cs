@@ -2,6 +2,7 @@
 using FamilyTree.Services.Interfaces;
 using Moq;
 using Prism.Regions;
+using System;
 using Xunit;
 
 namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
