@@ -31,7 +31,7 @@ namespace FamilyTree.Core
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+                new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
         }
 
         public override Task<HttpResponseMessage> Create(TObject templateObject)
