@@ -7,6 +7,8 @@ namespace FamilyTree.Business
 {
     public class FamilyTree : BusinessBase
     {
+        public string Name { get; set; }
+
         public ObservableCollection<Person> people { get; set; }
     }
 }

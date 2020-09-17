@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FamilyTree.Services.Repository.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FamilyTree.Core
+namespace FamilyTree.Services.Repository
 {
     public abstract class AsyncRepositoryBase<TResult, TObject> : IAsyncRepository<TResult, TObject>
     {

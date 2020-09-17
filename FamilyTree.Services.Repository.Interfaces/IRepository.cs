@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FamilyTree.Core
+namespace FamilyTree.Services.Repository.Interfaces
 {
     public interface IRepository<T>
     {

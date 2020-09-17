@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -41,5 +42,23 @@ namespace FamilyTree.Business
             get { return _gender; }
             set { SetProperty(ref _gender, value); }
         }
+
+        private Person _father;
+        public Person Father
+        {
+            get { return _father; }
+            set { SetProperty(ref _father, value); }
+        }
+
+        private Person _mother;
+        public Person Mother
+        {
+            get { return _mother; }
+            set { SetProperty(ref _mother, value); }
+        }
+
+        public ObservableCollection<Person> Children { get; set; }
+
+        public ObservableCollection<KeyValuePair<Relationship, KeyValuePair<DateTime, DateTime>>> Relationships { get; set; }
     }
 }
