@@ -9,5 +9,9 @@ namespace FamilyTree.Core
         public const string BaseURI = "http://localhost:5000/api";
         
         public const string PersonURI = "http://localhost:5000/api/person";
+
+        public const string FamilyTreeURI = "http://localhost:5000/api/familytree";
+
+        public const string RelationshipsURI = "http://localhost:5000/api/relationship";
     }
 }
