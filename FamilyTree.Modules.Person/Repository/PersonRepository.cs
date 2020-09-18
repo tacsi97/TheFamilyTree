@@ -14,7 +14,7 @@ namespace FamilyTree.Modules.Person.Repository
         public override string PostUri { get => Uris.PersonURI; }
         public override string GetUri { get => Path.Combine(Uris.PersonURI, "{0}"); }
         public override string PutUri { get => Uris.PersonURI; }
-        public override string DeleteUri { get => Path.Combine(Uris.PersonURI, "{0}"); }
+        public override string DeleteUri { get => Uris.PersonURI; }
         public override string GetAllUri { get => Uris.PersonURI; }
     }
 }
