@@ -8,6 +8,8 @@
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.Repository\FamilyTree.Services.Repository.csproj" />
+    <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
   </ItemGroup>
 </Project>

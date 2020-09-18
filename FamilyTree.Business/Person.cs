@@ -59,6 +59,12 @@ namespace FamilyTree.Business
 
         public ObservableCollection<Person> Children { get; set; }
 
-        public ObservableCollection<KeyValuePair<Relationship, KeyValuePair<DateTime, DateTime>>> Relationships { get; set; }
+        public ObservableCollection<Relationship> Partners { get; set; }
+
+        public Person()
+        {
+            Children = new ObservableCollection<Person>();
+            Partners = new ObservableCollection<Relationship>();
+        }
     }
 }
