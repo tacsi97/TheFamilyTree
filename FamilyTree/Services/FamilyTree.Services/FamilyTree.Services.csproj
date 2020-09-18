@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\FamilyTree.Services.Repository\FamilyTree.Services.Repository.csproj" />
     <ProjectReference Include="..\FamilyTree.Services.Interfaces\FamilyTree.Services.Interfaces.csproj" />
   </ItemGroup>
 

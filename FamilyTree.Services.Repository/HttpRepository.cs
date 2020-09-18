@@ -12,17 +12,17 @@ namespace FamilyTree.Services.Repository
     {
         private HttpClient _httpClient;
 
-        public abstract string RequestUriBase { get; set; }
+        public abstract string RequestUriBase { get;}
 
-        public abstract string PostUri { get; set; }
+        public abstract string PostUri { get; }
 
-        public abstract string GetUri { get; set; }
+        public abstract string GetUri { get; }
 
-        public abstract string PutUri { get; set; }
+        public abstract string PutUri { get; }
 
-        public abstract string DeleteUri { get; set; }
+        public abstract string DeleteUri { get; }
 
-        public abstract string GetAllUri { get; set; }
+        public abstract string GetAllUri { get; }
 
         public HttpRepository()
         {
