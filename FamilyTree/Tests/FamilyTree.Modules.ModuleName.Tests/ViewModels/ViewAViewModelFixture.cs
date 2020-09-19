@@ -7,6 +7,7 @@ using Prism.Regions;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
@@ -46,7 +47,7 @@ namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
         [Fact]
         public void asd()
         {
-            PersonService service = new PersonService(new PersonRepository());
+            PersonService service = new PersonService(new PersonRepository(new HttpClient()));
 
             var res = service.GetPeople().Result;
 

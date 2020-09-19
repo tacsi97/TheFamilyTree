@@ -3,12 +3,17 @@ using FamilyTree.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
     public class RelationshipRepository : HttpRepository<Business.Relationship>
     {
+        public RelationshipRepository(HttpClient httpClient) : base(httpClient)
+        {
+        }
+
         public override string RequestUriBase => Uris.BaseURI;
 
         public override string PostUri => Uris.RelationshipsURI;
