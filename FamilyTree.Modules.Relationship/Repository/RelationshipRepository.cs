@@ -17,7 +17,7 @@ namespace FamilyTree.Modules.Relationship.Repository
 
         public override string PutUri => Uris.RelationshipsURI;
 
-        public override string DeleteUri => Uris.RelationshipsURI;
+        public override string DeleteUri => Path.Combine(Uris.RelationshipsURI, "{0}");
 
         public override string GetAllUri => Uris.RelationshipsURI;
     }

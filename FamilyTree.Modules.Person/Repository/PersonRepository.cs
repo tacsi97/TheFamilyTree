@@ -10,11 +10,11 @@ namespace FamilyTree.Modules.Person.Repository
 {
     public class PersonRepository : HttpRepository<Business.Person>
     {
-        public override string RequestUriBase { get => Uris.BaseURI;}
-        public override string PostUri { get => Uris.PersonURI; }
-        public override string GetUri { get => Path.Combine(Uris.PersonURI, "{0}"); }
-        public override string PutUri { get => Uris.PersonURI; }
-        public override string DeleteUri { get => Uris.PersonURI; }
-        public override string GetAllUri { get => Uris.PersonURI; }
+        public override string RequestUriBase => Uris.BaseURI;
+        public override string PostUri => Uris.PersonURI;
+        public override string GetUri => Path.Combine(Uris.PersonURI, "{0}");
+        public override string PutUri => Uris.PersonURI;
+        public override string DeleteUri => Path.Combine(Uris.PersonURI, "{0}");
+        public override string GetAllUri => Uris.PersonURI;
     }
 }

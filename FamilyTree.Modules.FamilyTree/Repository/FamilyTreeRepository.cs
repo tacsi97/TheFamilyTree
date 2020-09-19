@@ -18,7 +18,7 @@ namespace FamilyTree.Modules.FamilyTree.Repository
 
         public override string PutUri => Uris.FamilyTreeURI;
 
-        public override string DeleteUri => Uris.FamilyTreeURI;
+        public override string DeleteUri => Path.Combine(Uris.FamilyTreeURI, "{0}");
 
         public override string GetAllUri => Uris.FamilyTreeURI;
     }
