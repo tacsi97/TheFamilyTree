@@ -10,7 +10,7 @@ namespace FamilyTree.Modules.FamilyTree.Tests
 {
     public class Repository
     {
-        private HttpRepository<Business.FamilyTree> _httpRepository;
+        private HttpRepository _httpRepository;
 
         public Repository()
         {

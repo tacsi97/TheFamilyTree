@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {
-    public class FamilyTreeRepository : HttpRepository<Business.FamilyTree>
+    public class FamilyTreeRepository : HttpRepository
     {
         public FamilyTreeRepository(HttpClient httpClient) : base(httpClient)
         {

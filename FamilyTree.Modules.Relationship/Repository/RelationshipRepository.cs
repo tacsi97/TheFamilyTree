@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
-    public class RelationshipRepository : HttpRepository<Business.Relationship>
+    public class RelationshipRepository : HttpRepository
     {
         public RelationshipRepository(HttpClient httpClient) : base(httpClient)
         {
