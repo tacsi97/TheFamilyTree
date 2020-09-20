@@ -9,6 +9,7 @@
     <PackageReference Include="Prism.DryIoc" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FamilyTree.Modules.FamilyTree\FamilyTree.Modules.FamilyTree.csproj" />
     <ProjectReference Include="..\..\FamilyTree.Modules.Main\FamilyTree.Modules.Main.csproj" />
     <ProjectReference Include="..\FamilyTree.Core\FamilyTree.Core.csproj" />
     <ProjectReference Include="..\Modules\FamilyTree.Modules.ModuleName\FamilyTree.Modules.ModuleName.csproj" />

@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using FamilyTree.Core;
+using FamilyTree.Core.Attributes;
+using System.Windows.Controls;
 
 namespace FamilyTree.Modules.Main.Views
 {

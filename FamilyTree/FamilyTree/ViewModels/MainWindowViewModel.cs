@@ -1,8 +1,11 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Core.ApplicationCommands;
+using FamilyTree.Modules.FamilyTree.Repository;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Net.Http;
 
 namespace FamilyTree.ViewModels
 {
@@ -11,6 +14,7 @@ namespace FamilyTree.ViewModels
         #region Fields
 
         private readonly IRegionManager _regionManager;
+        private readonly IApplicationCommand _application;
 
         #endregion
 
@@ -34,9 +38,12 @@ namespace FamilyTree.ViewModels
 
         #endregion
 
-        public MainWindowViewModel(IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager, IApplicationCommand application)
         {
             _regionManager = regionManager;
+            _application = application;
+            _application.NavigateCommand.RegisterCommand(NavigationCommand);
+
         }
 
         void ExecuteNavigationCommand(string navigationPath)

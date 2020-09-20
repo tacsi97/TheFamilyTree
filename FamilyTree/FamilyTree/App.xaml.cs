@@ -6,6 +6,10 @@ using FamilyTree.Modules.Main;
 using FamilyTree.Modules.ModuleName;
 using FamilyTree.Services.Interfaces;
 using FamilyTree.Services;
+using FamilyTree.Core.ApplicationCommands;
+using Prism.Regions;
+using FamilyTree.Core.Attributes;
+using FamilyTree.Core.Behaviors;
 
 namespace FamilyTree
 {
@@ -21,6 +25,9 @@ namespace FamilyTree
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //singletons
+            containerRegistry.RegisterSingleton<IApplicationCommand, ApplicationCommand>();
+
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
         }
 
@@ -28,6 +35,13 @@ namespace FamilyTree
         {
             //moduleCatalog.AddModule<ModuleNameModule>();
             moduleCatalog.AddModule<MainModule>();
+        }
+
+        protected override void ConfigureDefaultRegionBehaviors(IRegionBehaviorFactory regionBehaviors)
+        {
+            base.ConfigureDefaultRegionBehaviors(regionBehaviors);
+
+            regionBehaviors.AddIfMissing(DependentViewRegionBehavior.BehaviorKey, typeof(DependentViewRegionBehavior));
         }
     }
 }

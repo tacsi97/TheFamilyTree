@@ -1,7 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FamilyTree.Business\FamilyTree.Business.csproj" />
+    <ProjectReference Include="..\..\FamilyTree.Core\FamilyTree.Core.csproj" />
+  </ItemGroup>
 
 </Project>

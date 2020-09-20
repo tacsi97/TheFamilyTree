@@ -1,4 +1,5 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Modules.Main.ViewModels;
 using FamilyTree.Modules.Main.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -8,9 +9,9 @@ namespace FamilyTree.Modules.Main
 {
     public class MainModule : IModule
     {
-        private readonly RegionManager _regionManager;
+        private readonly IRegionManager _regionManager;
 
-        public MainModule(RegionManager regionManager)
+        public MainModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
@@ -22,7 +23,8 @@ namespace FamilyTree.Modules.Main
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<FunctionView, FunctionViewViewModel>();
         }
     }
 }
