@@ -45,10 +45,10 @@ namespace FamilyTree.Services.Repository
         /// <param name="uri">The full uri</param>
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null</exception>
+        /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
         public override async Task<HttpResponseMessage> CreateAsync(string uri, string content)
         {
-            if (content == null) throw new ArgumentNullException(nameof(content), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(content)) throw new ArgumentNullException(nameof(content), ExceptionMessages.ValueIsNull);
 
             if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
 
@@ -63,7 +63,7 @@ namespace FamilyTree.Services.Repository
         /// <param name="uri">The full uri</param>
         /// <param name="id">The id of the object</param>
         /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null</exception>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
         public override async Task<HttpResponseMessage> DeleteAsync(string uri, int id)
         {
@@ -80,7 +80,7 @@ namespace FamilyTree.Services.Repository
         /// <param name="uri">The full uri</param>
         /// <param name="id">The id of the object</param>
         /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null</exception>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
         public override async Task<HttpResponseMessage> GetAsync(string uri, int id)
         {
@@ -110,10 +110,10 @@ namespace FamilyTree.Services.Repository
         /// <param name="uri">The full uri</param>
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null</exception>
+        /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
         public override async Task<HttpResponseMessage> ModifyAsync(string uri, string content)
         {
-            if (content == null) throw new ArgumentNullException(nameof(content));
+            if (string.IsNullOrEmpty(content)) throw new ArgumentNullException(nameof(content));
             
             if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri));
 
