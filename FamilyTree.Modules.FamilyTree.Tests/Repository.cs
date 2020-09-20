@@ -8,6 +8,7 @@ using Xunit;
 
 namespace FamilyTree.Modules.FamilyTree.Tests
 {
+    //TODO: more integration tests when the server side is completed
     public class Repository
     {
         private HttpRepository _httpRepository;
