@@ -22,7 +22,7 @@ namespace FamilyTree.Services
 
         public async Task<bool> AddPerson(Person person)
         {
-            var response = await _httpRepository.Create(person);
+            var response = await _httpRepository.CreateAsync(person);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -34,7 +34,7 @@ namespace FamilyTree.Services
 
         public async Task<bool> DeletePerson(int id)
         {
-            var response = await _httpRepository.Delete(id);
+            var response = await _httpRepository.DeleteAsync(id);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -46,7 +46,7 @@ namespace FamilyTree.Services
 
         public async Task<IEnumerable<Person>> GetPeople()
         {
-            var response = await _httpRepository.GetAll();
+            var response = await _httpRepository.GetAllAsync();
 
             if (!response.IsSuccessStatusCode)
             {
@@ -60,7 +60,7 @@ namespace FamilyTree.Services
 
         public async Task<Person> GetPerson(int id)
         {
-            var response = await _httpRepository.Get(id);
+            var response = await _httpRepository.GetAsync(id);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -74,7 +74,7 @@ namespace FamilyTree.Services
 
         public async Task<bool> ModifyPerson(Person person)
         {
-            var response = await _httpRepository.Modify(person);
+            var response = await _httpRepository.ModifyAsync(person);
 
             if (!response.IsSuccessStatusCode)
             {
