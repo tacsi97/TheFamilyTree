@@ -44,8 +44,6 @@ namespace FamilyTree.ViewModels
             _application = application;
             _application.NavigateCommand.RegisterCommand(NavigationCommand);
 
-            var treeRepo = new FamilyTreeRepository(new HttpClient());
-            treeRepo.CreateAsync(null).Wait();
         }
 
         void ExecuteNavigationCommand(string navigationPath)

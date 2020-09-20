@@ -44,14 +44,5 @@ namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
             Assert.PropertyChanged(vm, nameof(vm.Message), () => vm.Message = "Changed");
         }
 
-        [Fact]
-        public void asd()
-        {
-            PersonService service = new PersonService(new PersonRepository(new HttpClient()));
-
-            var res = service.GetPeople().Result;
-
-            Assert.Single(res.ToList());
-        }
     }
 }
