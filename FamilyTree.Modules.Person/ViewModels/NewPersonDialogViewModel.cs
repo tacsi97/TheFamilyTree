@@ -24,7 +24,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set { SetProperty(ref _submitAsyncCommand, value); }
         }
 
-        private Business.Person _person;
+        private Business.Person _person = new Business.Person();
         public Business.Person Person
         {
             get { return _person; }
@@ -38,7 +38,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         public NewPersonDialogViewModel(IAsyncRepository<Business.Person> repository)
         {
             _repository = repository;
-            SubmitAsyncCommand = new AsyncCommand(Submit);
+            SubmitAsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);
         }
 
         public async Task Submit()
@@ -48,6 +48,17 @@ namespace FamilyTree.Modules.Person.ViewModels
             var result = new DialogResult(ButtonResult.OK);
 
             RequestClose(result);
+        }
+
+        public bool CanExecuteSubmit()
+        {
+            //TODO: add gender check
+            if (Person == null 
+                || string.IsNullOrEmpty(Person.FirstName)
+                || string.IsNullOrEmpty(Person.LastName)
+                || Person.DateOfBirth == null) 
+                return false;
+            return true;
         }
 
         public bool CanCloseDialog() => true;

@@ -34,18 +34,21 @@
                Content="Halálozási idő"
                FontSize="12"/>
 
-        <TextBlock Grid.Row="2"
-            Text="Szöveg"/>
-        <TextBlock Grid.Row="4"
-            Text="Szöveg"/>
-        <DatePicker Grid.Row="6"/>
-        <DatePicker Grid.Row="8"/>
+        <TextBox Grid.Row="2"
+            Text="{Binding Person.LastName}"/>
+        <TextBox Grid.Row="4"
+            Text="{Binding Person.FirstName}"/>
+        <DatePicker Grid.Row="6"
+                    SelectedDate="{Binding Person.DateOfBirth}"/>
+        <DatePicker Grid.Row="8"
+                    SelectedDate="{Binding Person.DateOfDeath}"/>
 
         <StackPanel Grid.Row="9" Orientation="Horizontal">
-            <RadioButton Content="Férfi" />
-            <RadioButton Content="Nő"/>
+            <RadioButton GroupName="gender" Content="Férfi"/>
+            <RadioButton GroupName="gender" Content="Nő"/>
         </StackPanel>
         <Button Grid.Row="10"
-            Content="Mentés"/>
+            Content="Mentés"
+                Command="{Binding SubmitAsyncCommand}"/>
     </Grid>
 </UserControl>

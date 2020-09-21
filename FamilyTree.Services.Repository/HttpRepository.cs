@@ -15,6 +15,7 @@ namespace FamilyTree.Services.Repository
         private HttpClient _httpClient;
 
         //TODO: make this virtual instead of abstract
+        //TODO: rewrite docs
         public abstract string RequestUriBase { get; }
 
         public abstract string PostUri { get; }
