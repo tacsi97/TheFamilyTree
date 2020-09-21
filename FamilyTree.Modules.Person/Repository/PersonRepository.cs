@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.Repository
 {
+    /// <summary>
+    /// <inheritdoc cref="HttpRepository{TObject}"/>
+    /// </summary>
     public class PersonRepository : HttpRepository<Business.Person>
     {
         public PersonRepository(HttpClient httpClient) : base(httpClient)

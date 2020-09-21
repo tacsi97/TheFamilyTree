@@ -19,17 +19,5 @@ namespace FamilyTree.Core.Extensions
                 
             }
         }
-
-        public static async void FireAndStoreAsync<T>(this Task task)
-        {
-            try
-            {
-                await task;
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
     }
 }

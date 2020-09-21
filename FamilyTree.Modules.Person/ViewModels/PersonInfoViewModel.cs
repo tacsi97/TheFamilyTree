@@ -11,9 +11,18 @@ namespace FamilyTree.Modules.Person.ViewModels
     {
         private readonly IAsyncRepository<Business.Person> _repository;
 
+        private Business.Person _person;
+        public Business.Person Person
+        {
+            get { return _person; }
+            set { SetProperty(ref _person, value); }
+        }
+
         public PersonInfoViewModel(IAsyncRepository<Business.Person> repository)
         {
             _repository = repository;
         }
+
+
     }
 }

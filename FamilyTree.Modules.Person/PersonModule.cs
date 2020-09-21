@@ -1,4 +1,7 @@
-﻿using FamilyTree.Modules.Person.Repository;
+﻿using FamilyTree.Core;
+using FamilyTree.Modules.Person.Repository;
+using FamilyTree.Modules.Person.ViewModels;
+using FamilyTree.Modules.Person.Views;
 using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Ioc;
@@ -17,6 +20,8 @@ namespace FamilyTree.Modules.Person
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, PersonRepository>();
+
+            containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(DialogNames.NewPersonDialog);
         }
     }
 }
