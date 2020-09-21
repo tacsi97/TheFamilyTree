@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository
 {
-    public abstract class HttpRepository : AsyncRepositoryBase<HttpResponseMessage>
+    public abstract class HttpRepository<TObject> : AsyncRepositoryBase<TObject>
     {
         private HttpClient _httpClient;
 
@@ -46,15 +47,20 @@ namespace FamilyTree.Services.Repository
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
-        public override async Task<HttpResponseMessage> CreateAsync(string uri, string content)
+        public override async Task CreateAsync(string uri, string content)
         {
-            if (string.IsNullOrEmpty(content)) throw new ArgumentNullException(nameof(content), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(content))
+                throw new ArgumentNullException(nameof(content), ExceptionMessages.ValueIsNull);
 
-            if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(uri))
+                throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
 
             var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
 
-            return await _httpClient.PostAsync(uri, data);
+            var response = await _httpClient.PostAsync(uri, data);
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException(ExceptionMessages.HttpResponseException);
         }
 
         /// <summary>
@@ -65,13 +71,16 @@ namespace FamilyTree.Services.Repository
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public override async Task<HttpResponseMessage> DeleteAsync(string uri, int id)
+        public override async Task DeleteAsync(string uri, int id)
         {
             if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
 
             if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
 
-            return await _httpClient.DeleteAsync(uri);
+            var response = await _httpClient.DeleteAsync(uri);
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException(ExceptionMessages.HttpResponseException);
         }
 
         /// <summary>
@@ -82,13 +91,17 @@ namespace FamilyTree.Services.Repository
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public override async Task<HttpResponseMessage> GetAsync(string uri, int id)
+        public override async Task<TObject> GetAsync(string uri, int id)
         {
             if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
 
             if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
 
-            return await _httpClient.GetAsync(uri);
+            var response = await _httpClient.GetAsync(uri);
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<TObject>(json);
         }
 
         /// <summary>
@@ -97,11 +110,15 @@ namespace FamilyTree.Services.Repository
         /// <param name="uri">The full uri</param>
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> is null or empty</exception>
-        public override async Task<HttpResponseMessage> GetAllAsync(string uri)
+        public override async Task<IEnumerable<TObject>> GetAllAsync(string uri)
         {
             if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
 
-            return await _httpClient.GetAsync(uri);
+            var response = await _httpClient.GetAsync(uri);
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<IEnumerable<TObject>>(json);
         }
 
         /// <summary>
@@ -111,15 +128,18 @@ namespace FamilyTree.Services.Repository
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
-        public override async Task<HttpResponseMessage> ModifyAsync(string uri, string content)
+        public override async Task ModifyAsync(string uri, string content)
         {
             if (string.IsNullOrEmpty(content)) throw new ArgumentNullException(nameof(content));
-            
+
             if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri));
 
             var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
 
-            return await _httpClient.PutAsync(uri, data);
+            var response = await _httpClient.PutAsync(uri, data);
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException(ExceptionMessages.HttpResponseException);
         }
 
         /// <summary>

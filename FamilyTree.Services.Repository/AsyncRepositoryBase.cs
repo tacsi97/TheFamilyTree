@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository
 {
-    public abstract class AsyncRepositoryBase<TResult> : IAsyncRepository<TResult>
+    public abstract class AsyncRepositoryBase<TObject> : IAsyncRepository<TObject>
     {
-        public abstract Task<TResult> CreateAsync(string uri, string content);
-        public abstract Task<TResult> DeleteAsync(string uri, int id);
-        public abstract Task<TResult> GetAsync(string uri, int id);
-        public abstract Task<TResult> GetAllAsync(string uri);
-        public abstract Task<TResult> ModifyAsync(string uri, string content);
+        public abstract Task CreateAsync(string uri, string content);
+        public abstract Task DeleteAsync(string uri, int id);
+        public abstract Task<IEnumerable<TObject>> GetAllAsync(string uri);
+        public abstract Task<TObject> GetAsync(string uri, int id);
+        public abstract Task ModifyAsync(string uri, string content);
     }
 }

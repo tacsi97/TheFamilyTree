@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository.Interfaces
 {
-    public interface IAsyncRepository<TResult>
+    public interface IAsyncRepository<TObject>
     {
-        Task<TResult> GetAllAsync(string uri);
+        Task<IEnumerable<TObject>> GetAllAsync(string uri);
 
-        Task<TResult> GetAsync(string uri, int id);
+        Task<TObject> GetAsync(string uri, int id);
 
-        Task<TResult> CreateAsync(string uri, string content);
+        Task CreateAsync(string uri, string content);
 
-        Task<TResult> ModifyAsync(string uri, string content);
+        Task ModifyAsync(string uri, string content);
 
-        Task<TResult> DeleteAsync(string uri, int id);
+        Task DeleteAsync(string uri, int id);
     }
 }

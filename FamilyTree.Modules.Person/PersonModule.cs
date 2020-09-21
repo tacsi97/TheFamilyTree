@@ -16,7 +16,7 @@ namespace FamilyTree.Modules.Person
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAsyncRepository<HttpResponseMessage>, PersonRepository>();
+            containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, PersonRepository>();
         }
     }
 }

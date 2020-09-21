@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.Repository
 {
-    public class PersonRepository : HttpRepository
+    public class PersonRepository : HttpRepository<Business.Person>
     {
         public PersonRepository(HttpClient httpClient) : base(httpClient)
         {
