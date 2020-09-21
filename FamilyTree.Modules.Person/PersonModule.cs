@@ -1,7 +1,9 @@
-﻿using FamilyTree.Modules.Person.Views;
+﻿using FamilyTree.Modules.Person.Repository;
+using FamilyTree.Services.Repository;
+using FamilyTree.Services.Repository.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Regions;
+using System.Net.Http;
 
 namespace FamilyTree.Modules.Person
 {
@@ -14,7 +16,7 @@ namespace FamilyTree.Modules.Person
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<IAsyncRepository<HttpResponseMessage>, PersonRepository>();
         }
     }
 }
