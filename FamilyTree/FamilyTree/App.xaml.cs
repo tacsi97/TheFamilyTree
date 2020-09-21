@@ -10,6 +10,10 @@ using FamilyTree.Core.ApplicationCommands;
 using Prism.Regions;
 using FamilyTree.Core.Attributes;
 using FamilyTree.Core.Behaviors;
+using FamilyTree.Modules.Person;
+using FamilyTree.Modules.FamilyTree;
+using FamilyTree.Business;
+using FamilyTree.Modules.Relationship;
 
 namespace FamilyTree
 {
@@ -35,6 +39,9 @@ namespace FamilyTree
         {
             //moduleCatalog.AddModule<ModuleNameModule>();
             moduleCatalog.AddModule<MainModule>();
+            moduleCatalog.AddModule<PersonModule>();
+            moduleCatalog.AddModule<FamilyTreeModule>();
+            moduleCatalog.AddModule<RelationshipModule>();
         }
 
         protected override void ConfigureDefaultRegionBehaviors(IRegionBehaviorFactory regionBehaviors)

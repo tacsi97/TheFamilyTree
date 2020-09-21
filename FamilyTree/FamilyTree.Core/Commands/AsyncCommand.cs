@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace FamilyTree.Core.Commands
 {
-    public class AsyncCommand : IAsyncCommand
+    public class AsyncCommand : SubmitAsyncCommand
     {
         public event EventHandler CanExecuteChanged;
 
