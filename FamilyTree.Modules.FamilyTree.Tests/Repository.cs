@@ -9,6 +9,7 @@ using Xunit;
 namespace FamilyTree.Modules.FamilyTree.Tests
 {
     //TODO: more integration tests when the server side is completed
+    //TODO: if the repository fails in saving data remotely, than it must save locally
     public class Repository
     {
         private HttpRepository _httpRepository;
