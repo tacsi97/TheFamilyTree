@@ -2,6 +2,7 @@
 using FamilyTree.Core;
 using FamilyTree.Core.Commands;
 using FamilyTree.Core.Extensions;
+using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
@@ -19,11 +20,18 @@ namespace FamilyTree.Modules.Person.ViewModels
     {
         private readonly IAsyncRepository<Business.Person> _repository;
 
-        private AsyncCommand _submitAsyncCommand;
-        public AsyncCommand SubmitAsyncCommand
+        private SubmitNewPersonCommand _submitNewPersonCommand;
+        public SubmitNewPersonCommand SubmitNewPersonCommand
         {
-            get { return _submitAsyncCommand; }
-            set { SetProperty(ref _submitAsyncCommand, value); }
+            get { return _submitNewPersonCommand; }
+            set { SetProperty(ref _submitNewPersonCommand, value); }
+        }
+
+        private AsyncCommand _asyncCommand;
+        public AsyncCommand AsyncCommand
+        {
+            get { return _asyncCommand; }
+            set { SetProperty(ref _asyncCommand, value); }
         }
 
         #region Properties
@@ -35,7 +43,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _firstName, value);
-                SubmitAsyncCommand.RaiseCanExecuteChanged();
+                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -46,7 +54,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _lastName, value);
-                SubmitAsyncCommand.RaiseCanExecuteChanged();
+                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -57,7 +65,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _dateOfBirth, value);
-                SubmitAsyncCommand.RaiseCanExecuteChanged();
+                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -68,7 +76,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _dateOfDeath, value);
-                SubmitAsyncCommand.RaiseCanExecuteChanged();
+                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -79,7 +87,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _gender, value);
-                SubmitAsyncCommand.RaiseCanExecuteChanged();
+                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -92,23 +100,32 @@ namespace FamilyTree.Modules.Person.ViewModels
         public NewPersonDialogViewModel(IAsyncRepository<Business.Person> repository)
         {
             _repository = repository;
-            SubmitAsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);
+
+            AsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);
+
+            SubmitNewPersonCommand = new SubmitNewPersonCommand(this);
         }
 
         public async Task Submit()
         {
-            await _repository.CreateAsync(JsonConvert.SerializeObject(
-                new Business.Person()
-                {
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    DateOfBirth = DateOfBirth,
-                    DateOfDeath = DateOfDeath,
-                    Gender = Gender
-                }), Uris.PersonURI);
+            try
+            {
+                await _repository.CreateAsync(
+                    Uris.PersonURI,
+                    JsonConvert.SerializeObject(
+                        new Business.Person() { 
+                            FirstName = FirstName,
+                            LastName = LastName,
+                            DateOfBirth = DateOfBirth,
+                            DateOfDeath = DateOfDeath,
+                            Gender = Gender
+                        }));
+            }
+            catch (Exception e)
+            {
 
+            }
             var result = new DialogResult(ButtonResult.OK);
-
             RequestClose(result);
         }
 

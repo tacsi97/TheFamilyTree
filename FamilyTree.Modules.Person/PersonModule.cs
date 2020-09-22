@@ -19,7 +19,7 @@ namespace FamilyTree.Modules.Person
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, PersonRepository>();
+            containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(DialogNames.NewPersonDialog);
         }

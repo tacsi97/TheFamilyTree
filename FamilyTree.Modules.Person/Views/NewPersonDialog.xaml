@@ -35,13 +35,13 @@
                FontSize="12"/>
 
         <TextBox Grid.Row="2"
-            Text="{Binding LastName, Mode=OneWayToSource}"/>
+            Text="{Binding LastName}"/>
         <TextBox Grid.Row="4"
-            Text="{Binding FirstName, Mode=OneWayToSource, UpdateSourceTrigger=LostFocus}"/>
+            Text="{Binding FirstName}"/>
         <DatePicker Grid.Row="6"
-                    SelectedDate="{Binding DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=LostFocus}"/>
+                    SelectedDate="{Binding DateOfBirth}"/>
         <DatePicker Grid.Row="8"
-                    SelectedDate="{Binding DateOfDeath, Mode=OneWayToSource, UpdateSourceTrigger=LostFocus}"/>
+                    SelectedDate="{Binding DateOfDeath}"/>
 
         <StackPanel Grid.Row="9" Orientation="Horizontal">
             <RadioButton GroupName="gender" Content="Férfi"/>
@@ -49,6 +49,6 @@
         </StackPanel>
         <Button Grid.Row="10"
             Content="Mentés"
-                Command="{Binding SubmitAsyncCommand}"/>
+                Command="{Binding SubmitNewPersonCommand}"/>
     </Grid>
 </UserControl>
