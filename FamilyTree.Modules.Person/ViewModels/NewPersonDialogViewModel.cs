@@ -134,7 +134,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             //TODO: add gender check
             if (string.IsNullOrEmpty(FirstName)
                 || string.IsNullOrEmpty(LastName)
-                || DateOfBirth == null)
+                || DateOfBirth == DateTime.MinValue)
                 return false;
             return true;
         }

@@ -1,9 +1,14 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.NewPersonDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"       
+             xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
+             xmlns:business="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
              prism:ViewModelLocator.AutoWireViewModel="True"
              Width="200" Height="300" Background="White">
+    <UserControl.Resources>
+        <converters:GenderToBoolConverter x:Key="btg"/>
+    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -44,8 +49,8 @@
                     SelectedDate="{Binding DateOfDeath}"/>
 
         <StackPanel Grid.Row="9" Orientation="Horizontal">
-            <RadioButton GroupName="gender" Content="Férfi"/>
-            <RadioButton GroupName="gender" Content="Nő"/>
+            <RadioButton GroupName="gender" IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
+            <RadioButton GroupName="gender" IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
         </StackPanel>
         <Button Grid.Row="10"
             Content="Mentés"
