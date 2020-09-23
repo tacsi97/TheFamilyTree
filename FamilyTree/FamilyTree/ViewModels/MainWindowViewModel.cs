@@ -62,7 +62,7 @@ namespace FamilyTree.ViewModels
 
         public void ExecuteUseless()
         {
-            _dialogService.ShowDialog(DialogNames.NewPersonDialog, null, r =>
+            _dialogService.ShowDialog(DialogNames.NewTreeDialog, null, r =>
             {
                 
             });

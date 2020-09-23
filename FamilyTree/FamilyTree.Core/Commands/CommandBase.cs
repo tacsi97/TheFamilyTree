@@ -7,7 +7,7 @@ namespace FamilyTree.Core.Commands
 {
     public abstract class CommandBase<T> : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public virtual event EventHandler CanExecuteChanged;
 
         protected T ViewModel { get; set; }
 

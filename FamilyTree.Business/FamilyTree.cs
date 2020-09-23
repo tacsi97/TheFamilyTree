@@ -9,6 +9,6 @@ namespace FamilyTree.Business
     {
         public string Name { get; set; }
 
-        public ObservableCollection<Person> people { get; set; }
+        public ObservableCollection<Person> People { get; set; }
     }
 }
