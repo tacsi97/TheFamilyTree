@@ -20,7 +20,7 @@ namespace FamilyTree.Modules.FamilyTree
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(FamilyTreeListView));
+            //_regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(FamilyTreeListView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

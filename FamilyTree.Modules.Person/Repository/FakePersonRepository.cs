@@ -18,6 +18,36 @@ namespace FamilyTree.Modules.Person.Repository
 
         public int id = 0;
 
+        public FakePersonRepository()
+        {
+            People.Add(
+                new Business.Person()
+                {
+                    ID = 0,
+                    FirstName = "László",
+                    LastName = "Tóth",
+                    DateOfBirth = new DateTime(1997, 12, 1)
+                });
+
+            People.Add(
+                new Business.Person()
+                {
+                    ID = 1,
+                    FirstName = "Berci",
+                    LastName = "Kutya",
+                    DateOfBirth = new DateTime(2015, 4, 3)
+                });
+
+            People.Add(
+                new Business.Person()
+                {
+                    ID = 2,
+                    FirstName = "Kutya",
+                    LastName = "Liza",
+                    DateOfBirth = new DateTime(2016, 6, 11)
+                });
+        }
+
         public async Task CreateAsync(string uri, string content)
         {
             await Task.Run(() =>
@@ -26,7 +56,6 @@ namespace FamilyTree.Modules.Person.Repository
                 person.ID = id;
                 id++;
                 People.Add(person);
-                MessageBox.Show("Hi");
             });
         }
 
