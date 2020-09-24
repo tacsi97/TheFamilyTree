@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="FamilyTree.Modules.FamilyTree.Views.FamilyTreeListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <DockPanel LastChildFill="True">
+        <Label DockPanel.Dock="Top" Content="Családfák"/>
+        <Button DockPanel.Dock="Top" Content="Frissít" Command="{Binding GetTreesCommand}"/>
+        <ListView ItemsSource="{Binding Trees}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="Business.FamilyTree">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Name}"
+                                   Grid.Column="0"/>
+                        <TextBlock Text="{Binding People.Count}"
+                                   Grid.Column="1"/>
+                    </Grid>
+                    <!--<Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                    </Grid>-->
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+</UserControl>

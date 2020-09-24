@@ -42,7 +42,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             SubmitCommand = new SubmitCommand(this);
         }
 
-        public bool SubmitCanExecute() => true;
+        public bool SubmitCanExecute() => !string.IsNullOrEmpty(FamilyTreeName);
 
         public async Task SubmitExecute()
         {

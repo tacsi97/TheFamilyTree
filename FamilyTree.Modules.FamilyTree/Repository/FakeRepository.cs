@@ -16,6 +16,9 @@ namespace FamilyTree.Modules.FamilyTree.Repository
         public FakeRepository()
         {
             Trees = new ObservableCollection<Business.FamilyTree>();
+            Trees.Add(new Business.FamilyTree() { Name = "Tóth Család" });
+            Trees.Add(new Business.FamilyTree() { Name = "Fodor Család" });
+            Trees.Add(new Business.FamilyTree() { Name = "Láng Család" });
         }
 
         public async Task CreateAsync(string uri, string content)
