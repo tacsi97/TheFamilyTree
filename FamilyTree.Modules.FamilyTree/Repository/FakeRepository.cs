@@ -1,4 +1,5 @@
-﻿using FamilyTree.Services.Repository.Interfaces;
+﻿using FamilyTree.Business;
+using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace FamilyTree.Modules.FamilyTree.Repository
         public FakeRepository()
         {
             Trees = new ObservableCollection<Business.FamilyTree>();
-            Trees.Add(new Business.FamilyTree() { Name = "Tóth Család" });
-            Trees.Add(new Business.FamilyTree() { Name = "Fodor Család" });
-            Trees.Add(new Business.FamilyTree() { Name = "Láng Család" });
+            Trees.Add(new Business.FamilyTree() { Name = "Tóth Család", People = new ObservableCollection<Person>() });
+            Trees.Add(new Business.FamilyTree() { Name = "Fodor Család", People = new ObservableCollection<Person>() });
+            Trees.Add(new Business.FamilyTree() { Name = "Láng Család", People = new ObservableCollection<Person>() });
         }
 
         public async Task CreateAsync(string uri, string content)

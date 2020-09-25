@@ -40,9 +40,9 @@
                FontSize="12"/>
 
         <TextBox Grid.Row="2"
-            Text="{Binding LastName}"/>
+            Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Row="4"
-            Text="{Binding FirstName}"/>
+            Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
         <DatePicker Grid.Row="6"
                     SelectedDate="{Binding DateOfBirth}"/>
         <DatePicker Grid.Row="8"

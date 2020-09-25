@@ -7,6 +7,11 @@
         <Label DockPanel.Dock="Top" Content="Családfák"/>
         <Button DockPanel.Dock="Top" Content="Frissít" Command="{Binding GetTreesCommand}"/>
         <ListView ItemsSource="{Binding Trees}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="Business.FamilyTree">
                     <Grid>
