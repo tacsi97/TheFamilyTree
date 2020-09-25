@@ -3,7 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-            
-    </Grid>
+    <ListView>
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        <ListViewItem>
+            <TextBlock Text="Átnevez"/>
+        </ListViewItem>
+        <ListViewItem>
+            <TextBlock Text="Töröl"/>
+        </ListViewItem>
+    </ListView>
 </UserControl>
