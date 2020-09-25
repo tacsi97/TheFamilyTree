@@ -28,6 +28,8 @@ namespace FamilyTree.Modules.FamilyTree
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.FamilyTree>, FakeRepository>();
 
             containerRegistry.RegisterDialog<NewTreeDialog, NewTreeDialogViewModel>(DialogNames.NewTreeDialog);
+
+            containerRegistry.RegisterForNavigation<FamilyTreeListView, FamilyTreeListViewModel>();
         }
     }
 }

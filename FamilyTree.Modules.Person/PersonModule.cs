@@ -30,6 +30,8 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(DialogNames.NewPersonDialog);
+
+            containerRegistry.RegisterForNavigation<PeopleListView, PeopleListViewModel>();
         }
     }
 }

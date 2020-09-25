@@ -50,8 +50,8 @@ namespace FamilyTree.Modules.Main.ViewModels
         {
             //The navigation path should match with the .xaml name
             MenuItems.Add(new NavigationItem() { Caption = "Főoldal", NavigationPath = "MainPage" });
-            MenuItems.Add(new NavigationItem() { Caption = "Családfák", NavigationPath = "FunctionView" });
-            MenuItems.Add(new NavigationItem() { Caption = "Beállítások", NavigationPath = "Settings" });
+            MenuItems.Add(new NavigationItem() { Caption = "Családfák", NavigationPath = "FamilyTreeListView" });
+            MenuItems.Add(new NavigationItem() { Caption = "Emberek", NavigationPath = "PeopleListView" });
             MenuItems.Add(new NavigationItem() { Caption = "Kijelentkezés", NavigationPath = "Logout" });
         }
 
