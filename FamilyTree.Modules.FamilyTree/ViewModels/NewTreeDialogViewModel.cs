@@ -36,12 +36,15 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public NewTreeDialogViewModel(IAsyncRepository<Business.FamilyTree> repository)
         {
-            //TODO: Command can execute not working
             _repository = repository;
 
             SubmitCommand = new SubmitCommand(this);
         }
 
+        /// <summary>
+        /// Determines that, the command can be executed or not.
+        /// </summary>
+        /// <returns>If the <c>NewTreeDialogViewModel</c>'s FamilyTreeName property is null or empty, then it return false.</returns>
         public bool SubmitCanExecute() => !string.IsNullOrEmpty(FamilyTreeName);
 
         public async Task SubmitExecute()

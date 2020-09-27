@@ -31,6 +31,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             _repository = repository;
 
+            // TODO: Maybe change this to CommandFactory call
             GetPeopleCommand = new GetPeopleCommand(this);
 
             People = new ObservableCollection<Business.Person>();

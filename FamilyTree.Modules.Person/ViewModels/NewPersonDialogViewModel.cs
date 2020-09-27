@@ -129,9 +129,14 @@ namespace FamilyTree.Modules.Person.ViewModels
             RequestClose(result);
         }
 
+        /// <summary>
+        /// This determines whether the command can be executed or not.
+        /// If the <c>NewPersonDialogViewModel</c>'s FirstName or LastName attribute is null or empty, or the DateOfBirth is minvalue.
+        /// </summary>
+        /// <returns>True or false</returns>
         public bool CanExecuteSubmit()
         {
-            //TODO: add gender check
+            // TODO: Create a generic validator class, what takes a parameter with the given type, and returns that the value is valid or not
             if (string.IsNullOrEmpty(FirstName)
                 || string.IsNullOrEmpty(LastName)
                 || DateOfBirth == DateTime.MinValue)
