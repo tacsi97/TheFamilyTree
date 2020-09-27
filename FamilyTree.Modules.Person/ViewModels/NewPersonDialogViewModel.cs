@@ -123,7 +123,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
             catch (Exception e)
             {
-
+                // TODO: exception handling
             }
             var result = new DialogResult(ButtonResult.OK);
             RequestClose(result);
