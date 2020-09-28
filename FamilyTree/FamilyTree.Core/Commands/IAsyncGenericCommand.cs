@@ -6,10 +6,10 @@ using System.Windows.Input;
 
 namespace FamilyTree.Core.Commands
 {
-    public interface IAsyncCommand : ICommand
+    public interface IAsyncGenericCommand<T> : ICommand
     {
-        Task ExecuteAsync();
-        bool CanExecute();
+        Task ExecuteAsync(T param);
+        bool CanExecute(T param);
         void RaiseCanExecuteChanged();
     }
 }

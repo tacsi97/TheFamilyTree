@@ -8,5 +8,6 @@ namespace FamilyTree.Core
     {
         public const string NewPersonDialog = "NewPersonDialog";
         public const string NewTreeDialog = "NewTreeDialog";
+        public const string ModifyTreeDialog = "ModifyTreeDialog";
     }
 }

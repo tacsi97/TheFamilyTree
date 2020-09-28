@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace FamilyTree.Core.Commands
 {
-    public class AsyncCommand : IAsyncCommand
+    public class AsyncGenericCommand<T> : IAsyncGenericCommand<T>
     {
         public event EventHandler CanExecuteChanged;
 
@@ -15,7 +15,7 @@ namespace FamilyTree.Core.Commands
         private readonly Func<Task> _execute;
         private readonly Func<bool> _canExecute;
 
-        public AsyncCommand(
+        public AsyncGenericCommand(
             Func<Task> execute,
             Func<bool> canExecute = null)
         {
@@ -23,14 +23,14 @@ namespace FamilyTree.Core.Commands
             _canExecute = canExecute;
         }
 
-        public bool CanExecute()
+        public bool CanExecute(T param)
         {
             return !_isExecuting && (_canExecute?.Invoke() ?? true);
         }
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteAsync(T param)
         {
-            if (CanExecute())
+            if (CanExecute(param))
             {
                 try
                 {
@@ -54,12 +54,12 @@ namespace FamilyTree.Core.Commands
         #region Explicit implementations
         bool ICommand.CanExecute(object parameter)
         {
-            return CanExecute();
+            return CanExecute((T)parameter);
         }
 
         void ICommand.Execute(object parameter)
         {
-            ExecuteAsync().FireAndForgetAsync();
+            ExecuteAsync((T)parameter).FireAndForgetAsync();
         }
         #endregion
     }

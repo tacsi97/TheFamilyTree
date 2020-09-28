@@ -17,9 +17,9 @@ namespace FamilyTree.Modules.FamilyTree.Repository
         public FakeRepository()
         {
             Trees = new ObservableCollection<Business.FamilyTree>();
-            Trees.Add(new Business.FamilyTree() { Name = "Tóth Család", People = new ObservableCollection<Person>() });
-            Trees.Add(new Business.FamilyTree() { Name = "Fodor Család", People = new ObservableCollection<Person>() });
-            Trees.Add(new Business.FamilyTree() { Name = "Láng Család", People = new ObservableCollection<Person>() });
+            Trees.Add(new Business.FamilyTree() { ID = 0, Name = "Tóth Család", People = new ObservableCollection<Person>() });
+            Trees.Add(new Business.FamilyTree() { ID = 1, Name = "Fodor Család", People = new ObservableCollection<Person>() });
+            Trees.Add(new Business.FamilyTree() { ID = 2, Name = "Láng Család", People = new ObservableCollection<Person>() });
         }
 
         public async Task CreateAsync(string uri, string content)
@@ -29,7 +29,17 @@ namespace FamilyTree.Modules.FamilyTree.Repository
 
         public async Task DeleteAsync(string uri, int id)
         {
-            await Task.Run(() => Trees.RemoveAt(id));
+            await Task.Run(() =>
+            {
+                foreach (var tree in Trees)
+                {
+                    if (tree.ID == id)
+                    {
+                        Trees.Remove(tree);
+                        break;
+                    }
+                }
+            });
         }
 
         public async Task<IEnumerable<Business.FamilyTree>> GetAllAsync(string uri)
@@ -51,8 +61,9 @@ namespace FamilyTree.Modules.FamilyTree.Repository
                 {
                     if(tree.ID == treeFrom.ID)
                     {
-                        tree.Name = treeFrom.Name;
-                        tree.People = treeFrom.People;
+                        treeFrom.Name = tree.Name;
+                        treeFrom.People = tree.People;
+                        break;
                     }
                 }
             });

@@ -1,7 +1,9 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.Commands;
+using FamilyTree.Modules.FamilyTree.PubSubEvents;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,24 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         #region Fields
 
         private readonly IAsyncRepository<Business.FamilyTree> _repository;
+        private readonly IEventAggregator _eventAggregator;
 
         #endregion
 
         #region Properties
 
         public ObservableCollection<Business.FamilyTree> Trees { get; set; }
+
+        private Business.FamilyTree _familyTree;
+        public Business.FamilyTree FamilyTree
+        {
+            get { return _familyTree; }
+            set
+            {
+                SetProperty(ref _familyTree, value);
+                _eventAggregator.GetEvent<SelectedTreeChanged>().Publish(_familyTree);
+            }
+        }
 
         #endregion
 
@@ -31,9 +45,10 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #endregion
 
-        public FamilyTreeListViewModel(IAsyncRepository<Business.FamilyTree> repository)
+        public FamilyTreeListViewModel(IAsyncRepository<Business.FamilyTree> repository, IEventAggregator eventAggregator)
         {
             _repository = repository;
+            _eventAggregator = eventAggregator;
 
             Trees = new ObservableCollection<Business.FamilyTree>();
 
