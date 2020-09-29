@@ -7,6 +7,11 @@ namespace FamilyTree.Business
 {
     public class BusinessBase : BindableBase
     {
-        public int ID { get; set; }
+        private int _id;
+        public int ID
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
     }
 }

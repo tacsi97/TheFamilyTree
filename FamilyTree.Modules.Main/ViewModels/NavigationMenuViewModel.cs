@@ -51,7 +51,7 @@ namespace FamilyTree.Modules.Main.ViewModels
             //The navigation path should match with the .xaml name
             MenuItems.Add(new NavigationItem() { Caption = "Főoldal", NavigationPath = "MainPage" });
             MenuItems.Add(new NavigationItem() { Caption = "Családfák", NavigationPath = "FamilyTreeListView" });
-            MenuItems.Add(new NavigationItem() { Caption = "Kijelentkezés", NavigationPath = "Logout" });
+            MenuItems.Add(new NavigationItem() { Caption = "Emberek(teszt miatt)", NavigationPath = "PeopleTabView" });
         }
 
         void ExecuteSelectCommand(NavigationItem navigationItem)

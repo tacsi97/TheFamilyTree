@@ -26,17 +26,6 @@
                         <TextBlock Text="{Binding People.Count}"
                                    Grid.Column="1"/>
                     </Grid>
-                    <!--<Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                    </Grid>-->
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
