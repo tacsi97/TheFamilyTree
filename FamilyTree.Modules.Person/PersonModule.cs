@@ -22,11 +22,7 @@ namespace FamilyTree.Modules.Person
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RegisterViewWithRegion(Core.RegionNames.ListView, typeof(PeopleListView));
-            
-            _regionManager.RegisterViewWithRegion(Core.RegionNames.ParentView, typeof(PeopleParentView));
-            
-            _regionManager.RegisterViewWithRegion(Core.RegionNames.FamilyView, typeof(PeopleAllView));
+
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
