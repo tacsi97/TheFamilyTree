@@ -22,8 +22,6 @@ namespace FamilyTree.Modules.Person
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(PeopleTabView));
-
             _regionManager.RegisterViewWithRegion(Core.RegionNames.ListView, typeof(PeopleListView));
             
             _regionManager.RegisterViewWithRegion(Core.RegionNames.ParentView, typeof(PeopleParentView));
@@ -36,8 +34,6 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(DialogNames.NewPersonDialog);
-           
-            containerRegistry.RegisterForNavigation<PeopleTabView, PeopleTabViewModel>();
         }
     }
 }
