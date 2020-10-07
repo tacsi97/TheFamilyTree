@@ -56,6 +56,7 @@ namespace FamilyTree.Modules.Main.ViewModels
 
         void ExecuteSelectCommand(NavigationItem navigationItem)
         {
+            // TODO: IsExpanded változóhoz legyen kötve a child objektum lista láthatósága
             _applicationCommand.NavigateCommand.Execute(navigationItem.NavigationPath);
         }
 
