@@ -5,9 +5,9 @@ namespace FamilyTree.Modules.Person.Views
     /// <summary>
     /// Interaction logic for PersonInfo
     /// </summary>
-    public partial class PersonInfo : UserControl
+    public partial class PersonInfoView : UserControl
     {
-        public PersonInfo()
+        public PersonInfoView()
         {
             InitializeComponent();
         }
