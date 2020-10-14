@@ -10,6 +10,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -93,6 +94,8 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public string Title => "Személy létrehozása";
 
+        public ObservableCollection<Business.Person> People { get; set; }
+
         #endregion
 
         public event Action<IDialogResult> RequestClose;
@@ -110,16 +113,18 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             try
             {
+                var person = new Business.Person()
+                {
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    DateOfBirth = DateOfBirth,
+                    DateOfDeath = DateOfDeath,
+                    Gender = Gender
+                };
+
                 await _repository.CreateAsync(
                     Uris.PersonURI,
-                    JsonConvert.SerializeObject(
-                        new Business.Person() { 
-                            FirstName = FirstName,
-                            LastName = LastName,
-                            DateOfBirth = DateOfBirth,
-                            DateOfDeath = DateOfDeath,
-                            Gender = Gender
-                        }));
+                    JsonConvert.SerializeObject(person));
             }
             catch (Exception e)
             {

@@ -17,17 +17,24 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
-        <Label Grid.Row="2" Grid.Column="0"/>
+        <Label Grid.Row="2" Grid.Column="0">
+            <Label.Content>
+                <MultiBinding StringFormat="{} {0} {1}">
+                    <Binding Path="FirstName"/>
+                    <Binding Path="LastName"/>
+                </MultiBinding>
+            </Label.Content>
+        </Label>
         <Label Grid.Row="3" Grid.Column="0"
-               Content="Nem"/>
+               Content="{Binding Gender}"/>
         <Label Grid.Row="4" Grid.Column="0"
-               Content="Kor"/>
+               Content="{Binding DateOfBirth}"/>
 
         <Label Grid.Row="0" Grid.Column="1"
             Content="Események"/>
         <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.RowSpan="4"
                       VerticalScrollBarVisibility="Auto">
-            <ListView >
+            <ListView>
 
             </ListView>
         </ScrollViewer>

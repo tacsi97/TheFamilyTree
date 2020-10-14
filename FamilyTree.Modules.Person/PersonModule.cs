@@ -1,4 +1,5 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Modules.Person.Core;
 using FamilyTree.Modules.Person.Repository;
 using FamilyTree.Modules.Person.ViewModels;
 using FamilyTree.Modules.Person.Views;
@@ -31,7 +32,7 @@ namespace FamilyTree.Modules.Person
 
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
 
-            containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(DialogNames.NewPersonDialog);
+            containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(PersonDialogNames.AddNewPersonDialog);
         }
     }
 }

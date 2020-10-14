@@ -13,7 +13,14 @@ namespace FamilyTree.Modules.Person.ViewModels
     {
         private readonly IAsyncRepository<Business.Person> _repository;
 
-        private Business.Person _person;
+        private Business.Person _person = new Business.Person()
+        {
+            FirstName = "Laci",
+            LastName = "Tóth",
+            DateOfBirth = DateTime.Parse("1997-12-01"),
+            Gender = Business.GenderType.Male
+        };
+
         public Business.Person Person
         {
             get { return _person; }
@@ -23,6 +30,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         public string Title => "Person info view";
 
         public event Action<IDialogResult> RequestClose;
+
+
 
         public PersonInfoViewModel(IAsyncRepository<Business.Person> repository)
         {
@@ -34,16 +43,16 @@ namespace FamilyTree.Modules.Person.ViewModels
             Person = parameters.GetValue<Business.Person>("person");
         }
 
+        public void OnDialogClosed()
+        {
+
+        }
+
         public void CloseDialog()
         {
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }
 
         public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
-        {
-
-        }
     }
 }
