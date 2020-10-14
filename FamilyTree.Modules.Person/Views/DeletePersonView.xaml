@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.DeletePersonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="Biztosan törli a kiválasztott személyt?"/>
+        <Button DockPanel.Dock="Left" Content="Igen" Command="{Binding DeleteCommand}"/>
+        <Button DockPanel.Dock="Right" Content="Nem" IsCancel="true"/>
+    </DockPanel>
+</UserControl>
