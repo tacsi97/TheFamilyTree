@@ -46,6 +46,9 @@ namespace FamilyTree.Modules.Person.Repository
                     LastName = "Liza",
                     DateOfBirth = new DateTime(2016, 6, 11)
                 });
+
+            // Mivel már megadtunk 3 személyt
+            id = 3;
         }
 
         public async Task CreateAsync(string uri, string content)
