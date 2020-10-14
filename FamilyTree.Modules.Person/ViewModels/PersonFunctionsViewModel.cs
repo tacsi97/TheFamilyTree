@@ -29,6 +29,9 @@ namespace FamilyTree.Modules.Person.ViewModels
             {
                 SetProperty(ref _selectedPerson, value);
                 AddPersonCommand.RaiseCanExecuteChanged();
+                ModifyPersonCommand.RaiseCanExecuteChanged();
+                ShowPersonCommand.RaiseCanExecuteChanged();
+                DeletePersonCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -37,9 +40,20 @@ namespace FamilyTree.Modules.Person.ViewModels
         #region Commands
 
         private DelegateCommand _addPersonCommand;
-
         public DelegateCommand AddPersonCommand =>
             _addPersonCommand ?? (_addPersonCommand = new DelegateCommand(ExecuteAddPersonCommand, CanExecuteAddPersonCommand));
+
+        private DelegateCommand _modifyPersonCommand;
+        public DelegateCommand ModifyPersonCommand =>
+            _modifyPersonCommand ?? (_modifyPersonCommand = new DelegateCommand(ExecuteModifyPersonCommand, CanExecuteModifyPersonCommand));
+
+        private DelegateCommand _showPersonCommand;
+        public DelegateCommand ShowPersonCommand =>
+            _showPersonCommand ?? (_showPersonCommand = new DelegateCommand(ExecuteShowPersonCommand, CanExecuteShowPersonCommand));
+
+        private DelegateCommand _deletePersonCommand;
+        public DelegateCommand DeletePersonCommand =>
+            _deletePersonCommand ?? (_deletePersonCommand = new DelegateCommand(ExecuteDeletePersonCommand, CanExecuteDeletePersonCommand));
 
         #endregion
 
@@ -51,13 +65,16 @@ namespace FamilyTree.Modules.Person.ViewModels
             _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Subscribe(SetPerson);
         }
 
+        #region AddPersonFunctions
+
         public void ExecuteAddPersonCommand()
         {
+            // TODO: ha már egyszer használva van a commandparameter, akkor azt kapja meg a függvény...
             var parameters = new DialogParameters();
             parameters.Add("SelectedPerson", SelectedPerson);
 
             // TODO: Nem itt végzi el a műveletet, hanem a dialognál, hogy tudjon jelezni időben, ha valami nem sikerült, majd ha végzett visszaadja az embert, amit hozzáadunk a listához, így nem kell mindenkit lekérdezni, plusz az observable collection is működik.
-            _dialogService.Show(PersonDialogNames.AddNewPersonDialog, parameters, r =>
+            _dialogService.ShowDialog(PersonDialogNames.AddNewPersonDialog, parameters, r =>
             {
                 if (r.Result != ButtonResult.OK)
                     return;
@@ -71,6 +88,82 @@ namespace FamilyTree.Modules.Person.ViewModels
 
             return true;
         }
+
+        #endregion
+
+        #region ModifyPersonFunctions
+
+        public void ExecuteModifyPersonCommand()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("SelectedPerson", SelectedPerson);
+
+            _dialogService.ShowDialog(PersonDialogNames.ModifyPersonDialog, parameters, r =>
+            {
+                if (r.Result != ButtonResult.OK)
+                    return;
+            });
+        }
+
+        public bool CanExecuteModifyPersonCommand()
+        {
+            if (SelectedPerson == null)
+                return false;
+
+            return true;
+        }
+
+        #endregion
+
+        #region ShowPersonFunctions
+
+        public void ExecuteShowPersonCommand()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("SelectedPerson", SelectedPerson);
+
+            // TODO: Nem itt végzi el a műveletet, hanem a dialognál, hogy tudjon jelezni időben, ha valami nem sikerült, majd ha végzett visszaadja az embert, amit hozzáadunk a listához, így nem kell mindenkit lekérdezni, plusz az observable collection is működik.
+            _dialogService.ShowDialog(PersonDialogNames.ShowPersonDialog, parameters, r =>
+            {
+                if (r.Result != ButtonResult.OK)
+                    return;
+            });
+        }
+
+        public bool CanExecuteShowPersonCommand()
+        {
+            if (SelectedPerson == null)
+                return false;
+
+            return true;
+        }
+
+        #endregion
+
+        #region DeletePersonFunctions
+
+
+        void ExecuteDeletePersonCommand()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("SelectedPerson", SelectedPerson);
+
+            _dialogService.ShowDialog(PersonDialogNames.DeletePersonDialog, parameters, r =>
+            {
+                if (r.Result != ButtonResult.OK)
+                    return;
+            });
+        }
+
+        bool CanExecuteDeletePersonCommand()
+        {
+            if (SelectedPerson == null)
+                return false;
+
+            return true;
+        }
+
+        #endregion
 
         public void SetPerson(Business.Person person)
         {
