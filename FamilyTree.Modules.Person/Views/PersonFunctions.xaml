@@ -5,8 +5,9 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <StackPanel Orientation="Horizontal">
-        <Button Content="Új" Command="{Binding AddPersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
-        <Button Content="Módosít"/>
-        <Button Content="Töröl"/>
+        <Button Width="100" Height="75" Content="Új" Command="{Binding AddPersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
+        <Button Width="100" Height="75" Content="Módosít" Command="{Binding ModifyPersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
+        <Button Width="100" Height="75" Content="Megtekint" Command="{Binding ShowPersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
+        <Button Width="100" Height="75" Content="Töröl" Command="{Binding DeletePersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
     </StackPanel>
 </UserControl>
