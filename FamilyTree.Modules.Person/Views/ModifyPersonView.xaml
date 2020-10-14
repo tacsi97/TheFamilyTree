@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.ModifyPersonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
+             xmlns:business="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
+             xmlns:prism="http://prismlibrary.com/"
+             Width="200" Height="300" Background="White"          
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <converters:GenderToBoolConverter x:Key="btg"/>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Content="Személy létrehozása"
+               FontSize="12" FontWeight="Bold"/>
+        <Label Grid.Row="1" 
+               Content="Vezetéknév"
+               FontSize="12"/>
+        <Label Grid.Row="3" 
+               Content="Utónév"
+               FontSize="12"/>
+        <Label Grid.Row="5" 
+               Content="Születési idő"
+               FontSize="12"/>
+        <Label Grid.Row="7" 
+               Content="Halálozási idő"
+               FontSize="12"/>
+
+        <TextBox Grid.Row="2"
+            Text="{Binding LastName, Mode=TwoWay}"/>
+        <TextBox Grid.Row="4"
+            Text="{Binding FirstName, Mode=TwoWay}"/>
+        <DatePicker Grid.Row="6"
+                    SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"/>
+        <DatePicker Grid.Row="8"
+                    SelectedDate="{Binding DateOfDeath, Mode=TwoWay}"/>
+
+        <StackPanel Grid.Row="9" Orientation="Horizontal">
+            <RadioButton GroupName="gender" IsChecked="{Binding Gender, Mode=TwoWay, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
+            <RadioButton GroupName="gender" IsChecked="{Binding Gender, Mode=TwoWay, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
+        </StackPanel>
+        <Button Grid.Row="10"
+            Content="Mentés"
+                Command="{Binding AsyncCommand}"/>
+    </Grid>
+</UserControl>
