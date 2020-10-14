@@ -37,6 +37,13 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Properties
 
+        private int _id;
+        public int ID
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
+
         private string _firstName;
         public string FirstName
         {
@@ -115,6 +122,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             {
                 var person = new Business.Person()
                 {
+                    ID = ID,
                     FirstName = FirstName,
                     LastName = LastName,
                     DateOfBirth = DateOfBirth,
@@ -125,13 +133,13 @@ namespace FamilyTree.Modules.Person.ViewModels
                 await _repository.CreateAsync(
                     Uris.PersonURI,
                     JsonConvert.SerializeObject(person));
+
+                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }
             catch (Exception e)
             {
                 // TODO: exception handling
             }
-            var result = new DialogResult(ButtonResult.OK);
-            RequestClose(result);
         }
 
         /// <summary>
