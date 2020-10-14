@@ -11,16 +11,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 {
     public class PersonInfoViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncRepository<Business.Person> _repository;
-
-        private Business.Person _person = new Business.Person()
-        {
-            FirstName = "Laci",
-            LastName = "Tóth",
-            DateOfBirth = DateTime.Parse("1997-12-01"),
-            Gender = Business.GenderType.Male
-        };
-
+        private Business.Person _person;
         public Business.Person Person
         {
             get { return _person; }
@@ -33,14 +24,14 @@ namespace FamilyTree.Modules.Person.ViewModels
 
 
 
-        public PersonInfoViewModel(IAsyncRepository<Business.Person> repository)
+        public PersonInfoViewModel()
         {
-            _repository = repository;
+
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Person = parameters.GetValue<Business.Person>("person");
+            Person = parameters.GetValue<Business.Person>("SelectedPerson");
         }
 
         public void OnDialogClosed()
