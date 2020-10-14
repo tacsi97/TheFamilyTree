@@ -29,10 +29,15 @@ namespace FamilyTree.Modules.Person
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<PeopleListView, PeopleListViewModel>();
+            containerRegistry.RegisterForNavigation<PeopleAllView, PeopleAllViewModel>();
+            containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
 
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(PersonDialogNames.AddNewPersonDialog);
+            containerRegistry.RegisterDialog<ModifyPersonView, ModifyPersonViewModel>(PersonDialogNames.ModifyPersonDialog);
+            containerRegistry.RegisterDialog<PersonInfoView, PersonInfoViewModel>(PersonDialogNames.ShowPersonDialog);
+            containerRegistry.RegisterDialog<DeletePersonView, DeletePersonViewModel>(PersonDialogNames.DeletePersonDialog);
         }
     }
 }
