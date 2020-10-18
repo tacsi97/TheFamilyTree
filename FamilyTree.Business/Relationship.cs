@@ -6,10 +6,25 @@ namespace FamilyTree.Business
 {
     public class Relationship : BusinessBase
     {
-        public Person Partner { get; set; }
+        private Person _partner;
+        public Person Partner
+        {
+            get { return _partner; }
+            set { SetProperty(ref _partner, value); }
+        }
 
-        public DateTime From { get; set; }
+        private DateTime _from;
+        public DateTime From
+        {
+            get { return _from; }
+            set { SetProperty(ref _from, value); }
+        }
 
-        public DateTime To { get; set; }
+        private DateTime _to;
+        public DateTime To
+        {
+            get { return _to; }
+            set { SetProperty(ref _to, value); }
+        }
     }
 }
