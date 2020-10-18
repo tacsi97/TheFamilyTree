@@ -36,6 +36,12 @@ namespace FamilyTree.Modules.Person.ViewModels
         }
 
         #region Properties
+        private Business.Person _selectedPerson;
+        public Business.Person SelectedPerson
+        {
+            get { return _selectedPerson; }
+            set { SetProperty(ref _selectedPerson, value); }
+        }
 
         private int _id;
         public int ID
@@ -101,8 +107,6 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public string Title => "Személy létrehozása";
 
-        public ObservableCollection<Business.Person> People { get; set; }
-
         #endregion
 
         public event Action<IDialogResult> RequestClose;
@@ -166,7 +170,10 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            if (!parameters.TryGetValue("SelectedPerson", out Business.Person person))
+                throw new ArgumentException("Argument not found in the paramters", nameof(person));
 
+            SelectedPerson = person;
         }
     }
 }
