@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,6 +8,7 @@ namespace FamilyTree.Business
     public class Relationship : BusinessBase
     {
         private Person _partner;
+        [JsonIgnore]
         public Person Partner
         {
             get { return _partner; }

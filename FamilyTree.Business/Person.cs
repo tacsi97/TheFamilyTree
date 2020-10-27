@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace FamilyTree.Business
 {
@@ -44,6 +45,7 @@ namespace FamilyTree.Business
         }
 
         private Person _father;
+        [JsonIgnore]
         public Person Father
         {
             get { return _father; }
@@ -51,6 +53,7 @@ namespace FamilyTree.Business
         }
 
         private Person _mother;
+        [JsonIgnore]
         public Person Mother
         {
             get { return _mother; }
@@ -59,6 +62,7 @@ namespace FamilyTree.Business
 
         public ObservableCollection<Person> Children { get; set; }
 
+        [JsonIgnore]
         public ObservableCollection<Relationship> Partners { get; set; }
 
         public Person()
