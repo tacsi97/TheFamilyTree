@@ -60,13 +60,6 @@ namespace FamilyTree.Business
             set { SetProperty(ref _mother, value); }
         }
 
-        private FamilyTree _familyTree;
-        public FamilyTree FamilyTree
-        {
-            get { return _familyTree; }
-            set { SetProperty(ref _familyTree, value); }
-        }
-
         public ObservableCollection<Person> Children { get; set; }
 
         [JsonIgnore]

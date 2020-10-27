@@ -1,14 +1,19 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 
 namespace FamilyTree.Business
 {
     public class Relationship : BusinessBase
     {
-        public ObservableCollection<Business.Person> Members { get; set; }
+        private Person _partner;
+        [JsonIgnore]
+        public Person Partner
+        {
+            get { return _partner; }
+            set { SetProperty(ref _partner, value); }
+        }
 
         private DateTime _from;
         public DateTime From
