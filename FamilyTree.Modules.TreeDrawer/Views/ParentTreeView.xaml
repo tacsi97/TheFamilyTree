@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="FamilyTree.Modules.TreeDrawer.Views.ParentTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"            
+             xmlns:model="clr-namespace:FamilyTree.Modules.TreeDrawer.Model"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Szülők"/>
+        <Button Content="Frissít" Command="{Binding GetRelationships}"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding TreeElements}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Background="Aqua" Width="3000" Height="2000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type model:LineTreeElement}">
+                        <Line X1="{Binding LeftCoordinate}"
+                              Y1="{Binding TopCoordinate}"
+                              X2="{Binding RigthCoordinate}"
+                              Y2="{Binding BottomCoordinate}"
+                              Stroke="Black"
+                              StrokeThickness="2"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:NodeTreeElement}">
+                        <StackPanel Orientation="Vertical" Background="White">
+                            <StackPanel.RenderTransform>
+                                <TranslateTransform X="{Binding LeftCoordinate, Mode=TwoWay}" Y="{Binding TopCoordinate, Mode=TwoWay}"/>
+                            </StackPanel.RenderTransform>
+                            <Image Width="{Binding TObject.Width}" Height="{Binding TObject.Height}"/>
+                            <TextBlock TextAlignment="Center">
+                                <TextBlock.Text>
+                                    <!--Valamiért csak ezzel működik-->
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="TObject.Person.FirstName"/>
+                                        <Binding Path="TObject.Person.LastName"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+            </ItemsControl>
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>
