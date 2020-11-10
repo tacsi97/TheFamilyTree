@@ -7,6 +7,6 @@ namespace FamilyTree.Core.ApplicationCommands
 {
     public class ApplicationCommand : IApplicationCommand
     {
-        public CompositeCommand NavigateCommand { get; } = new CompositeCommand();
+        public CompositeCommand CompositeCommand { get; } = new CompositeCommand();
     }
 }

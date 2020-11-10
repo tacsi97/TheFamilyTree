@@ -7,6 +7,6 @@ namespace FamilyTree.Core.ApplicationCommands
 {
     public interface IApplicationCommand
     {
-        CompositeCommand NavigateCommand { get; }
+        CompositeCommand CompositeCommand { get; }
     }
 }
