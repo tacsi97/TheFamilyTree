@@ -9,5 +9,7 @@
         <Button Width="100" Height="75" Content="Módosít" Command="{Binding ModifyPersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
         <Button Width="100" Height="75" Content="Megtekint" Command="{Binding ShowPersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
         <Button Width="100" Height="75" Content="Töröl" Command="{Binding DeletePersonCommand}" CommandParameter="{Binding SelectedPerson}"/>
+        <Button Width="100" Height="75" Content="Kapcsolatok" Command="{Binding NavigateCommand}"/>
+        <Button Width="100" Height="75" Content="Nézet váltás" Command="{Binding NavigateCommand}"/>
     </StackPanel>
 </UserControl>
