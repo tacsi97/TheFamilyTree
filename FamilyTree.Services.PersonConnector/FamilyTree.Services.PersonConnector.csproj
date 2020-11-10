@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
+    <ProjectReference Include="..\FamilyTree.Modules.Relationship\FamilyTree.Modules.Relationship.csproj" />
+  </ItemGroup>
+
 </Project>
