@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"       
              xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
              xmlns:business="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
+             xmlns:core="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
              prism:ViewModelLocator.AutoWireViewModel="True"
              Width="600" Height="600" Background="White">
     <UserControl.Resources>
@@ -44,22 +45,14 @@
 
             <StackPanel Grid.Row="4" Orientation="Horizontal"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-                <RadioButton GroupName="gender" IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
-                <RadioButton GroupName="gender" IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
+                <RadioButton GroupName="NewPersonGender" IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
+                <RadioButton GroupName="NewPersonGender" IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
             </StackPanel>
         </Grid>
 
-        <StackPanel Orientation="Vertical"
-                    VerticalAlignment="Center"
-                    Grid.Column="1" Grid.Row="1">
-            <TextBlock Text="Kapcsolat típusa"/>
-            <ComboBox />
-            <TextBlock Text="Kezdete"/>
-            <DatePicker/>
-            <TextBlock Text="Vége"/>
-            <DatePicker/>
-        </StackPanel>
-        
+        <ContentControl Grid.Row="1" Grid.Column="1"
+            prism:RegionManager.RegionName="{x:Static core:RegionNames.RelationshipRegion}"/>
+
         <Grid Margin="10" Grid.Row="2" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -80,14 +73,14 @@
 
             <StackPanel Grid.Row="4" Orientation="Horizontal"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-                <RadioButton GroupName="gender" IsEnabled="False" IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
-                <RadioButton GroupName="gender" IsEnabled="False" IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
+                <RadioButton GroupName="PartnerGender" IsEnabled="False" IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
+                <RadioButton GroupName="PartnerGender" IsEnabled="False" IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
             </StackPanel>
         </Grid>
         <Button Grid.Row="3" Grid.ColumnSpan="5" 
                 Content="Mentés"
                 Margin="10"
-                Command="{Binding SubmitNewPersonCommand}"/>
+                Command="{Binding ApplicationCommand.CompositeCommand}"/>
 
         <Grid Margin="10" Grid.Column="1" Grid.Row="2">
             <Grid.RowDefinitions>
