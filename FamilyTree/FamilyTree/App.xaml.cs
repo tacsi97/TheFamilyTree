@@ -14,6 +14,7 @@ using FamilyTree.Modules.Person;
 using FamilyTree.Modules.FamilyTree;
 using FamilyTree.Business;
 using FamilyTree.Modules.Relationship;
+using FamilyTree.Modules.TreeDrawer;
 
 namespace FamilyTree
 {
@@ -39,9 +40,10 @@ namespace FamilyTree
         {
             //moduleCatalog.AddModule<ModuleNameModule>();
             moduleCatalog.AddModule<MainModule>();
+            moduleCatalog.AddModule<RelationshipModule>();
             moduleCatalog.AddModule<PersonModule>();
             moduleCatalog.AddModule<FamilyTreeModule>();
-            moduleCatalog.AddModule<RelationshipModule>();
+            moduleCatalog.AddModule<TreeDrawerModule>();
         }
 
         protected override void ConfigureDefaultRegionBehaviors(IRegionBehaviorFactory regionBehaviors)
