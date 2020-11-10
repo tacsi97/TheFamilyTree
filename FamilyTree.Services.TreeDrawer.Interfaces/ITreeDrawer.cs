@@ -1,12 +1,11 @@
-﻿using FamilyTree.Modules.TreeDrawer.Model;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace FamilyTree.Services.TreeDrawer.Interfaces
 {
     public interface ITreeDrawer
     {
-        void Draw(ICollection<ITreeElement> treeElements);
+
     }
 }
