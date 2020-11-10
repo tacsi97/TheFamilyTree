@@ -11,4 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\FamilyTree.Business\FamilyTree.Business.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Adapters\" />
+  </ItemGroup>
 </Project>
