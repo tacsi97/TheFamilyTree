@@ -43,7 +43,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _firstName, value);
-                AsyncCommand.RaiseCanExecuteChanged();
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -54,7 +54,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _lastName, value);
-                AsyncCommand.RaiseCanExecuteChanged();
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -65,7 +65,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _dateOfBirth, value);
-                AsyncCommand.RaiseCanExecuteChanged();
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -76,7 +76,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _dateOfDeath, value);
-                AsyncCommand.RaiseCanExecuteChanged();
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -87,7 +87,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _gender, value);
-                AsyncCommand.RaiseCanExecuteChanged();
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
