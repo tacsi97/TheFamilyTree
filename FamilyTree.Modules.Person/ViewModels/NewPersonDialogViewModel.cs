@@ -1,11 +1,14 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Core;
+using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Core.Commands;
 using FamilyTree.Core.Extensions;
+using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
@@ -20,6 +23,9 @@ namespace FamilyTree.Modules.Person.ViewModels
     public class NewPersonDialogViewModel : BindableBase, IDialogAware
     {
         private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IEventAggregator _eventAggregator;
+
+        #region Commands
 
         private SubmitNewPersonCommand _submitNewPersonCommand;
         public SubmitNewPersonCommand SubmitNewPersonCommand
@@ -35,6 +41,15 @@ namespace FamilyTree.Modules.Person.ViewModels
             set { SetProperty(ref _asyncCommand, value); }
         }
 
+        private IUpload _applicationCommand;
+        public IUpload ApplicationCommand
+        {
+            get { return _applicationCommand; }
+            set { SetProperty(ref _applicationCommand, value); }
+        }
+
+        #endregion
+
         #region Properties
         private Business.Person _selectedPerson;
         public Business.Person SelectedPerson
@@ -43,11 +58,19 @@ namespace FamilyTree.Modules.Person.ViewModels
             set { SetProperty(ref _selectedPerson, value); }
         }
 
+        private Business.Person _newPerson = new Business.Person();
+        public Business.Person NewPerson
+        {
+            get { return _newPerson; }
+            set { SetProperty(ref _newPerson, value); }
+        }
+
         private int _id;
         public int ID
         {
             get { return _id; }
-            set { SetProperty(ref _id, value); }
+            set { SetProperty(ref _id, value);
+            }
         }
 
         private string _firstName;
@@ -57,7 +80,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _firstName, value);
-                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                NewPerson.FirstName = value;
             }
         }
 
@@ -68,7 +92,11 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _lastName, value);
-                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                NewPerson.LastName = value;
+                // Ennek itt kell lennie, mivel a NewPersonDialogViewModel konstruktora, hamarabb lefut, mint a SetRelationShipViewModel-é
+                _eventAggregator.GetEvent<CreateNewPersonEvent>().Publish(NewPerson);
+                _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Publish(SelectedPerson);
             }
         }
 
@@ -79,7 +107,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _dateOfBirth, value);
-                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                NewPerson.DateOfBirth = value;
             }
         }
 
@@ -90,7 +119,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _dateOfDeath, value);
-                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                NewPerson.DateOfDeath = value;
             }
         }
 
@@ -101,7 +131,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _gender, value);
-                SubmitNewPersonCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
+                NewPerson.Gender = value;
             }
         }
 
@@ -111,32 +142,36 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public NewPersonDialogViewModel(IAsyncRepository<Business.Person> repository)
+        public NewPersonDialogViewModel(IAsyncRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand)
         {
             _repository = repository;
+            _eventAggregator = eventAggregator;
+
+            ApplicationCommand = uploadCommand;
+
+            NewPerson = new Business.Person();
 
             AsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);
 
             SubmitNewPersonCommand = new SubmitNewPersonCommand(this);
+
+            // TODO: Refactor...
+            // Nem kell az IUpload, mert ApplicationCommand.<Command_name> alatt lehet elérni a paracsokat
+            // CompositeCommand név helyett egy másikat kitalálni
+            // Ehhez nem kell CanExecute, sem Execute, mivel a regisztrált Command-okon iterál végig
+            // Modulokban is kijavítani a típus regisztrációt, singletont stb
+            ApplicationCommand.CompositeCommand.RegisterCommand(AsyncCommand);
         }
 
         public async Task Submit()
         {
             try
             {
-                var person = new Business.Person()
-                {
-                    ID = ID,
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    DateOfBirth = DateOfBirth,
-                    DateOfDeath = DateOfDeath,
-                    Gender = Gender
-                };
-
                 await _repository.CreateAsync(
                     Uris.PersonURI,
-                    JsonConvert.SerializeObject(person));
+                    JsonConvert.SerializeObject(NewPerson));
+
+                //_uploadCommand.CompositeCommand.UnregisterCommand(SubmitNewPersonCommand);
 
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }
