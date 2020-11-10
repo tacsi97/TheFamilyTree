@@ -1,6 +1,7 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Modules.FamilyTree.Repository;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -47,9 +48,8 @@ namespace FamilyTree.ViewModels
             _regionManager = regionManager;
             _application = application;
             _dialogService = dialogService;
-            _application.NavigateCommand.RegisterCommand(NavigationCommand);
+            _application.CompositeCommand.RegisterCommand(NavigationCommand);
 
-            UselessCommand = new UselessCommand(this);
         }
 
         void ExecuteNavigationCommand(string navigationPath)
