@@ -28,7 +28,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             set
             {
                 SetProperty(ref _familyTree, value);
-                ModifyCommand.RaiseCanExecuteChanged();
+                ModifyCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
