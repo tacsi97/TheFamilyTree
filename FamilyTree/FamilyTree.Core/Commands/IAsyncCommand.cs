@@ -10,6 +10,6 @@ namespace FamilyTree.Core.Commands
     {
         Task ExecuteAsync();
         bool CanExecute();
-        void RaiseCanExecuteChanged();
+        void RaiseCanExecuteChanged(object sender, EventArgs eventArgs);
     }
 }

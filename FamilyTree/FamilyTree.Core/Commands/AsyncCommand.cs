@@ -42,23 +42,23 @@ namespace FamilyTree.Core.Commands
                     _isExecuting = false;
                 }
             }
-
-            RaiseCanExecuteChanged();
         }
 
-        public void RaiseCanExecuteChanged()
+        public void RaiseCanExecuteChanged(object sender, EventArgs eventArgs)
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(sender, eventArgs);
         }
 
         #region Explicit implementations
         bool ICommand.CanExecute(object parameter)
         {
+            _ = parameter;
             return CanExecute();
         }
 
         void ICommand.Execute(object parameter)
         {
+            _ = parameter;
             ExecuteAsync().FireAndForgetAsync();
         }
         #endregion
