@@ -1,8 +1,12 @@
-﻿using FamilyTree.Core.PubSubEvents;
+﻿using FamilyTree.Core;
+using FamilyTree.Core.ApplicationCommands;
+using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Core;
+using FamilyTree.Modules.Person.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -16,6 +20,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IRegionManager _regionManager;
 
         #endregion
 
@@ -32,6 +37,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                 ModifyPersonCommand.RaiseCanExecuteChanged();
                 ShowPersonCommand.RaiseCanExecuteChanged();
                 DeletePersonCommand.RaiseCanExecuteChanged();
+                NavigateCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -55,12 +61,17 @@ namespace FamilyTree.Modules.Person.ViewModels
         public DelegateCommand DeletePersonCommand =>
             _deletePersonCommand ?? (_deletePersonCommand = new DelegateCommand(ExecuteDeletePersonCommand, CanExecuteDeletePersonCommand));
 
+        private DelegateCommand _navigateCommand;
+        public DelegateCommand NavigateCommand =>
+            _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigateCommand, CanExecuteNavigateCommand));
+
         #endregion
 
-        public PersonFunctionsViewModel(IDialogService dialogService, IEventAggregator eventAggregator)
+        public PersonFunctionsViewModel(IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
 
             _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Subscribe(SetPerson);
         }
@@ -161,6 +172,24 @@ namespace FamilyTree.Modules.Person.ViewModels
                 return false;
 
             return true;
+        }
+
+        #endregion
+
+        #region RelationshipFunctions
+
+        public void ExecuteNavigateCommand()
+        {
+            //TODO: ez működik, a ListRelationshipView-hoz kell egy attribute
+            var navParams = new NavigationParameters();
+            navParams.Add("SelectedPerson", SelectedPerson);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListRelationshipView", navParams);
+        }
+
+        public bool CanExecuteNavigateCommand()
+        {
+            return SelectedPerson != null;
         }
 
         #endregion
