@@ -2,8 +2,10 @@
 using FamilyTree.Modules.FamilyTree.ViewModels;
 using FamilyTree.Services.Repository.Interfaces;
 using Moq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Text;
 using Xunit;
 
@@ -37,5 +39,6 @@ namespace FamilyTree.Modules.FamilyTree.Tests.ViewModels
 
             Assert.True(vm.SubmitCanExecute());
         }
+
     }
 }
