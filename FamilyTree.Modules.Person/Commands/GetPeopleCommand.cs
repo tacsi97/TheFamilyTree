@@ -18,6 +18,7 @@ namespace FamilyTree.Modules.Person.Commands
         public override void Execute(object parameter)
         {
             ViewModel.ExecuteGetPeopleCommand().FireAndForgetAsync();
+            Console.WriteLine("Hello");
         }
     }
 }
