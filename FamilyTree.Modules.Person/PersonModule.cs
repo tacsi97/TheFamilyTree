@@ -1,4 +1,5 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Modules.Person.Repository;
 using FamilyTree.Modules.Person.ViewModels;
@@ -33,6 +34,7 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
 
             containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
+            containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(PersonDialogNames.AddNewPersonDialog);
             containerRegistry.RegisterDialog<ModifyPersonView, ModifyPersonViewModel>(PersonDialogNames.ModifyPersonDialog);
