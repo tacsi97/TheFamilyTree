@@ -7,5 +7,6 @@
         <Button Width="100" Height="75" Content="Új" Command="{Binding CreateTreeCommand}"/>
         <Button Width="100" Height="75" Content="Módosít" Command="{Binding ModifyTreeCommand}" CommandParameter="{Binding SelectedTree}"/>
         <Button Width="100" Height="75" Content="Töröl" Command="{Binding DeleteTreeCommand}"/>
+        <Button Width="100" Height="75" Content="Megtekint" Command="{Binding NavigateCommand}" />
     </StackPanel>
 </UserControl>
