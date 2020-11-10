@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="FamilyTree.Modules.Relationship.Views.SetRelationShipView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Kapcsolat típusa"/>
+        <!-- TODO: kitalálni, hogy az elkülönített részek hogy kapják meg a szükséges információt  -->
+        <ComboBox ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
+        <TextBlock Text="Kezdete"/>
+        <DatePicker SelectedDate="{Binding From}" />
+        <TextBlock Text="Vége"/>
+        <DatePicker SelectedDate="{Binding To}" />
+    </StackPanel>
+</UserControl>
