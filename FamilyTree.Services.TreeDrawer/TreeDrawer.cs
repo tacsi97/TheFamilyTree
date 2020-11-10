@@ -1,12 +1,13 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Modules.Relationship.Core;
+using FamilyTree.Services.TreeDrawer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FamilyTree.Services.TreeDrawer
 {
-    public class TreeDrawer
+    public class TreeDrawer : ITreeDrawer
     {
         private readonly ICollection<Node> _nodes;
 
@@ -149,7 +150,7 @@ namespace FamilyTree.Services.TreeDrawer
                 return null;
         }
 
-        private void SetParentPosition(Node node, double minX)
+        public void SetParentPosition(Node node, double minX)
         {
             var fatherNode = GetNode(node.Person.Father);
             var motherNode = GetNode(node.Person.Mother);
