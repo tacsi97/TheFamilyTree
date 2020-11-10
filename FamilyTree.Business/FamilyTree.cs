@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -14,6 +15,7 @@ namespace FamilyTree.Business
             set { SetProperty(ref _name, value); }
         }
 
+        [JsonIgnore]
         public ObservableCollection<Person> People { get; set; }
     }
 }

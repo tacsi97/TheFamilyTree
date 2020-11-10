@@ -44,6 +44,13 @@ namespace FamilyTree.Business
             set { SetProperty(ref _gender, value); }
         }
 
+        private FamilyTree _familyTree;
+        public FamilyTree FamilyTree
+        {
+            get { return _familyTree; }
+            set { SetProperty(ref _familyTree, value); }
+        }
+
         private Person _father;
         [JsonIgnore]
         public Person Father
@@ -60,6 +67,7 @@ namespace FamilyTree.Business
             set { SetProperty(ref _mother, value); }
         }
 
+        [JsonIgnore]
         public ObservableCollection<Person> Children { get; set; }
 
         [JsonIgnore]
