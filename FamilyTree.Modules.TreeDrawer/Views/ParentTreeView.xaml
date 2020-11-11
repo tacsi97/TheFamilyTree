@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"            
              xmlns:model="clr-namespace:FamilyTree.Modules.TreeDrawer.Model"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Vertical">
+    <StackPanel x:Name="stackPanel" Orientation="Vertical">
         <TextBlock Text="Szülők"/>
         <Button Content="Frissít" Command="{Binding GetRelationships}"/>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -26,21 +26,24 @@
                               StrokeThickness="2"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:NodeTreeElement}">
-                        <StackPanel Orientation="Vertical" Background="White">
-                            <StackPanel.RenderTransform>
+                        <Button Command="{Binding DataContext.SelectPersonCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
+                                CommandParameter="{Binding TObject.Person}">
+                            <Button.RenderTransform>
                                 <TranslateTransform X="{Binding LeftCoordinate, Mode=TwoWay}" Y="{Binding TopCoordinate, Mode=TwoWay}"/>
-                            </StackPanel.RenderTransform>
-                            <Image Width="{Binding TObject.Width}" Height="{Binding TObject.Height}"/>
-                            <TextBlock TextAlignment="Center">
-                                <TextBlock.Text>
-                                    <!--Valamiért csak ezzel működik-->
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="TObject.Person.FirstName"/>
-                                        <Binding Path="TObject.Person.LastName"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
+                            </Button.RenderTransform>
+                            <StackPanel Orientation="Vertical" Background="White">
+                                <Image Width="{Binding TObject.Width}" Height="{Binding TObject.Height}"/>
+                                <TextBlock TextAlignment="Center">
+                                    <TextBlock.Text>
+                                        <!--Valamiért csak ezzel működik-->
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="TObject.Person.FirstName"/>
+                                            <Binding Path="TObject.Person.LastName"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.Resources>
             </ItemsControl>

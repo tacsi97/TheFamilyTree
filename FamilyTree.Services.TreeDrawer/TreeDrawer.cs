@@ -9,17 +9,15 @@ namespace FamilyTree.Services.TreeDrawer
 {
     public class TreeDrawer : ITreeDrawer
     {
-        private readonly ICollection<Node> _nodes;
+        public ICollection<Node> Nodes { get; set; }
 
-        public double HorizontalSpace { get; set; }
+        public double HorizontalSpace { get => 20d; }
 
-        public double VerticalSpace { get; set; }
+        public double VerticalSpace { get => 20d; }
 
-        public TreeDrawer(ICollection<Node> nodes)
+        public TreeDrawer()
         {
-            _nodes = nodes;
-            HorizontalSpace = 20d;
-            VerticalSpace = 20d;
+            Nodes = new List<Node>();
         }
 
         public ICollection<Node> ArrangeUpperTree(Node node)
@@ -57,7 +55,7 @@ namespace FamilyTree.Services.TreeDrawer
                 SetParentPosition(node, minX);
                 checkedNodes.Add(node);
             }
-            foreach (var personNode in _nodes)
+            foreach (var personNode in Nodes)
             {
                 personNode.IsChecked = false;
             }
@@ -212,16 +210,16 @@ namespace FamilyTree.Services.TreeDrawer
 
         public Node GetNode(Business.Person person)
         {
-            return _nodes.FirstOrDefault((node) => node.Person == person);
+            return Nodes.FirstOrDefault((node) => node.Person == person);
         }
 
-        public IEnumerable<Line> Createlines()
+        public ICollection<Line> Createlines()
         {
             var lines = new List<Line>();
 
-            foreach (var node in _nodes)
+            foreach (var node in Nodes)
             {
-                foreach (var innerNode in _nodes)
+                foreach (var innerNode in Nodes)
                 {
                     Line line;
                     if (!innerNode.Equals(node))
@@ -313,7 +311,7 @@ namespace FamilyTree.Services.TreeDrawer
                             || relationship.PersonTo.Equals(innerNode.Person))
                         ))
                         {
-                            var between = _nodes.Where(
+                            var between = Nodes.Where(
                                     member => (member.TopCoordinate == innerNode.TopCoordinate
                                     && ((node.LeftCoordinate < member.LeftCoordinate && member.LeftCoordinate < innerNode.LeftCoordinate)
                                     || (innerNode.LeftCoordinate < member.LeftCoordinate && member.LeftCoordinate < node.LeftCoordinate))
@@ -348,6 +346,16 @@ namespace FamilyTree.Services.TreeDrawer
                 }
             }
             return lines;
+        }
+
+        public ICollection<Node> GetNodes()
+        {
+            return Nodes;
+        }
+
+        public void SetNodes(ICollection<Node> nodes)
+        {
+            Nodes = nodes;
         }
     }
 }

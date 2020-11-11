@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>FamilyTree.Modules.TreeDrawer</AssemblyName>
   </PropertyGroup>
@@ -11,7 +11,11 @@
     <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
     <ProjectReference Include="..\FamilyTree.Modules.Person\FamilyTree.Modules.Person.csproj" />
     <ProjectReference Include="..\FamilyTree.Modules.Relationship\FamilyTree.Modules.Relationship.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.PersonConnector.Interfaces\FamilyTree.Services.PersonConnector.Interfaces.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.PersonConnector\FamilyTree.Services.PersonConnector.csproj" />
     <ProjectReference Include="..\FamilyTree.Services.Repository\FamilyTree.Services.Repository.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.TreeDrawer.Interfaces\FamilyTree.Services.TreeDrawer.Interfaces.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.TreeDrawer\FamilyTree.Services.TreeDrawer.csproj" />
     <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
   </ItemGroup>
 </Project>

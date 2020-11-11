@@ -1,11 +1,12 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Modules.Relationship.Core;
+using FamilyTree.Services.PersonConnector.Interfaces;
 using System;
 using System.Collections.Generic;
 
 namespace FamilyTree.Services.PersonConnector
 {
-    public class PersonConnector
+    public class PersonConnector : IPersonConnector
     {
         public ICollection<Business.Person> ConnectPeople(IEnumerable<Business.Relationship> relationships)
         {

@@ -7,9 +7,9 @@ namespace FamilyTree.Services.TreeDrawer.Interfaces
 {
     public interface ITreeDrawer
     {
-        double HorizontalSpace { get; set; }
+        double HorizontalSpace { get; }
 
-        double VerticalSpace { get; set; }
+        double VerticalSpace { get; }
 
         ICollection<Node> ArrangeUpperTree(Node node);
 
@@ -25,6 +25,10 @@ namespace FamilyTree.Services.TreeDrawer.Interfaces
 
         Node GetNode(Business.Person person);
 
-        IEnumerable<Line> Createlines();
+        ICollection<Line> Createlines();
+
+        ICollection<Node> GetNodes();
+
+        void SetNodes(ICollection<Node> nodes);
     }
 }

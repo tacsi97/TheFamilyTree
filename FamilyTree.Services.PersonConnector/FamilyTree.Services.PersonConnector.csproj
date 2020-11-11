@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
     <ProjectReference Include="..\FamilyTree.Modules.Relationship\FamilyTree.Modules.Relationship.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.PersonConnector.Interfaces\FamilyTree.Services.PersonConnector.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
