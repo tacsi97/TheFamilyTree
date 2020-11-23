@@ -25,7 +25,11 @@ namespace FamilyTree.Modules.FamilyTree
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAsyncRepository<Business.FamilyTree>, FakeRepository>();
+            containerRegistry.RegisterInstance<IAsyncGraphRepository<Business.FamilyTree>>(
+                new FamilyTreeGraphRepository(
+                    DatabaseInfo.Uri,
+                    DatabaseInfo.UserName,
+                    DatabaseInfo.Password));
 
             containerRegistry.RegisterDialog<NewTreeDialog, NewTreeDialogViewModel>(DialogNames.NewTreeDialog);
             containerRegistry.RegisterDialog<ModifyTreeDialog, ModifyTreeDialogViewModel>(DialogNames.ModifyTreeDialog);

@@ -21,14 +21,20 @@ namespace FamilyTree.Modules.Relationship
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            //_regionManager.RegisterViewWithRegion(RegionNames.RelationshipRegion, typeof(SetRelationShipView));
+            _regionManager.RegisterViewWithRegion(RegionNames.RelationshipRegion, typeof(SetRelationShipView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAsyncRepository<Business.Relationship>, FakeRelationshipRepository>();
+            containerRegistry.RegisterInstance<IAsyncGraphRepository<Business.Relationship>>(
+                new RelationshipGraphRepository(
+                    DatabaseInfo.Uri,
+                    DatabaseInfo.UserName,
+                    DatabaseInfo.Password));
             // Singleton
             containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
+
+            
 
             containerRegistry.RegisterForNavigation<ListRelationshipView, ListRelationshipViewModel>();
             containerRegistry.RegisterForNavigation<RelationshipFunctions, RelationshipFunctionsViewModel>();

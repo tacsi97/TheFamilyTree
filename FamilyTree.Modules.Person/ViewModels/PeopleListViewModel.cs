@@ -1,11 +1,14 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Modules.Person.Core;
+using FamilyTree.Modules.Person.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -16,13 +19,24 @@ using System.Windows.Controls;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class PeopleListViewModel : BindableBase
+    public class PeopleListViewModel : BindableBase, INavigationAware
     {
-        private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IAsyncGraphRepository<Business.Person> _repository;
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
 
         #region Properties
+
+        private Business.FamilyTree _selectedTree;
+        public Business.FamilyTree SelectedTree
+        {
+            get { return _selectedTree; }
+            set
+            {
+                SetProperty(ref _selectedTree, value);
+                _eventAggregator.GetEvent<SelectedTreeChangedEvent>().Publish(value);
+            }
+        }
 
         private Business.Person _selectedPerson;
         public Business.Person SelectedPerson
@@ -45,7 +59,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public PeopleListViewModel(IAsyncRepository<Business.Person> repository, IDialogService dialogService, IEventAggregator eventAggregator)
+        public PeopleListViewModel(IAsyncGraphRepository<Business.Person> repository, IDialogService dialogService, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _dialogService = dialogService;
@@ -61,12 +75,28 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             People.Clear();
 
-            var people = await _repository.GetAllAsync(Uris.PersonURI);
+            var people = await _repository.GetPeopleIncludedIn(SelectedTree.ID);
 
             foreach (var person in people)
             {
+                person.FamilyTree = SelectedTree;
                 People.Add(person);
             }
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>("SelectedTree");
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
         }
     }
 }

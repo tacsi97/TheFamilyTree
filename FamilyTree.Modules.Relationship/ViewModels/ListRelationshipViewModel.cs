@@ -22,7 +22,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
     public class ListRelationshipViewModel : BindableBase, INavigationAware
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IAsyncRepository<Business.Relationship> _repository;
+        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
 
         public string Title => "Edit";
 
@@ -58,7 +58,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public ListRelationshipViewModel(IEventAggregator eventAggregator, IAsyncRepository<Business.Relationship> repository)
+        public ListRelationshipViewModel(IEventAggregator eventAggregator, IAsyncGraphRepository<Business.Relationship> repository)
         {
             _eventAggregator = eventAggregator;
             _repository = repository;
@@ -72,7 +72,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
             // TODO: Ha nem nyomjuk meg a mentés gombot, akkor is megváltoztatja, a Bind miatt, de csak a lokális változatot
             Relationships.Clear();
             // TODO: lekérdezés, ami az összes kapcsolatot lekéri ember id alapján
-            var relships = await _repository.GetAllAsync(Uris.RelationshipsURI);
+            var relships = await _repository.GetAllAsync();
 
             relships.ToList().ForEach((relship) => Relationships.Add(relship));
         }

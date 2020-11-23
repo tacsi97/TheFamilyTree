@@ -15,7 +15,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
     public class NewTreeDialogViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncRepository<Business.FamilyTree> _repository;
+        private readonly IAsyncGraphRepository<Business.FamilyTree> _repository;
 
         public string Title => "Fa létrehozása";
 
@@ -34,7 +34,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public NewTreeDialogViewModel(IAsyncRepository<Business.FamilyTree> repository)
+        public NewTreeDialogViewModel(IAsyncGraphRepository<Business.FamilyTree> repository)
         {
             _repository = repository;
 
@@ -50,13 +50,12 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public async Task SubmitExecute()
         {
             await _repository.CreateAsync(
-                Uris.FamilyTreeURI,
-                JsonConvert.SerializeObject(
                     new Business.FamilyTree()
                     {
+                        ID = GlobalID.NewID(),
                         Name = FamilyTreeName,
                         People = new ObservableCollection<Business.Person>()
-                    }));
+                    });
 
             RequestClose(new DialogResult(ButtonResult.OK));
         }

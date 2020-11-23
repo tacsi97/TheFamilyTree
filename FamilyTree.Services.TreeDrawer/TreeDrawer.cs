@@ -9,6 +9,8 @@ namespace FamilyTree.Services.TreeDrawer
 {
     public class TreeDrawer : ITreeDrawer
     {
+        private double _verticalPosition = 0d;
+
         public ICollection<Node> Nodes { get; set; }
 
         public double HorizontalSpace { get => 20d; }
@@ -23,6 +25,8 @@ namespace FamilyTree.Services.TreeDrawer
         public ICollection<Node> ArrangeUpperTree(Node node)
         {
             var checkedNodes = new List<Node>();
+
+            var starterNode = node;
 
             var stack = new Stack<Node>();
             var minX = 0d;
@@ -60,12 +64,16 @@ namespace FamilyTree.Services.TreeDrawer
                 personNode.IsChecked = false;
             }
 
+            SetHeightUpside(starterNode);
+
             return checkedNodes;
         }
 
         public ICollection<Node> ArrangeLowerTree(Node node)
         {
             var checkedNodes = new List<Node>();
+
+            var starterNode = node;
 
             var stack = new Stack<Node>();
             var minX = 0d;
@@ -128,7 +136,60 @@ namespace FamilyTree.Services.TreeDrawer
                 personNode.IsChecked = false;
             }
 
+            SetHeightDownside(starterNode);
+
+            _verticalPosition = 0;
+
             return checkedNodes;
+        }
+
+        public void SetHeightUpside(Node node)
+        {
+            if (node == null)
+            {
+                _verticalPosition += (100d + VerticalSpace);
+                return;
+            }
+
+            node.TopCoordinate = _verticalPosition;
+
+            _verticalPosition -= (node.Height + VerticalSpace);
+            SetHeightUpside(GetNode(node.Person.Father));
+
+            _verticalPosition -= (node.Height + VerticalSpace);
+            SetHeightUpside(GetNode(node.Person.Mother));
+
+            _verticalPosition += (node.Height + VerticalSpace);
+
+            if (_verticalPosition > 0)
+                _verticalPosition = 0;
+
+            // végtelen ciklus a partner egymásra hivatkozás miatt
+
+            //foreach (var relation in node.Person.Partners)
+            //{
+            //    var person = (node.Person.ID == relation.PersonFrom.ID) ? relation.PersonTo : relation.PersonFrom;
+            //    SetHeightUpside(GetNode(person));
+            //}
+        }
+
+        public void SetHeightDownside(Node node)
+        {
+            if (node == null)
+            {
+                _verticalPosition -= (100d + VerticalSpace);
+                return;
+            }
+
+            node.TopCoordinate = _verticalPosition;
+
+            if (node.Person.Children.Count != 0)
+                _verticalPosition += (node.Height + VerticalSpace);
+
+            foreach (var child in node.Person.Children)
+            {
+                SetHeightDownside(GetNode(child));
+            }
         }
 
         public Node GetUncheckedParentNode(Node node)
@@ -210,6 +271,8 @@ namespace FamilyTree.Services.TreeDrawer
 
         public Node GetNode(Business.Person person)
         {
+            if (person == null) return null;
+
             return Nodes.FirstOrDefault((node) => node.Person == person);
         }
 
@@ -217,133 +280,149 @@ namespace FamilyTree.Services.TreeDrawer
         {
             var lines = new List<Line>();
 
-            foreach (var node in Nodes)
+            foreach (var parentNode in Nodes)
             {
-                foreach (var innerNode in Nodes)
+                //gyerek
+                foreach (var child in parentNode.Person.Children)
                 {
-                    Line line;
-                    if (!innerNode.Equals(node))
+                    var childNode = GetNode(child);
+
+                    lines.Add(new Line()
                     {
-                        if (node.Person.Father != null && node.Person.Father.Equals(innerNode.Person))
-                        {
-                            if (node.LeftCoordinate == innerNode.LeftCoordinate)
-                            {
-                                line = new Line()
-                                {
-                                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    TopCoordinate = node.TopCoordinate,
-                                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    BottomCoordinate = innerNode.BottomCoordinate
-                                };
-                                lines.Add(line);
-                            }
-                            else
-                            {
-                                var upperSide = new Line()
-                                {
-                                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    TopCoordinate = innerNode.BottomCoordinate,
-                                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
-                                };
-                                var middle = new Line()
-                                {
-                                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    TopCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2,
-                                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
-                                };
-                                var lowerSide = new Line()
-                                {
-                                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    TopCoordinate = node.TopCoordinate,
-                                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    BottomCoordinate = node.TopCoordinate - VerticalSpace / 2
-                                };
-                                lines.Add(upperSide);
-                                lines.Add(middle);
-                                lines.Add(lowerSide);
-                            }
-                        }
-                        else if (node.Person.Mother != null && node.Person.Mother.Equals(innerNode.Person))
-                        {
-                            if (node.LeftCoordinate == innerNode.LeftCoordinate)
-                            {
-                                line = new Line()
-                                {
-                                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    TopCoordinate = node.TopCoordinate,
-                                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    BottomCoordinate = innerNode.BottomCoordinate
-                                };
-                                lines.Add(line);
-                            }
-                            else
-                            {
-                                var upperSide = new Line()
-                                {
-                                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    TopCoordinate = innerNode.BottomCoordinate,
-                                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
-                                };
-                                var middle = new Line()
-                                {
-                                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
-                                    TopCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2,
-                                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
-                                };
-                                var lowerSide = new Line()
-                                {
-                                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    TopCoordinate = node.TopCoordinate,
-                                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
-                                    BottomCoordinate = node.TopCoordinate - VerticalSpace / 2
-                                };
-                                lines.Add(upperSide);
-                                lines.Add(middle);
-                                lines.Add(lowerSide);
-                            }
-                        }
-                        else if (node.Person.Partners.ToList().Exists((relationship) =>
-                            (relationship.PersonFrom.Equals(innerNode.Person)
-                            || relationship.PersonTo.Equals(innerNode.Person))
-                        ))
-                        {
-                            var between = Nodes.Where(
-                                    member => (member.TopCoordinate == innerNode.TopCoordinate
-                                    && ((node.LeftCoordinate < member.LeftCoordinate && member.LeftCoordinate < innerNode.LeftCoordinate)
-                                    || (innerNode.LeftCoordinate < member.LeftCoordinate && member.LeftCoordinate < node.LeftCoordinate))
-                                    && !member.Equals(node) && !member.Equals(innerNode))).FirstOrDefault();
-                            if (between == null)
-                                //megkeresi a rövidebb utat [ ]-[ ], és nem így köti össze [-]-[-]
-                                if (Math.Abs(node.LeftCoordinate - innerNode.RigthCoordinate) <
-                                    Math.Abs(innerNode.LeftCoordinate - node.RigthCoordinate))
-                                {
-                                    line = new Line()
-                                    {
-                                        LeftCoordinate = node.LeftCoordinate,
-                                        TopCoordinate = node.TopCoordinate + node.Height / 2,
-                                        RigthCoordinate = innerNode.RigthCoordinate,
-                                        BottomCoordinate = innerNode.TopCoordinate + innerNode.Height / 2
-                                    };
-                                    lines.Add(line);
-                                }
-                                else
-                                {
-                                    line = new Line()
-                                    {
-                                        LeftCoordinate = innerNode.LeftCoordinate,
-                                        TopCoordinate = innerNode.TopCoordinate + node.Height / 2,
-                                        RigthCoordinate = node.RigthCoordinate,
-                                        BottomCoordinate = innerNode.TopCoordinate + innerNode.Height / 2
-                                    };
-                                    lines.Add(line);
-                                };
-                        }
-                    }
+                        TopCoordinate = parentNode.BottomCoordinate,
+                        LeftCoordinate = parentNode.LeftCoordinate + (parentNode.Width / 2),
+                        RigthCoordinate = childNode.LeftCoordinate + (parentNode.Width / 2),
+                        BottomCoordinate = childNode.TopCoordinate
+                    });
                 }
+                //partner
+                #region comment
+                //foreach (var innerNode in Nodes)
+                //{
+                //    Line line;
+                //    if (!innerNode.Equals(node))
+                //    {
+                //        if (node.Person.Father != null && node.Person.Father.Equals(innerNode.Person))
+                //        {
+                //            if (node.LeftCoordinate == innerNode.LeftCoordinate)
+                //            {
+                //                line = new Line()
+                //                {
+                //                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    TopCoordinate = innerNode.BottomCoordinate,
+                //                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    BottomCoordinate = node.TopCoordinate
+                //                };
+                //                lines.Add(line);
+                //            }
+                //            else
+                //            {
+                //                var upperSide = new Line()
+                //                {
+                //                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    TopCoordinate = innerNode.BottomCoordinate,
+                //                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
+                //                };
+                //                var middle = new Line()
+                //                {
+                //                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    TopCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2,
+                //                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
+                //                };
+                //                var lowerSide = new Line()
+                //                {
+                //                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    TopCoordinate = node.TopCoordinate,
+                //                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    BottomCoordinate = node.TopCoordinate - VerticalSpace / 2
+                //                };
+                //                lines.Add(upperSide);
+                //                lines.Add(middle);
+                //                lines.Add(lowerSide);
+                //            }
+                //        }
+                //        else if (node.Person.Mother != null && node.Person.Mother.Equals(innerNode.Person))
+                //        {
+                //            if (node.LeftCoordinate == innerNode.LeftCoordinate)
+                //            {
+                //                line = new Line()
+                //                {
+                //                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    TopCoordinate = innerNode.BottomCoordinate,
+                //                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    BottomCoordinate = node.TopCoordinate
+                //                };
+                //                lines.Add(line);
+                //            }
+                //            else
+                //            {
+                //                var upperSide = new Line()
+                //                {
+                //                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    TopCoordinate = innerNode.BottomCoordinate,
+                //                    RigthCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
+                //                };
+                //                var middle = new Line()
+                //                {
+                //                    LeftCoordinate = innerNode.LeftCoordinate + innerNode.Width / 2,
+                //                    TopCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2,
+                //                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    BottomCoordinate = innerNode.BottomCoordinate + VerticalSpace / 2
+                //                };
+                //                var lowerSide = new Line()
+                //                {
+                //                    LeftCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    TopCoordinate = node.TopCoordinate,
+                //                    RigthCoordinate = node.LeftCoordinate + node.Width / 2,
+                //                    BottomCoordinate = node.TopCoordinate - VerticalSpace / 2
+                //                };
+                //                lines.Add(upperSide);
+                //                lines.Add(middle);
+                //                lines.Add(lowerSide);
+                //            }
+                //        }
+                //        else if (node.Person.Partners.ToList().Exists((relationship) =>
+                //            (relationship.PersonFrom.Equals(innerNode.Person)
+                //            || relationship.PersonTo.Equals(innerNode.Person))
+                //        ))
+                //        {
+                //            var between = Nodes.Where(
+                //                    member => (member.TopCoordinate == innerNode.TopCoordinate
+                //                    && ((node.LeftCoordinate < member.LeftCoordinate && member.LeftCoordinate < innerNode.LeftCoordinate)
+                //                    || (innerNode.LeftCoordinate < member.LeftCoordinate && member.LeftCoordinate < node.LeftCoordinate))
+                //                    && !member.Equals(node) && !member.Equals(innerNode))).FirstOrDefault();
+                //            if (between == null)
+                //                //megkeresi a rövidebb utat [ ]-[ ], és nem így köti össze [-]-[-]
+                //                if (Math.Abs(node.LeftCoordinate - innerNode.RigthCoordinate) <
+                //                    Math.Abs(innerNode.LeftCoordinate - node.RigthCoordinate))
+                //                {
+                //                    line = new Line()
+                //                    {
+                //                        LeftCoordinate = node.LeftCoordinate,
+                //                        TopCoordinate = node.TopCoordinate + node.Height / 2,
+                //                        RigthCoordinate = innerNode.RigthCoordinate,
+                //                        BottomCoordinate = innerNode.TopCoordinate + innerNode.Height / 2
+                //                    };
+                //                    lines.Add(line);
+                //                }
+                //                else
+                //                {
+                //                    line = new Line()
+                //                    {
+                //                        LeftCoordinate = innerNode.LeftCoordinate,
+                //                        TopCoordinate = innerNode.TopCoordinate + node.Height / 2,
+                //                        RigthCoordinate = node.RigthCoordinate,
+                //                        BottomCoordinate = innerNode.TopCoordinate + innerNode.Height / 2
+                //                    };
+                //                    lines.Add(line);
+                //                };
+                //        }
+                //    }
+                //} 
+                #endregion
             }
             return lines;
         }

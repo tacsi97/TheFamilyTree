@@ -1,7 +1,9 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Core;
 using FamilyTree.Core.Commands;
+using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
+using FamilyTree.Modules.Relationship.Core;
 using FamilyTree.Modules.TreeDrawer.Model;
 using FamilyTree.Modules.TreeDrawer.Utils;
 using FamilyTree.Services.PersonConnector.Interfaces;
@@ -10,6 +12,7 @@ using FamilyTree.Services.TreeDrawer.Interfaces;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,11 +22,11 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.TreeDrawer.ViewModels
 {
-    public class ParentTreeViewModel : BindableBase
+    public class ParentTreeViewModel : BindableBase, INavigationAware
     {
         #region Fields
 
-        private readonly IAsyncRepository<Business.Relationship> _repository;
+        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
         private readonly ITreeDrawer _treeDrawer;
         private readonly IPersonConnector _personConnector;
         private readonly IEventAggregator _eventAggregator;
@@ -43,6 +46,13 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
             }
         }
 
+        private Business.FamilyTree _selectedTree;
+        public Business.FamilyTree SelectedTree
+        {
+            get { return _selectedTree; }
+            set { SetProperty(ref _selectedTree, value); }
+        }
+
         public ObservableCollection<ITreeElement> TreeElements { get; set; }
 
         #endregion
@@ -59,7 +69,7 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
         #endregion
 
-        public ParentTreeViewModel(IAsyncRepository<Business.Relationship> repository, ITreeDrawer treeDrawer, IPersonConnector personConnector, IEventAggregator eventAggregator)
+        public ParentTreeViewModel(IAsyncGraphRepository<Business.Relationship> repository, ITreeDrawer treeDrawer, IPersonConnector personConnector, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _treeDrawer = treeDrawer;
@@ -71,13 +81,9 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
         public async Task ExecuteGetRelationships()
         {
-            var testAlgo = new TestTree();
-
             TreeElements.Clear();
             // Az összes kapcsolat, ami a fához tartozik
-            var result = await _repository.GetAllAsync(Uris.RelationshipsURI);
-
-            _personConnector.ConnectPeople(result);
+            var result = await _repository.GetRelationshipsIncludedIn(SelectedTree.ID);
 
             var aggregatedPeople = AggregatePeople(result);
 
@@ -98,13 +104,38 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
             _treeDrawer.ArrangeUpperTree(nodes[0]).ToList().ForEach((node) =>
                 TreeElements.Add(new NodeTreeElement(node)));
 
+            _treeDrawer.ArrangeLowerTree(nodes[0]).ToList().ForEach(node =>
+                TreeElements.Add(new NodeTreeElement(node)));
+
             _treeDrawer.Createlines().ToList().ForEach((line) =>
                 TreeElements.Add(new LineTreeElement(line)));
+
+            Offset();
         }
 
         public void ExecuteSelectPersonCommand(Business.Person person)
         {
             SelectedPerson = person;
+        }
+
+        public void Offset()
+        {
+            var minX = 0d;
+            var minY = 0d;
+            TreeElements.ToList().ForEach(node =>
+            {
+                if (node.TopCoordinate < minX)
+                    minX = node.TopCoordinate;
+
+                if (node.LeftCoordinate < minY)
+                    minY = node.LeftCoordinate;
+            });
+
+            TreeElements.ToList().ForEach(node =>
+            {
+                node.TopCoordinate += -minX;
+                node.LeftCoordinate += -minY;
+            });
         }
 
         private IDictionary<int, Business.Person> AggregatePeople(IEnumerable<Business.Relationship> relationships)
@@ -115,6 +146,56 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
             {
                 dictionary[relation.PersonFrom.ID] = relation.PersonFrom;
                 dictionary[relation.PersonTo.ID] = relation.PersonTo;
+            }
+
+            foreach (var relation in relationships)
+            {
+                if (relation.RelationType.Equals(TypeNames.Parent))
+                {
+                    // connect parents
+                    if (relation.PersonTo.Gender.Equals(GenderType.Male))
+                        dictionary[relation.PersonFrom.ID].Father = dictionary[relation.PersonTo.ID];
+                    else
+                        dictionary[relation.PersonFrom.ID].Mother = dictionary[relation.PersonTo.ID];
+
+                    dictionary[relation.PersonTo.ID].Children.Add(dictionary[relation.PersonFrom.ID]);
+                }
+                else if (relation.RelationType.Equals(TypeNames.Child))
+                {
+                    // connect child
+                    dictionary[relation.PersonFrom.ID].Children.Add(dictionary[relation.PersonTo.ID]);
+
+                    if (relation.PersonFrom.Gender.Equals(GenderType.Male))
+                        dictionary[relation.PersonTo.ID].Father = dictionary[relation.PersonFrom.ID];
+                    else
+                        dictionary[relation.PersonTo.ID].Mother = dictionary[relation.PersonFrom.ID];
+                }
+                else if (relation.RelationType.Equals(TypeNames.Partner))
+                {
+                    // nem baj, ha a szülők és a gyerekek nem Relationship-ként vannak tárolva,
+                    // mivel feltöltéskor Relationshipként megy fel,
+                    // letöltéskor pedig szintén Relationshipként 
+                    // módosításkor pedig lekérjük a Relationship objektumot
+                    // connect partner
+                    dictionary[relation.PersonFrom.ID].Partners.Add(new Business.Relationship()
+                    {
+                        RelationType = relation.RelationType,
+                        From = relation.From,
+                        To = relation.To,
+                        PersonFrom = dictionary[relation.PersonFrom.ID],
+                        PersonTo = dictionary[relation.PersonTo.ID]
+                    });
+
+                    //dictionary[relation.PersonTo.ID].Partners.Add(new Business.Relationship()
+                    //{
+                    //    RelationType = relation.RelationType,
+                    //    From = relation.From,
+                    //    To = relation.To,
+                    //    PersonFrom = dictionary[relation.PersonTo.ID],
+                    //    PersonTo = dictionary[relation.PersonFrom.ID]
+                    //});
+                }
+
             }
 
             return dictionary;
@@ -132,5 +213,19 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
             return list;
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>("SelectedTree");
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
+        }
     }
 }

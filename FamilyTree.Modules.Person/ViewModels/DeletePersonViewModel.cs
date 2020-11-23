@@ -15,7 +15,7 @@ namespace FamilyTree.Modules.Person.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IAsyncGraphRepository<Business.Person> _repository;
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public DeletePersonViewModel(IAsyncRepository<Business.Person> repository)
+        public DeletePersonViewModel(IAsyncGraphRepository<Business.Person> repository)
         {
             _repository = repository;
 
@@ -55,7 +55,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             try
             {
-                await _repository.DeleteAsync(Uris.PersonURI, SelectedPerson.ID);
+                await _repository.DeleteAsync(SelectedPerson.ID);
 
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }

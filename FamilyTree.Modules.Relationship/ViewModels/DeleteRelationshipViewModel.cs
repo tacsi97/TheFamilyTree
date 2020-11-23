@@ -15,7 +15,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRepository<Business.Relationship> _repository;
+        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public DeleteRelationshipViewModel(IAsyncRepository<Business.Relationship> repository)
+        public DeleteRelationshipViewModel(IAsyncGraphRepository<Business.Relationship> repository)
         {
             _repository = repository;
         }
@@ -70,7 +70,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
         {
             try
             {
-                await _repository.DeleteAsync(Uris.RelationshipsURI, SelectedRelationship.ID);
+                await _repository.DeleteAsync(SelectedRelationship.ID);
 
                 RequestClose(new DialogResult(ButtonResult.OK));
             }

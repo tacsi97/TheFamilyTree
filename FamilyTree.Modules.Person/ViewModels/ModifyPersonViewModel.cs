@@ -4,6 +4,7 @@ using FamilyTree.Core.Commands;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Services.Repository.Interfaces;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Events;
@@ -14,12 +15,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
     public class ModifyPersonViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IAsyncGraphRepository<Business.Person> _repository;
 
         private AsyncCommand _asyncCommand;
         public AsyncCommand AsyncCommand
@@ -91,7 +93,28 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
+        private BitmapImage _image;
+        public BitmapImage Image
+        {
+            get { return _image; }
+            set { SetProperty(ref _image, value); }
+        }
+
         public string Title => "Személy létrehozása";
+
+        private DelegateCommand _selectPictureCommand;
+        public DelegateCommand SelectPictureCommand =>
+            _selectPictureCommand ?? (_selectPictureCommand = new DelegateCommand(ExecuteSelectPictureCommand));
+
+        void ExecuteSelectPictureCommand()
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+                Image = new BitmapImage(new Uri(op.FileName));
+        }
 
         public ObservableCollection<Business.Person> People { get; set; }
 
@@ -99,7 +122,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public ModifyPersonViewModel(IAsyncRepository<Business.Person> repository)
+        public ModifyPersonViewModel(IAsyncGraphRepository<Business.Person> repository)
         {
             _repository = repository;
 
@@ -120,9 +143,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                     Gender = Gender
                 };
 
-                await _repository.ModifyAsync(
-                    Uris.PersonURI,
-                    JsonConvert.SerializeObject(person));
+                await _repository.ModifyAsync(person);
 
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }

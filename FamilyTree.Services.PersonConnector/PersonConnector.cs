@@ -12,7 +12,7 @@ namespace FamilyTree.Services.PersonConnector
         {
             // Összes relation-t lekérdezni, ami az adott fában van. Egy relation tartalmaz 2 embert, és a köztük lévő kapcsolatot is, ezekből pedig fel lehet építeni a fát.
 
-            var result = new List<Business.Person>();
+            var result = new List<Person>();
 
             foreach (var relation in relationships)
             {
@@ -32,9 +32,9 @@ namespace FamilyTree.Services.PersonConnector
                     relation.PersonFrom.Children.Add(relation.PersonTo);
 
                     if (relation.PersonFrom.Gender.Equals(GenderType.Male))
-                        relation.PersonFrom.Father = relation.PersonTo;
+                        relation.PersonTo.Father = relation.PersonFrom;
                     else
-                        relation.PersonFrom.Mother = relation.PersonTo;
+                        relation.PersonTo.Mother = relation.PersonFrom;
                 }
                 else if (relation.RelationType.Equals(TypeNames.Partner))
                 {

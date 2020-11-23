@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRepository<Business.Relationship> _repository;
+        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
 
         #endregion
 
@@ -113,7 +113,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public EditRelationshipViewModel(IAsyncRepository<Business.Relationship> repository)
+        public EditRelationshipViewModel(IAsyncGraphRepository<Business.Relationship> repository)
         {
             _repository = repository;
 
@@ -148,7 +148,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
         {
             try
             {
-                await _repository.ModifyAsync(Uris.RelationshipsURI, JsonConvert.SerializeObject(SelectedRelationship));
+                await _repository.ModifyAsync(SelectedRelationship);
 
                 RequestClose(new DialogResult(ButtonResult.OK));
             }

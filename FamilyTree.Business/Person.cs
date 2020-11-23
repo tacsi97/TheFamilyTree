@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 
 namespace FamilyTree.Business
@@ -65,6 +66,13 @@ namespace FamilyTree.Business
         {
             get { return _mother; }
             set { SetProperty(ref _mother, value); }
+        }
+
+        private BitmapImage _image;
+        public BitmapImage Image
+        {
+            get { return _image; }
+            set { SetProperty(ref _image, value); }
         }
 
         [JsonIgnore]

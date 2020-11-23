@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
         #region Fields
 
         private readonly IEventAggregator _eventAggregator;
-        private readonly IAsyncRepository<Business.Relationship> _repository;
+        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
         private readonly IUpload _appSaveCommand;
 
         #endregion
@@ -87,14 +87,14 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public SetRelationShipViewModel(IEventAggregator eventAggregator, IAsyncRepository<Business.Relationship> repository, IUpload saveCommand)
+        public SetRelationShipViewModel(IEventAggregator eventAggregator, IAsyncGraphRepository<Business.Relationship> repository, IUpload saveCommand)
         {
             _eventAggregator = eventAggregator;
             _appSaveCommand = saveCommand;
             _repository = repository;
 
             _eventAggregator.GetEvent<CreateNewPersonEvent>().Subscribe(SetNewPerson);
-            _eventAggregator.GetEvent<CreateNewPersonEvent>().Subscribe(SetSelectedPerson);
+            _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Subscribe(SetSelectedPerson);
 
             _appSaveCommand.CompositeCommand.RegisterCommand(SaveCommand);
 
@@ -122,11 +122,11 @@ namespace FamilyTree.Modules.Relationship.ViewModels
                     PersonTo = NewPerson
                 };
 
-                await _repository.CreateAsync(Uris.RelationshipsURI, JsonConvert.SerializeObject(relationship));
+                await _repository.CreateAsync(relationship);
 
                 _appSaveCommand.CompositeCommand.UnregisterCommand(SaveCommand);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //TODO: do something
             }

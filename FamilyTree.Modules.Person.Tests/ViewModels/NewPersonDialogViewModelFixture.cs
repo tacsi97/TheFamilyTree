@@ -40,19 +40,19 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
         [Fact]
         public void asdadd()
         {
-            var boolean = false;
+            //var boolean = false;
 
-            var command = new SubmitNewPersonCommand(new NewPersonDialogViewModel(
-                _repository.Object,
-                _eventAggregator.Object,
-                _iUpload.Object));
+            //var command = new SubmitNewPersonCommand(new NewPersonDialogViewModel(
+            //    _repository.Object,
+            //    _eventAggregator.Object,
+            //    _iUpload.Object));
 
-            command.CanExecuteChanged += Command_CanExecuteChanged;
+            //command.CanExecuteChanged += Command_CanExecuteChanged;
 
-            command.RaiseCanExecuteChanged(this, EventArgs.Empty);
-            command.CanExecute(null);
-            command.Execute(null);
-            Console.WriteLine("Hello");
+            //command.RaiseCanExecuteChanged(this, EventArgs.Empty);
+            //command.CanExecute(null);
+            //command.Execute(null);
+            //Console.WriteLine("Hello");
         }
 
         private void Command_CanExecuteChanged(object sender, EventArgs e)

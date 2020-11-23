@@ -3,9 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Text="Biztosan törli a kiválasztott személyt?"/>
-        <Button DockPanel.Dock="Left" Content="Igen" Command="{Binding DeleteCommand}"/>
-        <Button DockPanel.Dock="Right" Content="Nem" IsCancel="true"/>
-    </DockPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Text="Biztosan törli?"/>
+
+        <Button Grid.Row="1" Grid.Column="0"
+                Content="Igen"
+                Command="{Binding DeleteCommand}"
+                IsDefault="True"/>
+        <!-- TODO: command parameter-->
+        <Button Grid.Row="1" Grid.Column="1"
+                Content="Nem"
+                IsCancel="True"/>
+
+    </Grid>
 </UserControl>

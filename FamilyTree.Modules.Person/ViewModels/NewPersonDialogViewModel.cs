@@ -22,7 +22,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 {
     public class NewPersonDialogViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IAsyncGraphRepository<Business.Person> _repository;
         private readonly IEventAggregator _eventAggregator;
 
         #region Commands
@@ -136,16 +136,24 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
+        private Relationship _relationship;
+        public Relationship Relationship
+        {
+            get { return _relationship; }
+            set { SetProperty(ref _relationship, value); }
+        }
+
         public string Title => "Személy létrehozása";
 
         #endregion
 
         public event Action<IDialogResult> RequestClose;
 
-        public NewPersonDialogViewModel(IAsyncRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand)
+        public NewPersonDialogViewModel(IAsyncGraphRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand)
         {
             _repository = repository;
             _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<SelectedRelationshipChangedEvent>().Subscribe(SetRelationship);
 
             ApplicationCommand = uploadCommand;
 
@@ -167,11 +175,11 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             try
             {
-                await _repository.CreateAsync(
-                    Uris.PersonURI,
-                    JsonConvert.SerializeObject(NewPerson));
+                NewPerson.ID = GlobalID.NewID();
 
-                //_uploadCommand.CompositeCommand.UnregisterCommand(SubmitNewPersonCommand);
+                await _repository.CreateAsync(NewPerson);
+
+                ApplicationCommand.CompositeCommand.UnregisterCommand(AsyncCommand);
 
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }
@@ -190,8 +198,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             // TODO: Create a generic validator class, what takes a parameter with the given type, and returns that the value is valid or not
             if (string.IsNullOrEmpty(FirstName)
-                || string.IsNullOrEmpty(LastName)
-                || DateOfBirth == DateTime.MinValue)
+                || string.IsNullOrEmpty(LastName))
                 return false;
             return true;
         }
@@ -209,6 +216,13 @@ namespace FamilyTree.Modules.Person.ViewModels
                 throw new ArgumentException("Argument not found in the paramters", nameof(person));
 
             SelectedPerson = person;
+            NewPerson.FamilyTree = SelectedPerson.FamilyTree;
+        }
+
+        public void SetRelationship(Business.Relationship relationship)
+        {
+            Relationship = relationship;
         }
     }
+
 }

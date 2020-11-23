@@ -11,7 +11,7 @@
             <ItemsControl ItemsSource="{Binding TreeElements}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="Aqua" Width="3000" Height="2000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Canvas Background="White" Width="3000" Height="2000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
                         </Canvas>
                     </ItemsPanelTemplate>
@@ -27,12 +27,14 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:NodeTreeElement}">
                         <Button Command="{Binding DataContext.SelectPersonCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
-                                CommandParameter="{Binding TObject.Person}">
+                                CommandParameter="{Binding TObject.Person}"
+                                Width="{Binding TObject.Width}"
+                                Height="{Binding TObject.Height}">
                             <Button.RenderTransform>
                                 <TranslateTransform X="{Binding LeftCoordinate, Mode=TwoWay}" Y="{Binding TopCoordinate, Mode=TwoWay}"/>
                             </Button.RenderTransform>
                             <StackPanel Orientation="Vertical" Background="White">
-                                <Image Width="{Binding TObject.Width}" Height="{Binding TObject.Height}"/>
+                                <Image Width="80" Height="80"/>
                                 <TextBlock TextAlignment="Center">
                                     <TextBlock.Text>
                                         <!--Valamiért csak ezzel működik-->

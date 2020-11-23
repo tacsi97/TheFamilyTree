@@ -26,6 +26,17 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Properties
 
+        private Business.FamilyTree _familyTree;
+        public Business.FamilyTree FamilyTree
+        {
+            get { return _familyTree; }
+            set
+            {
+                SetProperty(ref _familyTree, value);
+                NavigateTreeViewCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         private Business.Person _selectedPerson;
         public Business.Person SelectedPerson
         {
@@ -37,7 +48,8 @@ namespace FamilyTree.Modules.Person.ViewModels
                 ModifyPersonCommand.RaiseCanExecuteChanged();
                 ShowPersonCommand.RaiseCanExecuteChanged();
                 DeletePersonCommand.RaiseCanExecuteChanged();
-                NavigateCommand.RaiseCanExecuteChanged();
+                NavigateRelationsCommand.RaiseCanExecuteChanged();
+                NavigateTreeViewCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -61,9 +73,13 @@ namespace FamilyTree.Modules.Person.ViewModels
         public DelegateCommand DeletePersonCommand =>
             _deletePersonCommand ?? (_deletePersonCommand = new DelegateCommand(ExecuteDeletePersonCommand, CanExecuteDeletePersonCommand));
 
-        private DelegateCommand _navigateCommand;
-        public DelegateCommand NavigateCommand =>
-            _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigateCommand, CanExecuteNavigateCommand));
+        private DelegateCommand _navigateTreeViewCommand;
+        public DelegateCommand NavigateTreeViewCommand =>
+            _navigateTreeViewCommand ?? (_navigateTreeViewCommand = new DelegateCommand(ExecuteNavigateTreeViewCommand, CanExecuteNavigateTreeViewCommand));
+
+        private DelegateCommand _navigateRelationsCommand;
+        public DelegateCommand NavigateRelationsCommand =>
+            _navigateRelationsCommand ?? (_navigateRelationsCommand = new DelegateCommand(ExecuteNavigateCommand, CanExecuteNavigateCommand));
 
         #endregion
 
@@ -74,6 +90,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             _regionManager = regionManager;
 
             _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Subscribe(SetPerson);
+            _eventAggregator.GetEvent<SelectedTreeChangedEvent>().Subscribe(SetTree);
         }
 
         #region AddPersonFunctions
@@ -194,9 +211,32 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
+        #region TreeViewFunctions
+
+        public void ExecuteNavigateTreeViewCommand()
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("SelectedTree", FamilyTree);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreeView", navParams);
+        }
+
+        public bool CanExecuteNavigateTreeViewCommand()
+        {
+            return FamilyTree != null;
+        }
+
+        #endregion
+
         public void SetPerson(Business.Person person)
         {
             SelectedPerson = person;
         }
+
+        public void SetTree(Business.FamilyTree tree)
+        {
+            FamilyTree = tree;
+        }
     }
+
 }

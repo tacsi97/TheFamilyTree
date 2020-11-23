@@ -17,7 +17,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
     public class ModifyTreeDialogViewModel : BindableBase, IDialogAware
     {
         // TODO: instead of passing the whole object, I should pass only the ID and the Name
-        private readonly IAsyncRepository<Business.FamilyTree> _repository;
+        private readonly IAsyncGraphRepository<Business.FamilyTree> _repository;
 
         public string Title => "Fa módosítása";
 
@@ -36,7 +36,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public ModifyTreeDialogViewModel(IAsyncRepository<Business.FamilyTree> repository)
+        public ModifyTreeDialogViewModel(IAsyncGraphRepository<Business.FamilyTree> repository)
         {
             _repository = repository;
 
@@ -46,14 +46,12 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public async Task ExecuteModifyTreeCommand()
         {
             await _repository.ModifyAsync(
-                Uris.FamilyTreeURI,
-                JsonConvert.SerializeObject(
                     new Business.FamilyTree()
                     {
                         Name = FamilyTree.Name,
                         People = FamilyTree.People,
                         ID = FamilyTree.ID
-                    }));
+                    });
 
             RequestClose(new DialogResult(ButtonResult.OK));
         }

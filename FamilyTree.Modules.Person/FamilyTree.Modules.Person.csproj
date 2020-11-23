@@ -11,6 +11,10 @@
     <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
     <ProjectReference Include="..\FamilyTree.Services.Repository.Interfaces\FamilyTree.Services.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\FamilyTree.Services.Repository\FamilyTree.Services.Repository.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.TimeStampedObjects.Interfaces\FamilyTree.Services.TimeStampedObjects.Interfaces.csproj" />
     <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

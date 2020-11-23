@@ -33,7 +33,11 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<PeopleAllView, PeopleAllViewModel>();
             containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
 
-            containerRegistry.RegisterSingleton<IAsyncRepository<Business.Person>, FakePersonRepository>();
+            containerRegistry.RegisterInstance<IAsyncGraphRepository<Business.Person>>(
+                new PersonGraphRepository(
+                    DatabaseInfo.Uri,
+                    DatabaseInfo.UserName,
+                    DatabaseInfo.Password));
             containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(PersonDialogNames.AddNewPersonDialog);
