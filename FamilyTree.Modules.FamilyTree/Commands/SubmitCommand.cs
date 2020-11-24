@@ -10,9 +10,9 @@ using System.Windows.Media.Animation;
 
 namespace FamilyTree.Modules.FamilyTree.Commands
 {
-    public class SubmitCommand : CommandBase<NewTreeDialogViewModel>
+    public class SubmitCommand : CommandBase<NewFamilyTreeViewModel>
     {
-        public SubmitCommand(NewTreeDialogViewModel ViewModel) : base(ViewModel)
+        public SubmitCommand(NewFamilyTreeViewModel ViewModel) : base(ViewModel)
         {
 
         }

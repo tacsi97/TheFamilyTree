@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
-    public class NewTreeDialogViewModel : BindableBase, IDialogAware
+    public class NewFamilyTreeViewModel : BindableBase, IDialogAware
     {
         private readonly IAsyncGraphRepository<Business.FamilyTree> _repository;
 
@@ -34,7 +34,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public NewTreeDialogViewModel(IAsyncGraphRepository<Business.FamilyTree> repository)
+        public NewFamilyTreeViewModel(IAsyncGraphRepository<Business.FamilyTree> repository)
         {
             _repository = repository;
 

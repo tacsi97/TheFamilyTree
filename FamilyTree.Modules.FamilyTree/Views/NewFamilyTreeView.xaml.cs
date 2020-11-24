@@ -5,9 +5,9 @@ namespace FamilyTree.Modules.FamilyTree.Views
     /// <summary>
     /// Interaction logic for NewTreeDialog
     /// </summary>
-    public partial class NewTreeDialog : UserControl
+    public partial class NewFamilyTreeView : UserControl
     {
-        public NewTreeDialog()
+        public NewFamilyTreeView()
         {
             InitializeComponent();
         }

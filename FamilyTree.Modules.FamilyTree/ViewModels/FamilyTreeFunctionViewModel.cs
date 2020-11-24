@@ -2,6 +2,7 @@
 using FamilyTree.Core.Commands;
 using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.PubSubEvents;
+using FamilyTree.Modules.FamilyTree.Views;
 using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
@@ -30,6 +31,18 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #region Commands
 
+        private DelegateCommand<string> _newFamilyTreeNavigateCommand;
+        public DelegateCommand<string> NewFamilyTreeNavigateCommand =>
+            _newFamilyTreeNavigateCommand ?? (_newFamilyTreeNavigateCommand = new DelegateCommand<string>(ExecuteNewFamilyTreeNavigateCommand, CanExecuteNewFamilyTreeNavigateCommand));
+
+        private DelegateCommand<string> _modifyFamilyTreeNavigateCommand;
+        public DelegateCommand<string> ModifyFamilyTreeNavigateCommand =>
+            _modifyFamilyTreeNavigateCommand ?? (_modifyFamilyTreeNavigateCommand = new DelegateCommand<string>(ExecuteModifyFamilyTreeNavigateCommand, CanExecuteModifyFamilyTreeNavigateCommand));
+
+        private DelegateCommand<string> _showPeopleNavigateCommand;
+        public DelegateCommand<string> ShowPeopleNavigateCommand =>
+            _showPeopleNavigateCommand ?? (_showPeopleNavigateCommand = new DelegateCommand<string>(ExecuteShowPeopleNavigateCommand, CanExecuteShowPeopleNavigateCommand));
+
         private DelegateCommand _createTreeCommand;
         public DelegateCommand CreateTreeCommand =>
             _createTreeCommand ?? (_createTreeCommand = new DelegateCommand(ExecuteCreateTreeCommand, CanExecuteCreateTreeCommand));
@@ -41,10 +54,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         private IAsyncGenericCommand<Business.FamilyTree> _deleteTreeCommand;
         public IAsyncGenericCommand<Business.FamilyTree> DeleteTreeCommand =>
             _deleteTreeCommand ?? (_deleteTreeCommand = new AsyncGenericCommand<Business.FamilyTree>(ExecuteDeleteTreeCommand, CanExecuteDeleteTreeCommand));
-
-        private DelegateCommand _navigateCommand;
-        public DelegateCommand NavigateCommand =>
-            _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigateCommand, CanExecuteNavigateCommand));
 
         #endregion
 
@@ -59,7 +68,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
                 SetProperty(ref _selectedTree, value);
                 ModifyTreeCommand.RaiseCanExecuteChanged();
                 DeleteTreeCommand.RaiseCanExecuteChanged();
-                NavigateCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -116,17 +124,67 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #region NavigateCommand
 
-        public void ExecuteNavigateCommand()
+        public void ExecuteNavigateCommand(object param)
         {
             var navParams = new NavigationParameters();
-            navParams.Add("SelectedTree", SelectedTree);
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "PeopleListView", navParams);
         }
 
-        public bool CanExecuteNavigateCommand()
+        public bool CanExecuteNavigateCommand(object param)
         {
             return SelectedTree != null;
+        }
+
+        #endregion
+
+        #region NewFamilyTreeCommand
+
+        public void ExecuteNewFamilyTreeNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add(NavParamNames.Tree, new Business.FamilyTree());
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteNewFamilyTreeNavigateCommand(string navigationPath)
+        {
+            return navigationPath != null;
+        }
+
+        #endregion
+
+        #region ModifyFamilyTreeCommand
+        // TODO: valahogy ezeket egységesíteni
+        public void ExecuteModifyFamilyTreeNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add(NavParamNames.Tree, SelectedTree);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteModifyFamilyTreeNavigateCommand(string navigationPath)
+        {
+            return navigationPath != null && SelectedTree != null;
+        }
+
+        #endregion
+
+        #region ShowPeopleCommand
+
+        public void ExecuteShowPeopleNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add(NavParamNames.Tree, SelectedTree);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteShowPeopleNavigateCommand(string navigationPath)
+        {
+            return navigationPath != null && SelectedTree != null;
         }
 
         #endregion
