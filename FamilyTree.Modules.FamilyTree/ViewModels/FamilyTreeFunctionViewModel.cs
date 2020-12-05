@@ -39,6 +39,10 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public DelegateCommand<string> ModifyFamilyTreeNavigateCommand =>
             _modifyFamilyTreeNavigateCommand ?? (_modifyFamilyTreeNavigateCommand = new DelegateCommand<string>(ExecuteModifyFamilyTreeNavigateCommand, CanExecuteModifyFamilyTreeNavigateCommand));
 
+        private DelegateCommand<string> _deleteFamilyTreeNavigateCommand;
+        public DelegateCommand<string> DeleteFamilyTreeNavigateCommand =>
+            _deleteFamilyTreeNavigateCommand ?? (_deleteFamilyTreeNavigateCommand = new DelegateCommand<string>(ExecuteDeleteFamilyTreeNavigateCommand, CanExecuteDeleteFamilyTreeNavigateCommand));
+
         private DelegateCommand<string> _showPeopleNavigateCommand;
         public DelegateCommand<string> ShowPeopleNavigateCommand =>
             _showPeopleNavigateCommand ?? (_showPeopleNavigateCommand = new DelegateCommand<string>(ExecuteShowPeopleNavigateCommand, CanExecuteShowPeopleNavigateCommand));
@@ -66,8 +70,9 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             set
             {
                 SetProperty(ref _selectedTree, value);
-                ModifyTreeCommand.RaiseCanExecuteChanged();
-                DeleteTreeCommand.RaiseCanExecuteChanged();
+                ModifyFamilyTreeNavigateCommand.RaiseCanExecuteChanged();
+                DeleteFamilyTreeNavigateCommand.RaiseCanExecuteChanged();
+                ShowPeopleNavigateCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -80,6 +85,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             _eventAggregator.GetEvent<SelectedTreeChanged>().Subscribe(ChangeSelectedTree);
+            SelectedTree = new Business.FamilyTree() { Name = "Teszt" };
         }
 
         #region CreateTreeCommand
@@ -166,6 +172,23 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         }
 
         public bool CanExecuteModifyFamilyTreeNavigateCommand(string navigationPath)
+        {
+            return navigationPath != null && SelectedTree != null;
+        }
+
+        #endregion
+
+        #region DeleteFamilyTreeCommand
+
+        public void ExecuteDeleteFamilyTreeNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add(NavParamNames.Tree, SelectedTree);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteDeleteFamilyTreeNavigateCommand(string navigationPath)
         {
             return navigationPath != null && SelectedTree != null;
         }

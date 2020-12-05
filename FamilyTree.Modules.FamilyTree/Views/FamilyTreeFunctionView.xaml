@@ -1,12 +1,21 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.FamilyTree.Views.FamilyTreeFunctionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:navnames="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <StackPanel Orientation="Horizontal">
-        <Button Width="100" Height="75" Content="Új" Command="{Binding CreateTreeCommand}"/>
-        <Button Width="100" Height="75" Content="Módosít" Command="{Binding ModifyTreeCommand}" CommandParameter="{Binding SelectedTree}"/>
-        <Button Width="100" Height="75" Content="Töröl" Command="{Binding DeleteTreeCommand}"/>
-        <Button Width="100" Height="75" Content="Megtekint" Command="{Binding NavigateCommand}" />
+        <Button Width="100" Height="75" Content="Új" 
+                Command="{Binding NewFamilyTreeNavigateCommand}"
+                CommandParameter="{x:Static navnames:NavigationNames.NewFamilyTreeView}"/>
+        <Button Width="100" Height="75" Content="Módosít" 
+                Command="{Binding ModifyFamilyTreeNavigateCommand}"
+                CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}"/>
+        <Button Width="100" Height="75" Content="Töröl" 
+                Command="{Binding DeleteFamilyTreeNavigateCommand}"
+                CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}"/>
+        <Button Width="100" Height="75" Content="Megtekint" 
+                Command="{Binding ShowPeopleNavigateCommand}"
+                CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}"/>
     </StackPanel>
 </UserControl>

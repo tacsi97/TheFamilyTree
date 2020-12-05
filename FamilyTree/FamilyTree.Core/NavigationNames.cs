@@ -4,8 +4,12 @@ using System.Text;
 
 namespace FamilyTree.Core
 {
-    public class NavigationNames
+    public static class NavigationNames
     {
-        public string NewFamilyTreeView => "NewFamilyTreeView";
-        }
+        public static string NewFamilyTreeView => "NewFamilyTreeView";
+        public static string ModifyFamilyTreeView => "ModifyFamilyTreeView";
+        public static string DeleteFamilyTreeView => "DeleteFamilyTreeView";
+        public static string FamilyTreeListView => "FamilyTreeListView";
+        public static string PeopleListView => "PeopleListView";
+    }
 }
