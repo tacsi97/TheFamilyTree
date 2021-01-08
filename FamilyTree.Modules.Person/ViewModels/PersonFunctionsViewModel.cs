@@ -83,6 +83,14 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
+        #region NewCommandsRegion
+
+        private DelegateCommand<string> _newFatherNavigateCommand;
+        public DelegateCommand<string> NewFatherNavigateCommand =>
+            _newFatherNavigateCommand ?? (_newFatherNavigateCommand = new DelegateCommand<string>(ExecuteNewFatherNavigateCommand, CanExecuteNewFatherNavigateCommand));
+        
+        #endregion
+
         public PersonFunctionsViewModel(IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _dialogService = dialogService;
@@ -225,6 +233,64 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             return FamilyTree != null;
         }
+
+        #endregion
+
+        #region NewFunctions
+
+        #region NewFatherNavigateCommand
+
+        public void ExecuteNewFatherNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("SelectedPerson", SelectedPerson);
+            navParams.Add("NewPersonRole", "Father");
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteNewFatherNavigateCommand(string navigationPath)
+        {
+            return !string.IsNullOrEmpty(navigationPath) && SelectedPerson != null;
+        }
+
+        #endregion
+
+        #region NewMotherNavigateCommand
+
+        public void ExecuteNewMotherNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("SelectedPerson", SelectedPerson);
+            navParams.Add("NewPersonRole", "Mother");
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteNewMotherNavigateCommand(string navigationPath)
+        {
+            return !string.IsNullOrEmpty(navigationPath) && SelectedPerson != null;
+        }
+
+        #endregion
+
+        #region NewChildNavigateCommand
+
+        public void ExecuteNewChildNavigateCommand(string navigationPath)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("SelectedPerson", SelectedPerson);
+            navParams.Add("NewPersonRole", "Child");
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+        }
+
+        public bool CanExecuteNewChildNavigateCommand(string navigationPath)
+        {
+            return !string.IsNullOrEmpty(navigationPath) && SelectedPerson != null;
+        }
+
+        #endregion
 
         #endregion
 
