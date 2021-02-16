@@ -33,7 +33,7 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<PeopleAllView, PeopleAllViewModel>();
             containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
 
-            containerRegistry.RegisterInstance<IAsyncGraphRepository<Business.Person>>(
+            containerRegistry.RegisterInstance<IAsyncRemoteRepository<Business.Person>>(
                 new PersonGraphRepository(
                     DatabaseInfo.Uri,
                     DatabaseInfo.UserName,

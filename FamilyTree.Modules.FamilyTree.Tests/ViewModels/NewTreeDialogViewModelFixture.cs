@@ -13,11 +13,11 @@ namespace FamilyTree.Modules.FamilyTree.Tests.ViewModels
 {
     public class NewTreeDialogViewModelFixture
     {
-        Mock<IAsyncRepository<Business.FamilyTree>> _repository;
+        Mock<IAsyncRemoteRepository<Business.FamilyTree>> _repository;
 
         public NewTreeDialogViewModelFixture()
         {
-            _repository = new Mock<IAsyncRepository<Business.FamilyTree>>();
+            _repository = new Mock<IAsyncRemoteRepository<Business.FamilyTree>>();
         }
 
         [Fact]

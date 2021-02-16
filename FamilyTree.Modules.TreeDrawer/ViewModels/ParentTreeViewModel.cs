@@ -26,7 +26,7 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
+        private readonly IAsyncRemoteRepository<Business.Relationship> _repository;
         private readonly ITreeDrawer _treeDrawer;
         private readonly IPersonConnector _personConnector;
         private readonly IEventAggregator _eventAggregator;
@@ -69,7 +69,7 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
         #endregion
 
-        public ParentTreeViewModel(IAsyncGraphRepository<Business.Relationship> repository, ITreeDrawer treeDrawer, IPersonConnector personConnector, IEventAggregator eventAggregator)
+        public ParentTreeViewModel(IAsyncRemoteRepository<Business.Relationship> repository, ITreeDrawer treeDrawer, IPersonConnector personConnector, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _treeDrawer = treeDrawer;

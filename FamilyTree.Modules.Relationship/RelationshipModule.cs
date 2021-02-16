@@ -26,7 +26,7 @@ namespace FamilyTree.Modules.Relationship
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance<IAsyncGraphRepository<Business.Relationship>>(
+            containerRegistry.RegisterInstance<IAsyncRemoteRepository<Business.Relationship>>(
                 new RelationshipGraphRepository(
                     DatabaseInfo.Uri,
                     DatabaseInfo.UserName,

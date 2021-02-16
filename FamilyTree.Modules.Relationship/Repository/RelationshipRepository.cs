@@ -1,4 +1,5 @@
-﻿using FamilyTree.Core;
+﻿using FamilyTree.Business;
+using FamilyTree.Core;
 using FamilyTree.Services.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ namespace FamilyTree.Modules.Relationship.Repository
 {
     public class RelationshipRepository : HttpRepository<Business.Relationship>
     {
-        public RelationshipRepository(HttpClient httpClient) : base(httpClient)
+        public RelationshipRepository(string uri, Token token, HttpClient httpClient)
+            : base(uri, token, httpClient)
         {
         }
 

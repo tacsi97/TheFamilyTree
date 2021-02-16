@@ -25,7 +25,7 @@ namespace FamilyTree.Modules.FamilyTree
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance<IAsyncGraphRepository<Business.FamilyTree>>(
+            containerRegistry.RegisterInstance<IAsyncRemoteRepository<Business.FamilyTree>>(
                 new FamilyTreeGraphRepository(
                     DatabaseInfo.Uri,
                     DatabaseInfo.UserName,

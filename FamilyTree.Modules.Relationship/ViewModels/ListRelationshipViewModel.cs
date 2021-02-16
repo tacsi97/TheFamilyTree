@@ -22,7 +22,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
     public class ListRelationshipViewModel : BindableBase, INavigationAware
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IAsyncGraphRepository<Business.Relationship> _repository;
+        private readonly IAsyncRemoteRepository<Business.Relationship> _repository;
 
         public string Title => "Edit";
 
@@ -58,7 +58,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public ListRelationshipViewModel(IEventAggregator eventAggregator, IAsyncGraphRepository<Business.Relationship> repository)
+        public ListRelationshipViewModel(IEventAggregator eventAggregator, IAsyncRemoteRepository<Business.Relationship> repository)
         {
             _eventAggregator = eventAggregator;
             _repository = repository;

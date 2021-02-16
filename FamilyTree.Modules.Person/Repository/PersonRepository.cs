@@ -1,4 +1,5 @@
-﻿using FamilyTree.Core;
+﻿using FamilyTree.Business;
+using FamilyTree.Core;
 using FamilyTree.Services.Repository;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace FamilyTree.Modules.Person.Repository
     /// </summary>
     public class PersonRepository : HttpRepository<Business.Person>
     {
-        public PersonRepository(HttpClient httpClient) : base(httpClient)
+        public PersonRepository(string uri, Token token, HttpClient httpClient)
+            : base(uri, token, httpClient)
         {
         }
 

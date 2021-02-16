@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {
-    public class FakeRepository : IAsyncRepository<Business.FamilyTree>
+    public class FakeRepository : IAsyncRemoteRepository<Business.FamilyTree>
     {
         public ObservableCollection<Business.FamilyTree> Trees { get; set; }
+        public Token Token { get; set; }
+        public string Uri { get; set; }
 
         public FakeRepository()
         {
@@ -22,12 +24,12 @@ namespace FamilyTree.Modules.FamilyTree.Repository
             Trees.Add(new Business.FamilyTree() { ID = 2, Name = "Láng Család", People = new ObservableCollection<Person>() });
         }
 
-        public async Task CreateAsync(string uri, string content)
+        public async Task CreateAsync(Business.FamilyTree content)
         {
-            await Task.Run(() => Trees.Add(JsonConvert.DeserializeObject<Business.FamilyTree>(content)));
+            await Task.Run(() => Trees.Add(content));
         }
 
-        public async Task DeleteAsync(string uri, int id)
+        public async Task DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
@@ -42,30 +44,25 @@ namespace FamilyTree.Modules.FamilyTree.Repository
             });
         }
 
-        public async Task<IEnumerable<Business.FamilyTree>> GetAllAsync(string uri)
+        public async Task<IEnumerable<Business.FamilyTree>> GetAllAsync()
         {
             return await Task.Run(() => Trees);
         }
 
-        public async Task<Business.FamilyTree> GetAsync(string uri, int id)
+        public async Task<Business.FamilyTree> GetAsync(int id)
         {
             return await Task.Run(() => Trees.ElementAt(id));
         }
 
-        public async Task ModifyAsync(string uri, string content)
+        public async Task ModifyAsync(Business.FamilyTree content)
         {
             await Task.Run(() =>
             {
-                var treeFrom = JsonConvert.DeserializeObject<Business.FamilyTree>(content);
-                foreach (var tree in Trees)
-                {
-                    if(tree.ID == treeFrom.ID)
-                    {
-                        treeFrom.Name = tree.Name;
-                        treeFrom.People = tree.People;
-                        break;
-                    }
-                }
+                var original = Trees.First(tree => tree.ID.Equals(content.ID));
+
+                original.ID = content.ID;
+                original.Name = content.Name;
+                original.People = content.People;
             });
         }
     }

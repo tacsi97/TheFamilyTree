@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using FamilyTree.Business;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +11,13 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository
 {
-    public abstract class HttpRepository<TObject> : AsyncRepositoryBase<TObject>
+    public abstract class HttpRepository<T> : AsyncRepositoryBase<T>
     {
         private HttpClient _httpClient;
+
+        private string _uri;
+
+        private Token _token;
 
         //TODO: make this virtual instead of abstract
         //TODO: rewrite docs
@@ -28,13 +33,11 @@ namespace FamilyTree.Services.Repository
 
         public abstract string GetAllUri { get; }
 
-        public HttpRepository()
+        public HttpRepository(string uri, Token token, HttpClient httpClient):
+            base(uri, token)
         {
-
-        }
-
-        public HttpRepository(HttpClient httpClient)
-        {
+            _uri = uri;
+            _token = token;
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(
@@ -48,96 +51,102 @@ namespace FamilyTree.Services.Repository
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
-        public override async Task CreateAsync(string uri, string content)
+        public override async Task CreateAsync(T content)
         {
-            if (string.IsNullOrEmpty(content))
+            if (content == null)
                 throw new ArgumentNullException(nameof(content), ExceptionMessages.ValueIsNull);
 
-            if (string.IsNullOrEmpty(uri))
-                throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(_uri))
+                throw new ArgumentNullException(nameof(_uri), ExceptionMessages.ValueIsNull);
 
-            var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
+            var data = new StringContent(
+                JsonConvert.SerializeObject(content), 
+                Encoding.UTF8, 
+                MediaTypeNames.Application.Json);
 
-            var response = await _httpClient.PostAsync(uri, data);
-
-            if (!response.IsSuccessStatusCode)
-                throw new HttpRequestException(ExceptionMessages.HttpResponseException);
-        }
-
-        /// <summary>
-        /// Sends an HTTP Delete request to the specified <paramref name="uri"/> with the <paramref name="id"/> of the object
-        /// </summary>
-        /// <param name="uri">The full uri</param>
-        /// <param name="id">The id of the object</param>
-        /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null or empty</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public override async Task DeleteAsync(string uri, int id)
-        {
-            if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
-
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
-
-            var response = await _httpClient.DeleteAsync(uri);
+            var response = await _httpClient.PostAsync(_uri, data);
 
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException(ExceptionMessages.HttpResponseException);
         }
 
         /// <summary>
-        /// Sends an HTTP Get request to the specified <paramref name="uri"/> with the <paramref name="id"/> of the object
+        /// Sends an HTTP Delete request to the specified <paramref name="_uri"/> with the <paramref name="id"/> of the object
         /// </summary>
-        /// <param name="uri">The full uri</param>
+        /// <param name="_uri">The full uri</param>
         /// <param name="id">The id of the object</param>
         /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> parameter is null or empty</exception>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="_uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public override async Task<TObject> GetAsync(string uri, int id)
+        public override async Task DeleteAsync(int id)
         {
-            if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(_uri)) throw new ArgumentNullException(nameof(_uri), ExceptionMessages.ValueIsNull);
 
             if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
 
-            var response = await _httpClient.GetAsync(uri);
+            var response = await _httpClient.DeleteAsync(_uri);
 
-            var json = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<TObject>(json);
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException(ExceptionMessages.HttpResponseException);
         }
 
         /// <summary>
-        /// Sends an HTTP Get request to the specified <paramref name="uri"/>
+        /// Sends an HTTP Get request to the specified <paramref name="_uri"/> with the <paramref name="id"/> of the object
         /// </summary>
-        /// <param name="uri">The full uri</param>
+        /// <param name="_uri">The full uri</param>
+        /// <param name="id">The id of the object</param>
         /// <returns>The response of the request</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="uri"/> is null or empty</exception>
-        public override async Task<IEnumerable<TObject>> GetAllAsync(string uri)
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="_uri"/> parameter is null or empty</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
+        public override async Task<T> GetAsync(int id)
         {
-            if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(_uri)) throw new ArgumentNullException(nameof(_uri), ExceptionMessages.ValueIsNull);
 
-            var response = await _httpClient.GetAsync(uri);
+            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
+
+            var response = await _httpClient.GetAsync(_uri);
 
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IEnumerable<TObject>>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         /// <summary>
-        /// Sends an HTTP Post request to the specified <paramref name="uri"/> with the serialized <paramref name="content"/>
+        /// Sends an HTTP Get request to the specified <paramref name="_uri"/>
         /// </summary>
-        /// <param name="uri">The full uri</param>
+        /// <param name="_uri">The full uri</param>
+        /// <returns>The response of the request</returns>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="_uri"/> is null or empty</exception>
+        public override async Task<IEnumerable<T>> GetAllAsync()
+        {
+            if (string.IsNullOrEmpty(_uri)) throw new ArgumentNullException(nameof(_uri), ExceptionMessages.ValueIsNull);
+
+            var response = await _httpClient.GetAsync(_uri);
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<IEnumerable<T>>(json);
+        }
+
+        /// <summary>
+        /// Sends an HTTP Post request to the specified <paramref name="_uri"/> with the serialized <paramref name="content"/>
+        /// </summary>
+        /// <param name="_uri">The full uri</param>
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
-        public override async Task ModifyAsync(string uri, string content)
+        public override async Task ModifyAsync(T content)
         {
-            if (string.IsNullOrEmpty(content)) throw new ArgumentNullException(nameof(content));
+            if (content == null) throw new ArgumentNullException(nameof(content));
 
-            if (string.IsNullOrEmpty(uri)) throw new ArgumentNullException(nameof(uri));
+            if (string.IsNullOrEmpty(_uri)) throw new ArgumentNullException(nameof(_uri));
 
-            var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
+            var data = new StringContent(
+                JsonConvert.SerializeObject(content), 
+                Encoding.UTF8, 
+                MediaTypeNames.Application.Json);
 
-            var response = await _httpClient.PutAsync(uri, data);
+            var response = await _httpClient.PutAsync(_uri, data);
 
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException(ExceptionMessages.HttpResponseException);

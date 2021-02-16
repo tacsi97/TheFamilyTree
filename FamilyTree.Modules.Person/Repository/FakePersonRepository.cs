@@ -12,9 +12,11 @@ using System.Windows;
 
 namespace FamilyTree.Modules.Person.Repository
 {
-    public class FakePersonRepository : IAsyncRepository<Business.Person>
+    public class FakePersonRepository : IAsyncRemoteRepository<Business.Person>
     {
         public ObservableCollection<Business.Person> People = new ObservableCollection<Business.Person>();
+        public Business.Token Token { get; set; }
+        public string Uri { get; set; }
 
         public int id = 0;
 
@@ -51,18 +53,17 @@ namespace FamilyTree.Modules.Person.Repository
             id = 3;
         }
 
-        public async Task CreateAsync(string uri, string content)
+        public async Task CreateAsync(Business.Person content)
         {
             await Task.Run(() =>
             {
-                var person = JsonConvert.DeserializeObject<Business.Person>(content);
-                person.ID = id;
+                content.ID = id;
                 id++;
-                People.Add(person);
+                People.Add(content);
             });
         }
 
-        public async Task DeleteAsync(string uri, int id)
+        public async Task DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
@@ -70,38 +71,30 @@ namespace FamilyTree.Modules.Person.Repository
             });
         }
 
-        public async Task<IEnumerable<Business.Person>> GetAllAsync(string uri)
+        public async Task<IEnumerable<Business.Person>> GetAllAsync()
         {
             var result = await Task.Run<IEnumerable<Business.Person>>(() => People);
 
             return result;
         }
 
-        public async Task<Business.Person> GetAsync(string uri, int id)
+        public async Task<Business.Person> GetAsync(int id)
         {
             var result = await Task.Run(() => People.ElementAt(id));
 
             return result;
         }
 
-        public async Task ModifyAsync(string uri, string content)
+        public async Task ModifyAsync(Business.Person content)
         {
             await Task.Run(() =>
             {
-                var resultPerson = JsonConvert.DeserializeObject<Business.Person>(content);
-                foreach (var person in People)
-                {
-                    if (person.ID == resultPerson.ID)
-                    {
-                        person.FirstName = resultPerson.FirstName;
-                        person.LastName = resultPerson.LastName;
-                        person.DateOfBirth = resultPerson.DateOfBirth;
-                        person.DateOfDeath = resultPerson.DateOfDeath;
-                        person.Gender = resultPerson.Gender;
-
-                        break;
-                    }
-                }
+                var original = People.First(person => person.ID.Equals(content.ID));
+                original.FirstName = content.FirstName;
+                original.LastName = content.LastName;
+                original.DateOfBirth = content.DateOfBirth;
+                original.DateOfDeath = content.DateOfDeath;
+                original.Gender = content.Gender;
             });
         }
     }

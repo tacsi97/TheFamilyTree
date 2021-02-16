@@ -13,9 +13,11 @@ using System.Windows;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
-    public class FakeRelationshipRepository : IAsyncRepository<Business.Relationship>
+    public class FakeRelationshipRepository : IAsyncRemoteRepository<Business.Relationship>
     {
         public ObservableCollection<Business.Relationship> Relationships { get; set; }
+        public Token Token { get; set; }
+        public string Uri { get; set; }
 
         public FakeRelationshipRepository()
         {
@@ -43,15 +45,15 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task CreateAsync(string uri, string content)
+        public async Task CreateAsync(Business.Relationship content)
         {
             await Task.Run(() =>
             {
-                Relationships.Add(JsonConvert.DeserializeObject<Business.Relationship>(content));
+                Relationships.Add(content);
             });
         }
 
-        public async Task DeleteAsync(string uri, int id)
+        public async Task DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
@@ -61,12 +63,12 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task<IEnumerable<Business.Relationship>> GetAllAsync(string uri)
+        public async Task<IEnumerable<Business.Relationship>> GetAllAsync()
         {
             return await Task.Run(() => Relationships);
         }
 
-        public async Task<Business.Relationship> GetAsync(string uri, int id)
+        public async Task<Business.Relationship> GetAsync(int id)
         {
             return await Task.Run(() =>
             {
@@ -74,18 +76,16 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task ModifyAsync(string uri, string content)
+        public async Task ModifyAsync(Business.Relationship content)
         {
-            var contentRelationship = JsonConvert.DeserializeObject<Business.Relationship>(content);
-
             await Task.Run(() =>
             {
-                var result = Relationships.ToList().Find((relationship) => relationship.ID == contentRelationship.ID);
+                var result = Relationships.ToList().Find((relationship) => relationship.ID == content.ID);
 
-                result.PersonFrom = contentRelationship.PersonFrom;
-                result.PersonTo = contentRelationship.PersonTo;
-                result.From = contentRelationship.From;
-                result.To = contentRelationship.To;
+                result.PersonFrom = content.PersonFrom;
+                result.PersonTo = content.PersonTo;
+                result.From = content.From;
+                result.To = content.To;
             });
         }
     }

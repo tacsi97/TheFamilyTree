@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
-    public class RelationshipGraphRepository : IAsyncGraphRepository<Business.Relationship>
+    public class RelationshipGraphRepository : IAsyncRemoteRepository<Business.Relationship>
     {
         public RelationshipGraphRepository(string uri, string user, string password)
         {

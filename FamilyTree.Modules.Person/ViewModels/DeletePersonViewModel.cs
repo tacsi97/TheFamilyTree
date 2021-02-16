@@ -15,7 +15,7 @@ namespace FamilyTree.Modules.Person.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncGraphRepository<Business.Person> _repository;
+        private readonly IAsyncRemoteRepository<Business.Person> _repository;
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public DeletePersonViewModel(IAsyncGraphRepository<Business.Person> repository)
+        public DeletePersonViewModel(IAsyncRemoteRepository<Business.Person> repository)
         {
             _repository = repository;
 

@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {
-    public class FamilyTreeGraphRepository : IAsyncGraphRepository<Business.FamilyTree>
+    public class FamilyTreeGraphRepository : IAsyncRemoteRepository<Business.FamilyTree>
     {
+        public Business.Token Token { get; set; }
 
-        public FamilyTreeGraphRepository(string uri, string user, string password)
-        {
-        }
+        public string Uri { get; set; }
 
         public async Task CreateAsync(Business.FamilyTree template)
         {

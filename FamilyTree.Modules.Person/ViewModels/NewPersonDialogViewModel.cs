@@ -22,7 +22,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 {
     public class NewPersonDialogViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncGraphRepository<Business.Person> _repository;
+        private readonly IAsyncRemoteRepository<Business.Person> _repository;
         private readonly IEventAggregator _eventAggregator;
 
         #region Commands
@@ -149,7 +149,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public NewPersonDialogViewModel(IAsyncGraphRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand)
+        public NewPersonDialogViewModel(IAsyncRemoteRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand)
         {
             _repository = repository;
             _eventAggregator = eventAggregator;

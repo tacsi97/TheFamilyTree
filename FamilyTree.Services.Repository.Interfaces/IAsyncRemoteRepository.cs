@@ -1,25 +1,30 @@
-﻿using System;
+﻿using FamilyTree.Business;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository.Interfaces
 {
-    public interface IAsyncRepository<TObject>
+    public interface IAsyncRemoteRepository<T>
     {
+        public Token Token { get; set; }
+
+        public string Uri { get; set; }
+
         // TODO: refactor after navigation branch IAsyncRemoteRepository(
         //                  Uri uri, 
         //                  Token(string userName, string password),
         //                  string content | int id)
         // Ebből lehet származtatni a graph repository-t is
-        Task<IEnumerable<TObject>> GetAllAsync(string uri);
+        Task<IEnumerable<T>> GetAllAsync();
 
-        Task<TObject> GetAsync(string uri, int id);
+        Task<T> GetAsync(int id);
 
-        Task CreateAsync(string uri, string content);
+        Task CreateAsync(T content);
 
-        Task ModifyAsync(string uri, string content);
+        Task ModifyAsync(T content);
 
-        Task DeleteAsync(string uri, int id);
+        Task DeleteAsync(int id);
     }
 }

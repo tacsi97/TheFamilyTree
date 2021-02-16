@@ -12,7 +12,8 @@ namespace FamilyTree.Modules.FamilyTree.Repository
 {
     public class FamilyTreeRepository : HttpRepository<Business.FamilyTree>
     {
-        public FamilyTreeRepository(HttpClient httpClient) : base(httpClient)
+        public FamilyTreeRepository(string uri, Token token, HttpClient httpClient)
+            : base(uri, token, httpClient)
         {
         }
 

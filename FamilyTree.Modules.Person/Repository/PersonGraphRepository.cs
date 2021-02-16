@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.Repository
 {
-    public class PersonGraphRepository : IAsyncGraphRepository<Business.Person>
+    public class PersonGraphRepository : IAsyncRemoteRepository<Business.Person>
     {
         // TODO: GraphRepositoryBase class, mivel sok az azonosság a függvényeknél
         // Write függvények csak módosítani nem adnak vissza értéket
