@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository
 {
-    public abstract class AsyncRepositoryBase<T> : IAsyncRemoteRepository<T>
+    /// <summary>
+    /// Ez lesz használatban akkor, amikor a helyi gépen futó adatbázishoz szeretnénk hozzáférni.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class LocalRepositoryBase<T> : IAsyncRepository<T>
     {
         #region Properties
 
@@ -18,7 +22,7 @@ namespace FamilyTree.Services.Repository
 
         #region Constructor
 
-        public AsyncRepositoryBase(string uri, Token token)
+        public LocalRepositoryBase(string uri, Token token)
         {
             Uri = uri;
             Token = token;

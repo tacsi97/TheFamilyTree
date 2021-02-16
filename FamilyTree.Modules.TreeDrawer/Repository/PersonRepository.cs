@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FamilyTree.Modules.TreeDrawer.Repository
 {
-    public class PersonRepository : HttpRepository<Business.Person>
+    public class PersonRepository : HttpRepositoryBase<Business.Person>
     {
         public PersonRepository(string uri, Token token, HttpClient httpClient)
             : base(uri, token, httpClient)

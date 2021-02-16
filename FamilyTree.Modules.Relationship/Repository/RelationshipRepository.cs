@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
-    public class RelationshipRepository : HttpRepository<Business.Relationship>
+    public class RelationshipRepository : HttpRepositoryBase<Business.Relationship>
     {
         public RelationshipRepository(string uri, Token token, HttpClient httpClient)
             : base(uri, token, httpClient)

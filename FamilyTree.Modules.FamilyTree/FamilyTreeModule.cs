@@ -2,6 +2,7 @@
 using FamilyTree.Modules.FamilyTree.Repository;
 using FamilyTree.Modules.FamilyTree.ViewModels;
 using FamilyTree.Modules.FamilyTree.Views;
+using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -25,11 +26,14 @@ namespace FamilyTree.Modules.FamilyTree
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance<IAsyncRemoteRepository<Business.FamilyTree>>(
-                new FamilyTreeGraphRepository(
+            containerRegistry.RegisterInstance<IAsyncRepository<Business.FamilyTree>>(
+                new FakeTreeRepository(
                     DatabaseInfo.Uri,
-                    DatabaseInfo.UserName,
-                    DatabaseInfo.Password));
+                    new Business.Token()
+                    {
+                        UserName = DatabaseInfo.UserName,
+                        Code = DatabaseInfo.Password
+                    }));
 
             containerRegistry.RegisterDialog<NewFamilyTreeView, NewFamilyTreeViewModel>(DialogNames.NewTreeDialog);
             containerRegistry.RegisterDialog<ModifyTreeDialog, ModifyFamilyTreeViewModel>(DialogNames.ModifyTreeDialog);

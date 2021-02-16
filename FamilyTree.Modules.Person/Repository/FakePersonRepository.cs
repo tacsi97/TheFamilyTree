@@ -1,4 +1,5 @@
 ﻿using FamilyTree.Core.Extensions;
+using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Common;
@@ -12,15 +13,14 @@ using System.Windows;
 
 namespace FamilyTree.Modules.Person.Repository
 {
-    public class FakePersonRepository : IAsyncRemoteRepository<Business.Person>
+    public class FakePersonRepository : LocalRepositoryBase<Business.Person>
     {
         public ObservableCollection<Business.Person> People = new ObservableCollection<Business.Person>();
-        public Business.Token Token { get; set; }
-        public string Uri { get; set; }
 
         public int id = 0;
 
-        public FakePersonRepository()
+        public FakePersonRepository(string uri, Business.Token token)
+            : base(uri, token)
         {
             People.Add(
                 new Business.Person()
@@ -53,7 +53,7 @@ namespace FamilyTree.Modules.Person.Repository
             id = 3;
         }
 
-        public async Task CreateAsync(Business.Person content)
+        public override async Task CreateAsync(Business.Person content)
         {
             await Task.Run(() =>
             {
@@ -63,7 +63,7 @@ namespace FamilyTree.Modules.Person.Repository
             });
         }
 
-        public async Task DeleteAsync(int id)
+        public override async Task DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
@@ -71,21 +71,21 @@ namespace FamilyTree.Modules.Person.Repository
             });
         }
 
-        public async Task<IEnumerable<Business.Person>> GetAllAsync()
+        public override async Task<IEnumerable<Business.Person>> GetAllAsync()
         {
             var result = await Task.Run<IEnumerable<Business.Person>>(() => People);
 
             return result;
         }
 
-        public async Task<Business.Person> GetAsync(int id)
+        public override async Task<Business.Person> GetAsync(int id)
         {
             var result = await Task.Run(() => People.ElementAt(id));
 
             return result;
         }
 
-        public async Task ModifyAsync(Business.Person content)
+        public override async Task ModifyAsync(Business.Person content)
         {
             await Task.Run(() =>
             {

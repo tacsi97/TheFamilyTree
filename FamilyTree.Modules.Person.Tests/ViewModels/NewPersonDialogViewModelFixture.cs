@@ -14,13 +14,13 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
 {
     public class NewPersonDialogViewModelFixture
     {
-        Mock<IAsyncRemoteRepository<Business.Person>> _repository;
+        Mock<IAsyncRepository<Business.Person>> _repository;
         Mock<IEventAggregator> _eventAggregator;
         Mock<IUpload> _iUpload;
 
         public NewPersonDialogViewModelFixture()
         {
-            _repository = new Mock<IAsyncRemoteRepository<Business.Person>>();
+            _repository = new Mock<IAsyncRepository<Business.Person>>();
             _eventAggregator = new Mock<IEventAggregator>();
             _iUpload = new Mock<IUpload>();
         }

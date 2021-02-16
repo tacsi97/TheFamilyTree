@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository.Interfaces
 {
-    public interface IAsyncRemoteRepository<T>
+    // TODO: IAysnc repo-bol származzon a RemoteRepoBase, LocalRepoBase és a FakeRepoBase
+    public interface IAsyncRepository<T>
     {
         public Token Token { get; set; }
 

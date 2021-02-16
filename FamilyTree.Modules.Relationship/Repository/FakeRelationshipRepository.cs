@@ -13,13 +13,11 @@ using System.Windows;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
-    public class FakeRelationshipRepository : IAsyncRemoteRepository<Business.Relationship>
+    public class FakeRelationshipRepository : LocalRepositoryBase<Business.Relationship>
     {
         public ObservableCollection<Business.Relationship> Relationships { get; set; }
-        public Token Token { get; set; }
-        public string Uri { get; set; }
 
-        public FakeRelationshipRepository()
+        public FakeRelationshipRepository(string uri, Token token) : base(uri, token)
         {
             Relationships = new ObservableCollection<Business.Relationship>();
 
@@ -45,7 +43,7 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task CreateAsync(Business.Relationship content)
+        public override async Task CreateAsync(Business.Relationship content)
         {
             await Task.Run(() =>
             {
@@ -53,7 +51,7 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task DeleteAsync(int id)
+        public override async Task DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
@@ -63,12 +61,12 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task<IEnumerable<Business.Relationship>> GetAllAsync()
+        public override async Task<IEnumerable<Business.Relationship>> GetAllAsync()
         {
             return await Task.Run(() => Relationships);
         }
 
-        public async Task<Business.Relationship> GetAsync(int id)
+        public override async Task<Business.Relationship> GetAsync(int id)
         {
             return await Task.Run(() =>
             {
@@ -76,7 +74,7 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public async Task ModifyAsync(Business.Relationship content)
+        public override async Task ModifyAsync(Business.Relationship content)
         {
             await Task.Run(() =>
             {

@@ -15,7 +15,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRemoteRepository<Business.Relationship> _repository;
+        private readonly IAsyncRepository<Business.Relationship> _repository;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public DeleteRelationshipViewModel(IAsyncRemoteRepository<Business.Relationship> repository)
+        public DeleteRelationshipViewModel(IAsyncRepository<Business.Relationship> repository)
         {
             _repository = repository;
         }

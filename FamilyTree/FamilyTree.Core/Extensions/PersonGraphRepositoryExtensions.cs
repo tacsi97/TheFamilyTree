@@ -11,7 +11,7 @@ namespace FamilyTree.Core.Extensions
 {
     public static class PersonGraphRepositoryExtensions
     {
-        public static async Task<IEnumerable<Business.Person>> GetPeopleIncludedIn(this IAsyncRemoteRepository<Business.Person> asyncGraph, int familyTreeID)
+        public static async Task<IEnumerable<Business.Person>> GetPeopleIncludedIn(this IAsyncRepository<Business.Person> asyncGraph, int familyTreeID)
         {
             var people = new List<Business.Person>();
 
@@ -34,7 +34,7 @@ namespace FamilyTree.Core.Extensions
             return people;
         }
 
-        public static async Task CreateParent(this IAsyncRemoteRepository<Business.Person> asyncGraphRepository, Business.Person child, Business.Person parent)
+        public static async Task CreateParent(this IAsyncRepository<Business.Person> asyncGraphRepository, Business.Person child, Business.Person parent)
         {
             // fel lehetne használi a normál create függvényt is asyncGraphRepository.CreateAsync(parent);
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
@@ -58,7 +58,7 @@ namespace FamilyTree.Core.Extensions
             }
         }
 
-        public static async Task CreateChild(this IAsyncRemoteRepository<Business.Person> asyncGraphRepository, Business.Person parent, Business.Person child)
+        public static async Task CreateChild(this IAsyncRepository<Business.Person> asyncGraphRepository, Business.Person parent, Business.Person child)
         {
             // fel lehetne használi a normál create függvényt is asyncGraphRepository.CreateAsync(parent);
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))

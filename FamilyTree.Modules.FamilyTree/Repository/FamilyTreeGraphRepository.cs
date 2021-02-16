@@ -1,4 +1,5 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Neo4j.Driver;
 using Neo4jClient;
@@ -10,13 +11,14 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {
-    public class FamilyTreeGraphRepository : IAsyncRemoteRepository<Business.FamilyTree>
+    public class FamilyTreeGraphRepository : LocalRepositoryBase<Business.FamilyTree>
     {
-        public Business.Token Token { get; set; }
+        public FamilyTreeGraphRepository(string uri, Business.Token token)
+            : base(uri, token)
+        {
+        }
 
-        public string Uri { get; set; }
-
-        public async Task CreateAsync(Business.FamilyTree template)
+        public override async Task CreateAsync(Business.FamilyTree template)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
@@ -34,7 +36,7 @@ namespace FamilyTree.Modules.FamilyTree.Repository
             }
         }
 
-        public async Task DeleteAsync(int id)
+        public override async Task DeleteAsync(int id)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
@@ -48,7 +50,7 @@ namespace FamilyTree.Modules.FamilyTree.Repository
             }
         }
 
-        public async Task<IEnumerable<Business.FamilyTree>> GetAllAsync()
+        public override async Task<IEnumerable<Business.FamilyTree>> GetAllAsync()
         {
             var trees = new List<Business.FamilyTree>();
 
@@ -106,7 +108,7 @@ namespace FamilyTree.Modules.FamilyTree.Repository
             return trees;
         }
 
-        public async Task<Business.FamilyTree> GetAsync(int id)
+        public override async Task<Business.FamilyTree> GetAsync(int id)
         {
             Business.FamilyTree tree = null;
 
@@ -126,7 +128,7 @@ namespace FamilyTree.Modules.FamilyTree.Repository
             return tree;
         }
 
-        public async Task ModifyAsync(Business.FamilyTree template)
+        public override async Task ModifyAsync(Business.FamilyTree template)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {

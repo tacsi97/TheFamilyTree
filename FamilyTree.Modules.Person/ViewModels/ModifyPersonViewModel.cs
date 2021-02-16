@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 {
     public class ModifyPersonViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncRemoteRepository<Business.Person> _repository;
+        private readonly IAsyncRepository<Business.Person> _repository;
 
         private AsyncCommand _asyncCommand;
         public AsyncCommand AsyncCommand
@@ -122,7 +122,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public ModifyPersonViewModel(IAsyncRemoteRepository<Business.Person> repository)
+        public ModifyPersonViewModel(IAsyncRepository<Business.Person> repository)
         {
             _repository = repository;
 

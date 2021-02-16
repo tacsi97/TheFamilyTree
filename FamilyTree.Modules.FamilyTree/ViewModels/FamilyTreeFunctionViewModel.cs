@@ -22,7 +22,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRemoteRepository<Business.FamilyTree> _repository;
+        private readonly IAsyncRepository<Business.FamilyTree> _repository;
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
@@ -78,7 +78,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #endregion
 
-        public FamilyTreeFunctionViewModel(IAsyncRemoteRepository<Business.FamilyTree> repository, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
+        public FamilyTreeFunctionViewModel(IAsyncRepository<Business.FamilyTree> repository, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _repository = repository;
             _dialogService = dialogService;

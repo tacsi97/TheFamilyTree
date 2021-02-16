@@ -10,8 +10,11 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.Repository
 {
-    public class PersonGraphRepository : IAsyncRemoteRepository<Business.Person>
+    public class PersonGraphRepository : IAsyncRepository<Business.Person>
     {
+        public Business.Token Token { get; set; }
+        public string Uri { get; set; }
+
         // TODO: GraphRepositoryBase class, mivel sok az azonosság a függvényeknél
         // Write függvények csak módosítani nem adnak vissza értéket
         // Read függvények csak értéket adnak vissza, nem módosítanak

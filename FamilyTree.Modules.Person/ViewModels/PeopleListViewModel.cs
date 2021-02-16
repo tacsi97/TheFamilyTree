@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 {
     public class PeopleListViewModel : BindableBase, INavigationAware
     {
-        private readonly IAsyncRemoteRepository<Business.Person> _repository;
+        private readonly IAsyncRepository<Business.Person> _repository;
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
 
@@ -59,7 +59,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public PeopleListViewModel(IAsyncRemoteRepository<Business.Person> repository, IDialogService dialogService, IEventAggregator eventAggregator)
+        public PeopleListViewModel(IAsyncRepository<Business.Person> repository, IDialogService dialogService, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _dialogService = dialogService;

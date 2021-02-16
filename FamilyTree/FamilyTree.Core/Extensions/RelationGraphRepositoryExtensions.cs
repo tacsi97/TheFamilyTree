@@ -10,7 +10,7 @@ namespace FamilyTree.Core.Extensions
 {
     public static class RelationGraphRepositoryExtensions
     {
-        public static async Task<IEnumerable<Business.Relationship>> GetRelationshipsIncludedIn(this IAsyncRemoteRepository<Business.Relationship> asyncGraph, int familyTreeID)
+        public static async Task<IEnumerable<Business.Relationship>> GetRelationshipsIncludedIn(this IAsyncRepository<Business.Relationship> asyncGraph, int familyTreeID)
         {
             var relationships = new List<Business.Relationship>();
 
@@ -59,7 +59,7 @@ namespace FamilyTree.Core.Extensions
             return relationships;
         }
 
-        public static async Task CreateParentRelationship(this IAsyncRemoteRepository<Business.Relationship> asyncGraphRepository, Business.Person fromPerson, Business.Person toPerson, DateTime from, DateTime to)
+        public static async Task CreateParentRelationship(this IAsyncRepository<Business.Relationship> asyncGraphRepository, Business.Person fromPerson, Business.Person toPerson, DateTime from, DateTime to)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {

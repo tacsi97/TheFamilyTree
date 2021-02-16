@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
         #region Fields
 
         private readonly IEventAggregator _eventAggregator;
-        private readonly IAsyncRemoteRepository<Business.Relationship> _repository;
+        private readonly IAsyncRepository<Business.Relationship> _repository;
         private readonly IUpload _appSaveCommand;
 
         #endregion
@@ -87,7 +87,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public SetRelationShipViewModel(IEventAggregator eventAggregator, IAsyncRemoteRepository<Business.Relationship> repository, IUpload saveCommand)
+        public SetRelationShipViewModel(IEventAggregator eventAggregator, IAsyncRepository<Business.Relationship> repository, IUpload saveCommand)
         {
             _eventAggregator = eventAggregator;
             _appSaveCommand = saveCommand;

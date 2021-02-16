@@ -10,7 +10,7 @@ using System.Text;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {
-    public class FamilyTreeRepository : HttpRepository<Business.FamilyTree>
+    public class FamilyTreeRepository : HttpRepositoryBase<Business.FamilyTree>
     {
         public FamilyTreeRepository(string uri, Token token, HttpClient httpClient)
             : base(uri, token, httpClient)

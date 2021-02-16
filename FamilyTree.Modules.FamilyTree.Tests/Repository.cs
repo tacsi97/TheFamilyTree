@@ -12,7 +12,7 @@ namespace FamilyTree.Modules.FamilyTree.Tests
     //TODO: if the repository fails in saving data remotely, than it must save locally
     public class Repository
     {
-        private HttpRepository<Business.FamilyTree> _httpRepository;
+        private HttpRepositoryBase<Business.FamilyTree> _httpRepository;
 
         public Repository()
         {

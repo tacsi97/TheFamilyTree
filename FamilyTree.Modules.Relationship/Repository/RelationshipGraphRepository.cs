@@ -12,11 +12,14 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Relationship.Repository
 {
-    public class RelationshipGraphRepository : IAsyncRemoteRepository<Business.Relationship>
+    public class RelationshipGraphRepository : IAsyncRepository<Business.Relationship>
     {
         public RelationshipGraphRepository(string uri, string user, string password)
         {
         }
+
+        public Token Token { get; set; }
+        public string Uri { get; set; }
 
         public async Task CreateAsync(Business.Relationship template)
         {

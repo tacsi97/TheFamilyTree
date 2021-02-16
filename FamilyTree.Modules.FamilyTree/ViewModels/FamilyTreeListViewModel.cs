@@ -17,7 +17,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRemoteRepository<Business.FamilyTree> _repository;
+        private readonly IAsyncRepository<Business.FamilyTree> _repository;
         private readonly IEventAggregator _eventAggregator;
 
         #endregion
@@ -45,7 +45,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #endregion
 
-        public FamilyTreeListViewModel(IAsyncRemoteRepository<Business.FamilyTree> repository, IEventAggregator eventAggregator)
+        public FamilyTreeListViewModel(IAsyncRepository<Business.FamilyTree> repository, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _eventAggregator = eventAggregator;

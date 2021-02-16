@@ -33,11 +33,14 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<PeopleAllView, PeopleAllViewModel>();
             containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
 
-            containerRegistry.RegisterInstance<IAsyncRemoteRepository<Business.Person>>(
-                new PersonGraphRepository(
+            containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
+                new FakeRepositoryBase<Business.Person>(
                     DatabaseInfo.Uri,
-                    DatabaseInfo.UserName,
-                    DatabaseInfo.Password));
+                    new Business.Token()
+                    {
+                        UserName = DatabaseInfo.UserName,
+                        Code = DatabaseInfo.Password
+                    }));
             containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
 
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(PersonDialogNames.AddNewPersonDialog);

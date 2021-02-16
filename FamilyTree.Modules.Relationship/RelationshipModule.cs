@@ -3,6 +3,7 @@ using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Modules.Relationship.Repository;
 using FamilyTree.Modules.Relationship.ViewModels;
 using FamilyTree.Modules.Relationship.Views;
+using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -26,15 +27,17 @@ namespace FamilyTree.Modules.Relationship
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance<IAsyncRemoteRepository<Business.Relationship>>(
-                new RelationshipGraphRepository(
+            containerRegistry.RegisterInstance<IAsyncRepository<Business.Relationship>>(
+                new FakeRepositoryBase<Business.Relationship>(
                     DatabaseInfo.Uri,
-                    DatabaseInfo.UserName,
-                    DatabaseInfo.Password));
+                    new Business.Token()
+                    {
+                        UserName = DatabaseInfo.UserName,
+                        Code = DatabaseInfo.Password
+                    }));
+
             // Singleton
             containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
-
-            
 
             containerRegistry.RegisterForNavigation<ListRelationshipView, ListRelationshipViewModel>();
             containerRegistry.RegisterForNavigation<RelationshipFunctions, RelationshipFunctionsViewModel>();

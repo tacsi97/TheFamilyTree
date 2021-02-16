@@ -15,7 +15,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
     public class NewFamilyTreeViewModel : BindableBase, IDialogAware
     {
-        private readonly IAsyncRemoteRepository<Business.FamilyTree> _repository;
+        private readonly IAsyncRepository<Business.FamilyTree> _repository;
 
         public string Title => "Fa létrehozása";
 
@@ -34,7 +34,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public NewFamilyTreeViewModel(IAsyncRemoteRepository<Business.FamilyTree> repository)
+        public NewFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository)
         {
             _repository = repository;
 
