@@ -6,26 +6,57 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository.Interfaces
 {
-    // TODO: IAysnc repo-bol származzon a RemoteRepoBase, LocalRepoBase és a FakeRepoBase
-    public interface IAsyncRepository<T>
+    /// <summary>
+    /// This is an interface for the main CRUD operations.
+    /// </summary>
+    /// <typeparam name="T">The generic type</typeparam>
+    public interface IAsyncRepository<T> where T : BusinessBase
     {
+        /// <summary>
+        /// A token for accessing the database.
+        /// It contains a username and a password
+        /// </summary>
         public Token Token { get; set; }
 
+        /// <summary>
+        /// An uri that specifies the the database.
+        /// </summary>
         public string Uri { get; set; }
 
-        // TODO: refactor after navigation branch IAsyncRemoteRepository(
-        //                  Uri uri, 
-        //                  Token(string userName, string password),
-        //                  string content | int id)
-        // Ebből lehet származtatni a graph repository-t is
+        /// <summary>
+        /// This function returns all of the <typeparamref name="T"/> objects.
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<T>> GetAllAsync();
 
+        /// <summary>
+        /// This function returns a <typeparamref name="T"/> object, which is a <typeparamref name="BusinessBase"/>,
+        /// where the specified <paramref name="id"/> is equals with the <typeparamref name="BusinessBase"/> objects <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The ID of the <typeparamref name="BusinessBase"/> object.</param>
+        /// <returns>The object with the corresponding ID or null if there isn't any object</returns>
         Task<T> GetAsync(int id);
 
+        /// <summary>
+        /// This function inserts a <typeparamref name="T"/> object to the dataset.
+        /// </summary>
+        /// <param name="content">The <typeparamref name="T"/> object</param>
+        /// <returns></returns>
         Task CreateAsync(T content);
 
+        /// <summary>
+        /// This function finds the <typeparamref name="T"/> object
+        /// which has the same id as the <typeparamref name="T"/> object given in the parameter.
+        /// </summary>
+        /// <param name="content">The <typeparamref name="T"/> object with the new values</param>
+        /// <returns></returns>
         Task ModifyAsync(T content);
 
+        /// <summary>
+        /// This function removes the <typeparamref name="T"/> object with the given <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">The ID of the <typeparamref name="T"/> object, you want to remove</param>
+        /// <returns></returns>
         Task DeleteAsync(int id);
     }
 }

@@ -17,6 +17,7 @@ namespace FamilyTree.Services.Repository
         public ObservableCollection<T> Collection { get; set; }
 
         public Token Token { get; set; }
+
         public string Uri { get; set; }
 
         public FakeRepositoryBase()
