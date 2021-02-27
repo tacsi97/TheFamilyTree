@@ -8,9 +8,9 @@ namespace FamilyTree.Modules.FamilyTree.Views
     /// Interaction logic for ModifyTreeDialog
     /// </summary>
     [DependentView(RegionNames.FunctionRegion, typeof(BackFamilyTreeView))]
-    public partial class ModifyTreeDialog : UserControl
+    public partial class ModifyFamilyTreeView : UserControl
     {
-        public ModifyTreeDialog()
+        public ModifyFamilyTreeView()
         {
             InitializeComponent();
         }
