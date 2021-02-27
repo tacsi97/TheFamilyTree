@@ -47,18 +47,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public DelegateCommand<string> ShowPeopleNavigateCommand =>
             _showPeopleNavigateCommand ?? (_showPeopleNavigateCommand = new DelegateCommand<string>(ExecuteShowPeopleNavigateCommand, CanExecuteShowPeopleNavigateCommand));
 
-        private DelegateCommand _createTreeCommand;
-        public DelegateCommand CreateTreeCommand =>
-            _createTreeCommand ?? (_createTreeCommand = new DelegateCommand(ExecuteCreateTreeCommand, CanExecuteCreateTreeCommand));
-
-        private DelegateCommand<Business.FamilyTree> _modifyTreeCommand;
-        public DelegateCommand<Business.FamilyTree> ModifyTreeCommand =>
-            _modifyTreeCommand ?? (_modifyTreeCommand = new DelegateCommand<Business.FamilyTree>(ExecuteModifyTreeCommand, CanExecuteModifyTreeCommand));
-
-        private IAsyncGenericCommand<Business.FamilyTree> _deleteTreeCommand;
-        public IAsyncGenericCommand<Business.FamilyTree> DeleteTreeCommand =>
-            _deleteTreeCommand ?? (_deleteTreeCommand = new AsyncGenericCommand<Business.FamilyTree>(ExecuteDeleteTreeCommand, CanExecuteDeleteTreeCommand));
-
         #endregion
 
         #region Properties
@@ -86,64 +74,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             _regionManager = regionManager;
             _eventAggregator.GetEvent<SelectedTreeChanged>().Subscribe(ChangeSelectedTree);
         }
-
-        #region CreateTreeCommand
-
-        public void ExecuteCreateTreeCommand()
-        {
-            var navParams = new NavigationParameters();
-
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "NewFamilyTreeView", navParams);
-        }
-
-        public bool CanExecuteCreateTreeCommand() => true;
-
-        #endregion
-
-        #region ModifyTreeCommand
-
-        public void ExecuteModifyTreeCommand(Business.FamilyTree familyTree)
-        {
-            var parameters = new DialogParameters();
-
-            parameters.Add(DialogParameterNames.Tree, familyTree);
-
-            _dialogService.ShowDialog(DialogNames.ModifyTreeDialog, parameters, r =>
-            {
-
-            });
-        }
-
-        public bool CanExecuteModifyTreeCommand(Business.FamilyTree familyTree) => familyTree != null;
-
-        #endregion
-
-        #region DeleteTreeCommand
-
-        public async Task ExecuteDeleteTreeCommand()
-        {
-            await _repository.DeleteAsync(SelectedTree.ID);
-        }
-
-        public bool CanExecuteDeleteTreeCommand() => SelectedTree != null;
-
-        #endregion
-
-        #region NavigateCommand
-
-        public void ExecuteNavigateCommand(object param)
-        {
-            var navParams = new NavigationParameters();
-
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "PeopleListView", navParams);
-        }
-
-        public bool CanExecuteNavigateCommand(object param)
-        {
-            return SelectedTree != null;
-        }
-
-        #endregion
 
         #region NewFamilyTreeCommand
 
