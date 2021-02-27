@@ -5,6 +5,7 @@ using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -14,27 +15,23 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
-    public class ModifyFamilyTreeViewModel : BindableBase, IDialogAware
+    public class ModifyFamilyTreeViewModel : BindableBase, INavigationAware
     {
         // TODO: instead of passing the whole object, I should pass only the ID and the Name
         private readonly IAsyncRepository<Business.FamilyTree> _repository;
 
-        public string Title => "Fa módosítása";
-
-        private Business.FamilyTree _familyTree;
-        public Business.FamilyTree FamilyTree
+        private Business.FamilyTree _selectedTree;
+        public Business.FamilyTree SelectedTree
         {
-            get { return _familyTree; }
+            get { return _selectedTree; }
             set
             {
-                SetProperty(ref _familyTree, value);
+                SetProperty(ref _selectedTree, value);
                 ModifyCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
         public IAsyncCommand ModifyCommand { get; set; }
-
-        public event Action<IDialogResult> RequestClose;
 
         public ModifyFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository)
         {
@@ -48,30 +45,31 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             await _repository.ModifyAsync(
                     new Business.FamilyTree()
                     {
-                        Name = FamilyTree.Name,
-                        People = FamilyTree.People,
-                        ID = FamilyTree.ID
+                        Name = SelectedTree.Name,
+                        People = SelectedTree.People,
+                        ID = SelectedTree.ID
                     });
-
-            RequestClose(new DialogResult(ButtonResult.OK));
         }
 
         /// <summary>
         /// Determines that, the command can be executed or not.
         /// </summary>
         /// <returns>If the <c>NewTreeDialogViewModel</c>'s FamilyTreeName property is null or empty, then it return false.</returns>
-        public bool CanExecuteModifyTreeCommand() => FamilyTree != null;
+        public bool CanExecuteModifyTreeCommand() => SelectedTree != null;
 
-        public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-
+            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
         }
 
-        public void OnDialogOpened(IDialogParameters parameters)
+        public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            FamilyTree = parameters.GetValue<Business.FamilyTree>(DialogParameterNames.Tree);
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
         }
     }
 }
