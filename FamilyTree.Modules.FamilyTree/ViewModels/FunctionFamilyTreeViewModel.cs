@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
-    public class FamilyTreeFunctionViewModel : BindableBase
+    public class FunctionFamilyTreeViewModel : BindableBase
     {
         #region Fields
 
@@ -78,21 +78,22 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #endregion
 
-        public FamilyTreeFunctionViewModel(IAsyncRepository<Business.FamilyTree> repository, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
+        public FunctionFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _repository = repository;
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             _eventAggregator.GetEvent<SelectedTreeChanged>().Subscribe(ChangeSelectedTree);
-            SelectedTree = new Business.FamilyTree() { Name = "Teszt" };
         }
 
         #region CreateTreeCommand
 
         public void ExecuteCreateTreeCommand()
         {
-            _dialogService.ShowDialog(DialogNames.NewTreeDialog, null, null);
+            var navParams = new NavigationParameters();
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "NewFamilyTreeView", navParams);
         }
 
         public bool CanExecuteCreateTreeCommand() => true;
@@ -162,7 +163,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         #endregion
 
         #region ModifyFamilyTreeCommand
-        // TODO: valahogy ezeket egységesíteni
         public void ExecuteModifyFamilyTreeNavigateCommand(string navigationPath)
         {
             var navParams = new NavigationParameters();

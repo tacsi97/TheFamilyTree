@@ -3,11 +3,11 @@
 namespace FamilyTree.Modules.FamilyTree.Views
 {
     /// <summary>
-    /// Interaction logic for FamilyTreeFunctionView
+    /// Interaction logic for FunctionFamilyTreeView
     /// </summary>
-    public partial class FamilyTreeFunctionView : UserControl
+    public partial class FunctionFamilyTreeView : UserControl
     {
-        public FamilyTreeFunctionView()
+        public FunctionFamilyTreeView()
         {
             InitializeComponent();
         }

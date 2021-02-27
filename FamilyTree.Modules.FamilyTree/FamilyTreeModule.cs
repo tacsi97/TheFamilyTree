@@ -41,7 +41,7 @@ namespace FamilyTree.Modules.FamilyTree
             containerRegistry.RegisterForNavigation<BackFamilyTreeView, BackFamilyTreeViewViewModel>();
             containerRegistry.RegisterForNavigation<NewFamilyTreeView, NewFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<FamilyTreeListView, FamilyTreeListViewModel>();
-            containerRegistry.RegisterForNavigation<FamilyTreeFunctionView, FamilyTreeFunctionViewModel>();
+            containerRegistry.RegisterForNavigation<FunctionFamilyTreeView, FunctionFamilyTreeViewModel>();
         }
     }
 }
