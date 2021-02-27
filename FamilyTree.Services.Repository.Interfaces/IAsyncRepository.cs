@@ -10,7 +10,7 @@ namespace FamilyTree.Services.Repository.Interfaces
     /// This is an interface for the main CRUD operations.
     /// </summary>
     /// <typeparam name="T">The generic type</typeparam>
-    public interface IAsyncRepository<T> where T : BusinessBase
+    public interface IAsyncRepository<T>
     {
         /// <summary>
         /// A token for accessing the database.
