@@ -24,7 +24,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         {
             _regionManager = regionManager;
         }
-
+        // TODO: Dependent View-t kirakni egy külön helyre, mert mindenhol ugyan az.
         public void ExecuteNavigateBackCommand()
         {
             var navParams = new NavigationParameters();
