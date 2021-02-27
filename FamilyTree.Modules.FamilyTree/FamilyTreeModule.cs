@@ -36,8 +36,8 @@ namespace FamilyTree.Modules.FamilyTree
                     }));
 
             containerRegistry.RegisterDialog<NewFamilyTreeView, NewFamilyTreeViewModel>(DialogNames.NewTreeDialog);
-            containerRegistry.RegisterDialog<ModifyTreeDialog, ModifyFamilyTreeViewModel>(DialogNames.ModifyTreeDialog);
 
+            containerRegistry.RegisterForNavigation<ModifyFamilyTreeView, ModifyFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<BackFamilyTreeView, BackFamilyTreeViewViewModel>();
             containerRegistry.RegisterForNavigation<NewFamilyTreeView, NewFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<FamilyTreeListView, FamilyTreeListViewModel>();
