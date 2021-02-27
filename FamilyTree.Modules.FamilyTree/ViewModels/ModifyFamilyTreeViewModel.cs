@@ -19,7 +19,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
     {
         // TODO: instead of passing the whole object, I should pass only the ID and the Name
         private readonly IAsyncRepository<Business.FamilyTree> _repository;
-
+        private readonly IRegionManager _regionManager;
         private Business.FamilyTree _selectedTree;
         public Business.FamilyTree SelectedTree
         {
@@ -33,22 +33,28 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public IAsyncCommand ModifyCommand { get; set; }
 
-        public ModifyFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository)
+        public ModifyFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository, IRegionManager regionManager)
         {
             _repository = repository;
-
+            _regionManager = regionManager;
             ModifyCommand = new AsyncCommand(ExecuteModifyTreeCommand, CanExecuteModifyTreeCommand);
         }
 
         public async Task ExecuteModifyTreeCommand()
         {
-            await _repository.ModifyAsync(
-                    new Business.FamilyTree()
-                    {
-                        Name = SelectedTree.Name,
-                        People = SelectedTree.People,
-                        ID = SelectedTree.ID
-                    });
+            var tree = new Business.FamilyTree()
+            {
+                Name = SelectedTree.Name,
+                People = SelectedTree.People,
+                ID = SelectedTree.ID
+            };
+
+            await _repository.ModifyAsync(tree);
+
+            var navParams = new NavigationParameters();
+            navParams.Add(NavParamNames.Tree, tree);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "FamilyTreeListView", navParams);
         }
 
         /// <summary>
