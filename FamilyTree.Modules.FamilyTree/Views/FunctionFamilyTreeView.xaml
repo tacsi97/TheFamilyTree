@@ -7,7 +7,7 @@
     <StackPanel Orientation="Horizontal">
         <Button Width="100" Height="75" Content="Új" 
                 Command="{Binding NewFamilyTreeNavigateCommand}"
-                CommandParameter="{x:Static navnames:NavigationNames.NewFamilyTreeView}"/>
+                CommandParameter="{x:Static navnames:NavigationNames.CreateFamilyTreeView}"/>
         <Button Width="100" Height="75" Content="Módosít" 
                 Command="{Binding ModifyFamilyTreeNavigateCommand}"
                 CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}"/>
