@@ -22,8 +22,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
     {
         #region Fields
 
-        private readonly IAsyncRepository<Business.FamilyTree> _repository;
-        private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
 
@@ -66,10 +64,8 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #endregion
 
-        public FunctionFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
+        public FunctionFamilyTreeViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
-            _repository = repository;
-            _dialogService = dialogService;
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             _eventAggregator.GetEvent<SelectedTreeChanged>().Subscribe(ChangeSelectedTree);

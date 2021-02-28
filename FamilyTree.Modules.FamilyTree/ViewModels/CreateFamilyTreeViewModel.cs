@@ -1,9 +1,11 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.Commands;
+using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -13,11 +15,12 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
-    public class NewFamilyTreeViewModel : BindableBase, IDialogAware
+    public class CreateFamilyTreeViewModel : BindableBase, INavigationAware
     {
         private readonly IAsyncRepository<Business.FamilyTree> _repository;
+        private readonly IRegionManager _regionManager;
 
-        public string Title => "Fa létrehozása";
+        public Business.FamilyTree FamilyTree { get; set; }
 
         private string _familyTreeName;
         public string FamilyTreeName
@@ -32,11 +35,10 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public SubmitCommand SubmitCommand { get; set; }
 
-        public event Action<IDialogResult> RequestClose;
-
-        public NewFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository)
+        public CreateFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository, IRegionManager regionManager)
         {
             _repository = repository;
+            _regionManager = regionManager;
 
             SubmitCommand = new SubmitCommand(this);
         }
@@ -49,27 +51,34 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         public async Task SubmitExecute()
         {
-            await _repository.CreateAsync(
-                    new Business.FamilyTree()
-                    {
-                        ID = GlobalID.NewID(),
-                        Name = FamilyTreeName,
-                        People = new ObservableCollection<Business.Person>()
-                    });
+            FamilyTree = new Business.FamilyTree()
+            {
+                ID = GlobalID.NewID(),
+                Name = FamilyTreeName,
+                People = new ObservableCollection<Business.Person>()
+            };
 
-            RequestClose(new DialogResult(ButtonResult.OK));
+            await _repository.CreateAsync(FamilyTree);
+
+            var navParams = new NavigationParameters();
+            navParams.Add("FamilyTree", FamilyTree);
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListFamilyTreeView", navParams);
         }
 
-        public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-
+            return;
         }
 
-        public void OnDialogOpened(IDialogParameters parameters)
+        public bool IsNavigationTarget(NavigationContext navigationContext)
         {
+            return true;
+        }
 
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            navigationContext.Parameters.Add(NavParamNames.Tree, FamilyTree);
         }
     }
 }

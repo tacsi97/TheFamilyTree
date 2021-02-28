@@ -8,9 +8,9 @@ namespace FamilyTree.Modules.FamilyTree.Views
     /// Interaction logic for NewTreeDialog
     /// </summary>
     [DependentView(RegionNames.FunctionRegion, typeof(BackFamilyTreeView))]
-    public partial class NewFamilyTreeView : UserControl
+    public partial class CreateFamilyTreeView : UserControl
     {
-        public NewFamilyTreeView()
+        public CreateFamilyTreeView()
         {
             InitializeComponent();
         }
