@@ -1,10 +1,12 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.Commands;
+using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.PubSubEvents;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
-    public class ListFamilyTreeViewModel : BindableBase
+    public class ListFamilyTreeViewModel : BindableBase, INavigationAware
     {
         #region Fields
 
@@ -65,6 +67,21 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             {
                 Trees.Add(tree);
             }
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            FamilyTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            navigationContext.Parameters.Add(NavParamNames.Tree, FamilyTree);
         }
     }
 }
