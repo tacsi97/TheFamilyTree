@@ -40,6 +40,7 @@ namespace FamilyTree.Modules.FamilyTree
             containerRegistry.RegisterForNavigation<CreateFamilyTreeView, CreateFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<ListFamilyTreeView, ListFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<FunctionFamilyTreeView, FunctionFamilyTreeViewModel>();
+            containerRegistry.RegisterForNavigation<DeleteFamilyTreeView, DeleteFamilyTreeViewViewModel>();
         }
     }
 }
