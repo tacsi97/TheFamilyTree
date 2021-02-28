@@ -35,11 +35,9 @@ namespace FamilyTree.Modules.FamilyTree
                         Code = DatabaseInfo.Password
                     }));
 
-            containerRegistry.RegisterDialog<NewFamilyTreeView, NewFamilyTreeViewModel>(DialogNames.NewTreeDialog);
-
             containerRegistry.RegisterForNavigation<ModifyFamilyTreeView, ModifyFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<BackFamilyTreeView, BackFamilyTreeViewViewModel>();
-            containerRegistry.RegisterForNavigation<NewFamilyTreeView, NewFamilyTreeViewModel>();
+            containerRegistry.RegisterForNavigation<CreateFamilyTreeView, CreateFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<ListFamilyTreeView, ListFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<FunctionFamilyTreeView, FunctionFamilyTreeViewModel>();
         }
