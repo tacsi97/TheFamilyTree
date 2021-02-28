@@ -5,12 +5,12 @@ using System.Windows.Controls;
 namespace FamilyTree.Modules.FamilyTree.Views
 {
     /// <summary>
-    /// Interaction logic for FamilyTreeListView
+    /// Interaction logic for ListFamilyTreeView
     /// </summary>
     [DependentView(RegionNames.FunctionRegion, typeof(FunctionFamilyTreeView))]
-    public partial class FamilyTreeListView : UserControl
+    public partial class ListFamilyTreeView : UserControl
     {
-        public FamilyTreeListView()
+        public ListFamilyTreeView()
         {
             InitializeComponent();
         }

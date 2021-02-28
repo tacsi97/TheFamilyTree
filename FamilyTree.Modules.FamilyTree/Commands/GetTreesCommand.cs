@@ -8,9 +8,9 @@ using System.Text;
 
 namespace FamilyTree.Modules.FamilyTree.Commands
 {
-    public class GetTreesCommand : CommandBase<FamilyTreeListViewModel>
+    public class GetTreesCommand : CommandBase<ListFamilyTreeViewModel>
     {
-        public GetTreesCommand(FamilyTreeListViewModel ViewModel) : base(ViewModel)
+        public GetTreesCommand(ListFamilyTreeViewModel ViewModel) : base(ViewModel)
         {
         }
 

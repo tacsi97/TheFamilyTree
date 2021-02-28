@@ -54,7 +54,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Tree, tree);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "FamilyTreeListView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListFamilyTreeView", navParams);
         }
 
         /// <summary>

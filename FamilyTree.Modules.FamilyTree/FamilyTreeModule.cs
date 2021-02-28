@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.FamilyTree
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            //_regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(FamilyTreeListView));
+            //_regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(ListFamilyTreeView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -40,7 +40,7 @@ namespace FamilyTree.Modules.FamilyTree
             containerRegistry.RegisterForNavigation<ModifyFamilyTreeView, ModifyFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<BackFamilyTreeView, BackFamilyTreeViewViewModel>();
             containerRegistry.RegisterForNavigation<NewFamilyTreeView, NewFamilyTreeViewModel>();
-            containerRegistry.RegisterForNavigation<FamilyTreeListView, FamilyTreeListViewModel>();
+            containerRegistry.RegisterForNavigation<ListFamilyTreeView, ListFamilyTreeViewModel>();
             containerRegistry.RegisterForNavigation<FunctionFamilyTreeView, FunctionFamilyTreeViewModel>();
         }
     }

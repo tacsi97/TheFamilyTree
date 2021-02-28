@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
-    public class FamilyTreeListViewModel : BindableBase
+    public class ListFamilyTreeViewModel : BindableBase
     {
         #region Fields
 
@@ -45,7 +45,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #endregion
 
-        public FamilyTreeListViewModel(IAsyncRepository<Business.FamilyTree> repository, IEventAggregator eventAggregator)
+        public ListFamilyTreeViewModel(IAsyncRepository<Business.FamilyTree> repository, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _eventAggregator = eventAggregator;
