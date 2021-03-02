@@ -16,6 +16,7 @@ namespace FamilyTree.Services.Repository
         #region Properties
 
         public Token Token { get; set; }
+
         public string Uri { get; set; }
 
         #endregion
@@ -28,11 +29,15 @@ namespace FamilyTree.Services.Repository
             Token = token;
         }
 
+        #endregion
+
+        #region Functions
+
         public abstract Task<IEnumerable<T>> GetAllAsync();
 
         public abstract Task<T> GetAsync(int id);
 
-        public abstract Task CreateAsync(T content);
+        public abstract Task<T> CreateAsync(T content);
 
         public abstract Task ModifyAsync(T content);
 

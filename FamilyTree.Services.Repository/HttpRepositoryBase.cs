@@ -49,7 +49,7 @@ namespace FamilyTree.Services.Repository
         /// <param name="content">Must be serialized to JSON</param>
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
-        public async Task CreateAsync(T content)
+        public async Task<T> CreateAsync(T content)
         {
             if (content == null)
                 throw new ArgumentNullException(nameof(content), ExceptionMessages.ValueIsNull);
@@ -62,10 +62,17 @@ namespace FamilyTree.Services.Repository
                 Encoding.UTF8, 
                 MediaTypeNames.Application.Json);
 
+            // TODO: tranzakció vagy https://stackoverflow.com/questions/39190018/how-to-get-object-using-httpclient-with-response-ok-in-web-api
             var response = await _httpClient.PostAsync(Uri, data);
 
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException(ExceptionMessages.HttpResponseException);
+
+            var resultJSON = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<T>(resultJSON);
+
+            return result;
         }
 
         /// <summary>
@@ -102,6 +109,7 @@ namespace FamilyTree.Services.Repository
 
             if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
 
+            // hol van használva az ID???
             var response = await _httpClient.GetAsync(Uri);
 
             var json = await response.Content.ReadAsStringAsync();

@@ -38,11 +38,12 @@ namespace FamilyTree.Services.Repository.Interfaces
         Task<T> GetAsync(int id);
 
         /// <summary>
-        /// This function inserts a <typeparamref name="T"/> object to the dataset.
+        /// This function inserts a <typeparamref name="T"/> object to the dataset, 
+        /// and it sends the <typeparamref name="T"/> object back.
         /// </summary>
         /// <param name="content">The <typeparamref name="T"/> object</param>
-        /// <returns></returns>
-        Task CreateAsync(T content);
+        /// <returns>The <typeparamref name="T"/> object that is created.</returns>
+        Task<T> CreateAsync(T content);
 
         /// <summary>
         /// This function finds the <typeparamref name="T"/> object

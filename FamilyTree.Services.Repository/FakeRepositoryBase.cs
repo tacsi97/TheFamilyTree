@@ -33,11 +33,12 @@ namespace FamilyTree.Services.Repository
             Collection = new ObservableCollection<T>();
         }
 
-        public virtual async Task CreateAsync(T content)
+        public virtual async Task<T> CreateAsync(T content)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 Collection.Add(content);
+                return content;
             });
         }
 
