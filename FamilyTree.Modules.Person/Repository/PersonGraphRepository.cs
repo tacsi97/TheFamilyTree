@@ -22,7 +22,7 @@ namespace FamilyTree.Modules.Person.Repository
         {
         }
 
-        public async Task CreateAsync(Business.Person template)
+        public async Task<Business.Person> CreateAsync(Business.Person template)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
@@ -40,6 +40,9 @@ namespace FamilyTree.Modules.Person.Repository
                     .Set($"p.DateOfDeath = date('{ template.DateOfDeath:yyyy-MM-dd}')")
                     .Set($"p.Gender = '{ template.Gender }'")
                     .ExecuteWithoutResultsAsync();
+
+                // TODO: lekérdezni az előzőleg beszúrt emberkét
+                return new Business.Person();
             }
         }
 

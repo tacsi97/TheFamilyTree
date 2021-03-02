@@ -18,7 +18,7 @@ namespace FamilyTree.Modules.FamilyTree.Repository
         {
         }
 
-        public override async Task CreateAsync(Business.FamilyTree template)
+        public override async Task<Business.FamilyTree> CreateAsync(Business.FamilyTree template)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
@@ -33,6 +33,9 @@ namespace FamilyTree.Modules.FamilyTree.Repository
                     .Set($"pair.ID = { GlobalID.NewID() }")
                     .Set($"rel.ID = {GlobalID.NewID()}")
                     .ExecuteWithoutResultsAsync();
+
+                // TODO: lekérdezni az előzőleg beszúrt emberkét
+                return new Business.FamilyTree();
             }
         }
 

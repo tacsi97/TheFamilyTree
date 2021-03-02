@@ -43,11 +43,12 @@ namespace FamilyTree.Modules.Relationship.Repository
             });
         }
 
-        public override async Task CreateAsync(Business.Relationship content)
+        public override async Task<Business.Relationship> CreateAsync(Business.Relationship content)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 Relationships.Add(content);
+                return content;
             });
         }
 

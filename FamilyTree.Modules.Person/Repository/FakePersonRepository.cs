@@ -53,13 +53,14 @@ namespace FamilyTree.Modules.Person.Repository
             id = 3;
         }
 
-        public override async Task CreateAsync(Business.Person content)
+        public override async Task<Business.Person> CreateAsync(Business.Person content)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 content.ID = id;
                 id++;
                 People.Add(content);
+                return content;
             });
         }
 

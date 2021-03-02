@@ -21,7 +21,7 @@ namespace FamilyTree.Modules.Relationship.Repository
         public Token Token { get; set; }
         public string Uri { get; set; }
 
-        public async Task CreateAsync(Business.Relationship template)
+        public async Task<Business.Relationship> CreateAsync(Business.Relationship template)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
@@ -34,6 +34,9 @@ namespace FamilyTree.Modules.Relationship.Repository
                     .Where($"p2.ID = {template.PersonTo.ID}")
                     .Create("(p1)-[rel:")
                     .ExecuteWithoutResultsAsync();
+
+                // TODO: Lekérdezni az előzőleg beszúrt emberkét
+                return new Business.Relationship();
                 #region Comment
                 // hozzáadjuk az ember a fához
                 //await gc.Cypher
