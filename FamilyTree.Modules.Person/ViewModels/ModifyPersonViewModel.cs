@@ -3,12 +3,14 @@ using FamilyTree.Core;
 using FamilyTree.Core.Commands;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
+using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -19,18 +21,17 @@ using System.Windows.Media.Imaging;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class ModifyPersonViewModel : BindableBase, IDialogAware
+    public class ModifyPersonViewModel : BindableBase, INavigationAware
     {
-        private readonly IAsyncRepository<Business.Person> _repository;
+        #region Fields
 
-        private AsyncCommand _asyncCommand;
-        public AsyncCommand AsyncCommand
-        {
-            get { return _asyncCommand; }
-            set { SetProperty(ref _asyncCommand, value); }
-        }
+        private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IRegionManager _regionManager;
+
+        #endregion
 
         #region Properties
+
         private int _id;
         public int ID
         {
@@ -120,11 +121,21 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public event Action<IDialogResult> RequestClose;
+        #region Commands
 
-        public ModifyPersonViewModel(IAsyncRepository<Business.Person> repository)
+        private AsyncCommand _asyncCommand;
+        public AsyncCommand AsyncCommand
+        {
+            get { return _asyncCommand; }
+            set { SetProperty(ref _asyncCommand, value); }
+        }
+
+        #endregion
+
+        public ModifyPersonViewModel(IAsyncRepository<Business.Person> repository, IRegionManager regionManager)
         {
             _repository = repository;
+            _regionManager = regionManager;
 
             AsyncCommand = new AsyncCommand(ExecuteSubmit, CanExecuteSubmit);
         }
@@ -145,7 +156,10 @@ namespace FamilyTree.Modules.Person.ViewModels
 
                 await _repository.ModifyAsync(person);
 
-                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+                var navParams = new NavigationParameters();
+                navParams.Add(NavParamNames.Person, person);
+
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView", navParams);
             }
             catch (Exception e)
             {
@@ -153,31 +167,14 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        /// <summary>
-        /// This determines whether the command can be executed or not.
-        /// If the <c>NewPersonDialogViewModel</c>'s FirstName or LastName attribute is null or empty, or the DateOfBirth is minvalue.
-        /// </summary>
-        /// <returns>True or false</returns>
         public bool CanExecuteSubmit()
         {
-            // TODO: Create a generic validator class, what takes a parameter with the given type, and returns that the value is valid or not
-            if (string.IsNullOrEmpty(FirstName)
-                || string.IsNullOrEmpty(LastName)
-                || DateOfBirth == DateTime.MinValue)
-                return false;
             return true;
         }
 
-        public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            var person = parameters.GetValue<Business.Person>("SelectedPerson");
+            var person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
 
             ID = person.ID;
             FirstName = person.FirstName;
@@ -185,6 +182,16 @@ namespace FamilyTree.Modules.Person.ViewModels
             DateOfBirth = person.DateOfBirth;
             DateOfDeath = person.DateOfDeath;
             Gender = person.Gender;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            return;
         }
     }
 }
