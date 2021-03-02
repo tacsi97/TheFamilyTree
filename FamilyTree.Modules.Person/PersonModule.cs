@@ -32,6 +32,7 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<PeopleListView, PeopleListViewModel>();
             containerRegistry.RegisterForNavigation<PeopleAllView, PeopleAllViewModel>();
             containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
+            containerRegistry.RegisterForNavigation<DeletePersonView, DeletePersonViewModel>();
 
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
                 new FakeRepositoryBase<Business.Person>(
@@ -46,7 +47,6 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterDialog<NewPersonDialog, NewPersonDialogViewModel>(PersonDialogNames.AddNewPersonDialog);
             containerRegistry.RegisterDialog<ModifyPersonView, ModifyPersonViewModel>(PersonDialogNames.ModifyPersonDialog);
             containerRegistry.RegisterDialog<PersonInfoView, PersonInfoViewModel>(PersonDialogNames.ShowPersonDialog);
-            containerRegistry.RegisterDialog<DeletePersonView, DeletePersonViewModel>(PersonDialogNames.DeletePersonDialog);
         }
     }
 }

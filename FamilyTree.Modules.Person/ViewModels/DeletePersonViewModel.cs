@@ -1,8 +1,10 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.Commands;
+using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -11,11 +13,12 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class DeletePersonViewModel : BindableBase, IDialogAware
+    public class DeletePersonViewModel : BindableBase, INavigationAware
     {
         #region Fields
 
         private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly IRegionManager _regionManager;
 
         #endregion
 
@@ -38,15 +41,10 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        #region Events
-
-        public event Action<IDialogResult> RequestClose;
-
-        #endregion
-
-        public DeletePersonViewModel(IAsyncRepository<Business.Person> repository)
+        public DeletePersonViewModel(IAsyncRepository<Business.Person> repository, IRegionManager regionManager)
         {
             _repository = repository;
+            _regionManager = regionManager;
 
             DeleteCommand = new AsyncCommand(ExecuteDeleteCommand, CanExecuteDeleteCommand);
         }
@@ -57,7 +55,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             {
                 await _repository.DeleteAsync(SelectedPerson.ID);
 
-                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonViewModel");
             }
             catch(Exception e)
             {
@@ -65,18 +63,21 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            SelectedPerson = parameters.GetValue<Business.Person>("SelectedPerson");
-        }
-
         public bool CanExecuteDeleteCommand() => true;
 
-        public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            SelectedPerson = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
+        }
 
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            return;
         }
     }
 }
