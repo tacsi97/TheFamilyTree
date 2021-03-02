@@ -6,6 +6,7 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ using System.Windows.Controls;
 
 namespace FamilyTree.Modules.Relationship.ViewModels
 {
-    public class EditRelationshipViewModel : BindableBase, IDialogAware
+    public class EditRelationshipViewModel : BindableBase, INavigationAware
     {
         #region Fields
 
@@ -96,12 +97,6 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        #region Events
-
-        public event Action<IDialogResult> RequestClose;
-
-        #endregion
-
         #region Commands
 
         private AsyncCommand _saveCommand;
@@ -125,32 +120,11 @@ namespace FamilyTree.Modules.Relationship.ViewModels
             Types.Add(TypeNames.Child);
         }
 
-        public bool CanCloseDialog()
-        {
-            return true;
-        }
-
-        public void OnDialogClosed()
-        {
-
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            SelectedRelationship = parameters.GetValue<Business.Relationship>("SelectedRelationship");
-
-            From = SelectedRelationship.From;
-            To = SelectedRelationship.To;
-            SelectedType = SelectedRelationship.RelationType;
-        }
-
         public async Task ExecuteSaveCommand()
         {
             try
             {
                 await _repository.ModifyAsync(SelectedRelationship);
-
-                RequestClose(new DialogResult(ButtonResult.OK));
             }
             catch (Exception)
             {
@@ -166,6 +140,25 @@ namespace FamilyTree.Modules.Relationship.ViewModels
                 && SelectedRelationship.To != null
                 && SelectedRelationship.To != DateTime.MinValue
                 && !string.IsNullOrEmpty(SelectedRelationship.RelationType);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            SelectedRelationship = navigationContext.Parameters.GetValue<Business.Relationship>(NavParamNames.Relationship);
+
+            From = SelectedRelationship.From;
+            To = SelectedRelationship.To;
+            SelectedType = SelectedRelationship.RelationType;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            return;
         }
     }
 }
