@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using FamilyTree.Core;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -17,7 +18,9 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #region Commands
 
-
+        private DelegateCommand _navigateBackCommand;
+        public DelegateCommand NavigateBackCommand =>
+            _navigateBackCommand ?? (_navigateBackCommand = new DelegateCommand(ExecuteNavigateBackCommand));
 
         #endregion
 
@@ -25,5 +28,11 @@ namespace FamilyTree.Modules.Relationship.ViewModels
         {
             _regionManager = regionManager;
         }
+
+        public void ExecuteNavigateBackCommand()
+        {
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListRelationshipView");
+        }
+
     }
 }
