@@ -12,7 +12,6 @@
     <ProjectReference Include="..\..\FamilyTree.Modules.FamilyTree\FamilyTree.Modules.FamilyTree.csproj" />
     <ProjectReference Include="..\..\FamilyTree.Modules.Main\FamilyTree.Modules.Main.csproj" />
     <ProjectReference Include="..\..\FamilyTree.Modules.Person\FamilyTree.Modules.Person.csproj" />
-    <ProjectReference Include="..\..\FamilyTree.Modules.Relationship\FamilyTree.Modules.Relationship.csproj" />
     <ProjectReference Include="..\..\FamilyTree.Modules.TreeDrawer\FamilyTree.Modules.TreeDrawer.csproj" />
     <ProjectReference Include="..\FamilyTree.Core\FamilyTree.Core.csproj" />
     <ProjectReference Include="..\Modules\FamilyTree.Modules.ModuleName\FamilyTree.Modules.ModuleName.csproj" />

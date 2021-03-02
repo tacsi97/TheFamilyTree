@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Services.Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Modules.FamilyTree", "FamilyTree.Modules.FamilyTree\FamilyTree.Modules.FamilyTree.csproj", "{B339047C-6E0D-48E9-AF4B-277915D8C4AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Modules.Relationship", "FamilyTree.Modules.Relationship\FamilyTree.Modules.Relationship.csproj", "{AE4556DD-540C-48E0-A33D-F67643A7E283}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Modules.FamilyTree.Tests", "FamilyTree.Modules.FamilyTree.Tests\FamilyTree.Modules.FamilyTree.Tests.csproj", "{419CEE53-BA7B-4174-BB2D-2166B53AD2DB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Modules.Person.Tests", "FamilyTree.Modules.Person.Tests\FamilyTree.Modules.Person.Tests.csproj", "{E8F5AAA5-F4DE-4333-A268-1CC486DE9C9A}"
@@ -51,9 +49,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Services.PersonC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Services.PersonConnector.Interfaces", "FamilyTree.Services.PersonConnector.Interfaces\FamilyTree.Services.PersonConnector.Interfaces.csproj", "{50A2F276-30FF-4852-BFD3-CF3A7AB0D555}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.Services.TimeStampedObjects", "FamilyTree.Services.TimeStampedObjects\FamilyTree.Services.TimeStampedObjects.csproj", "{4209DC2A-6994-4C50-832B-AB5A93A6E4AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Services.TimeStampedObjects", "FamilyTree.Services.TimeStampedObjects\FamilyTree.Services.TimeStampedObjects.csproj", "{4209DC2A-6994-4C50-832B-AB5A93A6E4AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.Services.TimeStampedObjects.Interfaces", "FamilyTree.Services.TimeStampedObjects.Interfaces\FamilyTree.Services.TimeStampedObjects.Interfaces.csproj", "{AF5F07C2-4F4E-44C7-A48F-6274C576561F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Services.TimeStampedObjects.Interfaces", "FamilyTree.Services.TimeStampedObjects.Interfaces\FamilyTree.Services.TimeStampedObjects.Interfaces.csproj", "{AF5F07C2-4F4E-44C7-A48F-6274C576561F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,10 +107,6 @@ Global
 		{B339047C-6E0D-48E9-AF4B-277915D8C4AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B339047C-6E0D-48E9-AF4B-277915D8C4AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B339047C-6E0D-48E9-AF4B-277915D8C4AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE4556DD-540C-48E0-A33D-F67643A7E283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE4556DD-540C-48E0-A33D-F67643A7E283}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE4556DD-540C-48E0-A33D-F67643A7E283}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE4556DD-540C-48E0-A33D-F67643A7E283}.Release|Any CPU.Build.0 = Release|Any CPU
 		{419CEE53-BA7B-4174-BB2D-2166B53AD2DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{419CEE53-BA7B-4174-BB2D-2166B53AD2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{419CEE53-BA7B-4174-BB2D-2166B53AD2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -164,7 +158,6 @@ Global
 		{11DCD5C1-D057-4824-8E42-28644F20073E} = {7474E796-23A7-4E2C-AF4F-B5A0E33CCDB0}
 		{9B477C61-B654-4DDA-86DF-FC9F679CDC2A} = {7474E796-23A7-4E2C-AF4F-B5A0E33CCDB0}
 		{B339047C-6E0D-48E9-AF4B-277915D8C4AE} = {AE9FACC4-3CFC-477F-8F08-8FF5B081F5B3}
-		{AE4556DD-540C-48E0-A33D-F67643A7E283} = {AE9FACC4-3CFC-477F-8F08-8FF5B081F5B3}
 		{419CEE53-BA7B-4174-BB2D-2166B53AD2DB} = {36F6F740-638F-4077-9C7F-5DCCD3B5BF55}
 		{E8F5AAA5-F4DE-4333-A268-1CC486DE9C9A} = {36F6F740-638F-4077-9C7F-5DCCD3B5BF55}
 		{BAD9075B-3E76-4DDD-8A20-942256DF1BF7} = {AE9FACC4-3CFC-477F-8F08-8FF5B081F5B3}
