@@ -5,11 +5,13 @@ using FamilyTree.Core.Commands;
 using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
+using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -20,10 +22,11 @@ using System.Windows.Input;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class NewPersonDialogViewModel : BindableBase, IDialogAware
+    public class CreatePersonViewModel : BindableBase, INavigationAware
     {
         private readonly IAsyncRepository<Business.Person> _repository;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IRegionManager _regionManager;
 
         #region Commands
 
@@ -94,7 +97,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                 SetProperty(ref _lastName, value);
                 AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
                 NewPerson.LastName = value;
-                // Ennek itt kell lennie, mivel a NewPersonDialogViewModel konstruktora, hamarabb lefut, mint a SetRelationShipViewModel-é
+                // Ennek itt kell lennie, mivel a CreatePersonViewModel konstruktora, hamarabb lefut, mint a SetRelationShipViewModel-é
                 _eventAggregator.GetEvent<CreateNewPersonEvent>().Publish(NewPerson);
                 _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Publish(SelectedPerson);
             }
@@ -147,16 +150,14 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public event Action<IDialogResult> RequestClose;
-
-        public NewPersonDialogViewModel(IAsyncRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand)
+        public CreatePersonViewModel(IAsyncRepository<Business.Person> repository, IEventAggregator eventAggregator, IUpload uploadCommand, IRegionManager regionManager)
         {
             _repository = repository;
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<SelectedRelationshipChangedEvent>().Subscribe(SetRelationship);
 
             ApplicationCommand = uploadCommand;
-
+            this._regionManager = regionManager;
             NewPerson = new Business.Person();
 
             AsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);
@@ -175,13 +176,11 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             try
             {
-                NewPerson.ID = GlobalID.NewID();
-
+                // TODO: Tranzakcióval lehet megoldani, nagyon egyszerűen
                 await _repository.CreateAsync(NewPerson);
-
                 ApplicationCommand.CompositeCommand.UnregisterCommand(AsyncCommand);
 
-                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView");
             }
             catch (Exception e)
             {
@@ -191,7 +190,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         /// <summary>
         /// This determines whether the command can be executed or not.
-        /// If the <c>NewPersonDialogViewModel</c>'s FirstName or LastName attribute is null or empty, or the DateOfBirth is minvalue.
+        /// If the <c>CreatePersonViewModel</c>'s FirstName or LastName attribute is null or empty, or the DateOfBirth is minvalue.
         /// </summary>
         /// <returns>True or false</returns>
         public bool CanExecuteSubmit()
@@ -203,25 +202,27 @@ namespace FamilyTree.Modules.Person.ViewModels
             return true;
         }
 
-        public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
-        {
-
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            if (!parameters.TryGetValue("SelectedPerson", out Business.Person person))
-                throw new ArgumentException("Argument not found in the paramters", nameof(person));
-
-            SelectedPerson = person;
-            NewPerson.FamilyTree = SelectedPerson.FamilyTree;
-        }
-
         public void SetRelationship(Business.Relationship relationship)
         {
             Relationship = relationship;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            var person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
+
+            SelectedPerson = person;
+            NewPerson.FamilyTree = person.FamilyTree;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            return;
         }
     }
 

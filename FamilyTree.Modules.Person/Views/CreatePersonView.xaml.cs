@@ -3,11 +3,11 @@
 namespace FamilyTree.Modules.Person.Views
 {
     /// <summary>
-    /// Interaction logic for NewPersonDialog
+    /// Interaction logic for CreatePersonView
     /// </summary>
-    public partial class NewPersonDialog : UserControl
+    public partial class CreatePersonView : UserControl
     {
-        public NewPersonDialog()
+        public CreatePersonView()
         {
             InitializeComponent();
         }
