@@ -1,8 +1,10 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.Commands;
+using FamilyTree.Modules.Relationship.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -11,17 +13,16 @@ using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Relationship.ViewModels
 {
-    public class DeleteRelationshipViewModel : BindableBase, IDialogAware
+    public class DeleteRelationshipViewModel : BindableBase, INavigationAware
     {
         #region Fields
 
         private readonly IAsyncRepository<Business.Relationship> _repository;
+        private readonly IRegionManager _regionManager;
 
         #endregion
 
         #region Properties
-
-        public string Title => "Törlés";
 
         private Business.Relationship _selectedRelationship;
         public Business.Relationship SelectedRelationship
@@ -40,30 +41,10 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        #region Events
-
-        public event Action<IDialogResult> RequestClose;
-
-        #endregion
-
-        public DeleteRelationshipViewModel(IAsyncRepository<Business.Relationship> repository)
+        public DeleteRelationshipViewModel(IAsyncRepository<Business.Relationship> repository, IRegionManager regionManager)
         {
             _repository = repository;
-        }
-
-        public bool CanCloseDialog()
-        {
-            return true;
-        }
-
-        public void OnDialogClosed()
-        {
-
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            SelectedRelationship = parameters.GetValue<Business.Relationship>("SelectedRelationship");
+            _regionManager = regionManager;
         }
 
         public async Task ExecuteSaveCommand()
@@ -72,7 +53,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
             {
                 await _repository.DeleteAsync(SelectedRelationship.ID);
 
-                RequestClose(new DialogResult(ButtonResult.OK));
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListRelationshipView");
             }
             catch (Exception)
             {
@@ -85,5 +66,19 @@ namespace FamilyTree.Modules.Relationship.ViewModels
             return true;
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            SelectedRelationship = navigationContext.Parameters.GetValue<Business.Relationship>(NavParamNames.Relationship);
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            return;
+        }
     }
 }
