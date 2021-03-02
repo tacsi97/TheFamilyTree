@@ -55,7 +55,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             {
                 await _repository.DeleteAsync(SelectedPerson.ID);
 
-                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonViewModel");
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView");
             }
             catch(Exception e)
             {

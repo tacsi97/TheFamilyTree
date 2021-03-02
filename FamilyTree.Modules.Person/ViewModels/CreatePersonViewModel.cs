@@ -154,10 +154,10 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             _repository = repository;
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
             _eventAggregator.GetEvent<SelectedRelationshipChangedEvent>().Subscribe(SetRelationship);
 
             ApplicationCommand = uploadCommand;
-            this._regionManager = regionManager;
             NewPerson = new Business.Person();
 
             AsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class BackPersonViewViewModel : BindableBase
+    public class BackPersonViewModel : BindableBase
     {
 
         #region Fields
@@ -19,21 +19,25 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Commands
 
-        private DelegateCommand _navigateCommand;
-
-        public DelegateCommand NavigateCommand =>
-            _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigateCommand));
+        private DelegateCommand _navigateBackCommand;
+        public DelegateCommand NavigateBackCommand =>
+            _navigateBackCommand ?? (_navigateBackCommand = new DelegateCommand(ExecuteNavigateBackCommand, CanExecuteNavigateBackCommand));
 
         #endregion
 
-        public BackPersonViewViewModel(IRegionManager regionManager)
+        public BackPersonViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
 
-        public void ExecuteNavigateCommand()
+        public void ExecuteNavigateBackCommand()
         {
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView");
+        }
+
+        bool CanExecuteNavigateBackCommand()
+        {
+            return true;
         }
     }
 }

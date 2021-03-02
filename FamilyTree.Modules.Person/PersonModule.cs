@@ -30,14 +30,12 @@ namespace FamilyTree.Modules.Person
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<ListPersonView, ListPersonViewModel>();
-            containerRegistry.RegisterForNavigation<PeopleAllView, PeopleAllViewModel>();
-            containerRegistry.RegisterForNavigation<PeopleParentView, PeopleParentViewModel>();
             containerRegistry.RegisterForNavigation<DeletePersonView, DeletePersonViewModel>();
             containerRegistry.RegisterForNavigation<ModifyPersonView, ModifyPersonViewModel>();
             containerRegistry.RegisterForNavigation<CreatePersonView, CreatePersonViewModel>();
 
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
-                new FakeRepositoryBase<Business.Person>(
+                new FakePersonRepository(
                     DatabaseInfo.Uri,
                     new Business.Token()
                     {

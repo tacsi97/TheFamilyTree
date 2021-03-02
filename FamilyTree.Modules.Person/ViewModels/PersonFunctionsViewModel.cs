@@ -44,11 +44,13 @@ namespace FamilyTree.Modules.Person.ViewModels
             set
             {
                 SetProperty(ref _selectedPerson, value);
-                AddPersonCommand.RaiseCanExecuteChanged();
+                NewFatherCommand.RaiseCanExecuteChanged();
+                NewMotherCommand.RaiseCanExecuteChanged();
+                NewChildCommand.RaiseCanExecuteChanged();
+                NewPairCommand.RaiseCanExecuteChanged();
                 ModifyPersonCommand.RaiseCanExecuteChanged();
                 ShowPersonCommand.RaiseCanExecuteChanged();
                 DeletePersonCommand.RaiseCanExecuteChanged();
-                NavigateRelationsCommand.RaiseCanExecuteChanged();
                 NavigateTreeViewCommand.RaiseCanExecuteChanged();
             }
         }
@@ -57,10 +59,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Commands
 
-        private DelegateCommand _addPersonCommand;
-        public DelegateCommand AddPersonCommand =>
-            _addPersonCommand ?? (_addPersonCommand = new DelegateCommand(ExecuteAddPersonCommand, CanExecuteAddPersonCommand));
-
+        // TODO: A legtöbb command más viewmodelben kellene hogy szerepeljen
         private DelegateCommand _modifyPersonCommand;
         public DelegateCommand ModifyPersonCommand =>
             _modifyPersonCommand ?? (_modifyPersonCommand = new DelegateCommand(ExecuteModifyPersonCommand, CanExecuteModifyPersonCommand));
@@ -77,18 +76,22 @@ namespace FamilyTree.Modules.Person.ViewModels
         public DelegateCommand NavigateTreeViewCommand =>
             _navigateTreeViewCommand ?? (_navigateTreeViewCommand = new DelegateCommand(ExecuteNavigateTreeViewCommand, CanExecuteNavigateTreeViewCommand));
 
-        private DelegateCommand _navigateRelationsCommand;
-        public DelegateCommand NavigateRelationsCommand =>
-            _navigateRelationsCommand ?? (_navigateRelationsCommand = new DelegateCommand(ExecuteNavigateCommand, CanExecuteNavigateCommand));
+        private DelegateCommand _newFatherCommand;
+        public DelegateCommand NewFatherCommand =>
+            _newFatherCommand ?? (_newFatherCommand = new DelegateCommand(ExecuteNewFatherNavigateCommand, CanExecuteNewFatherNavigateCommand));
 
-        #endregion
+        private DelegateCommand _newMotherCommand;
+        public DelegateCommand NewMotherCommand =>
+            _newMotherCommand ?? (_newMotherCommand = new DelegateCommand(ExecuteNewMotherNavigateCommand, CanExecuteNewMotherNavigateCommand));
 
-        #region NewCommandsRegion
+        private DelegateCommand _newPairCommand;
+        public DelegateCommand NewPairCommand =>
+            _newPairCommand ?? (_newPairCommand = new DelegateCommand(ExecuteNewPairCommand, CanExecuteNewPairCommand));
 
-        private DelegateCommand<string> _newFatherNavigateCommand;
-        public DelegateCommand<string> NewFatherNavigateCommand =>
-            _newFatherNavigateCommand ?? (_newFatherNavigateCommand = new DelegateCommand<string>(ExecuteNewFatherNavigateCommand, CanExecuteNewFatherNavigateCommand));
-        
+        private DelegateCommand _newChildCommand;
+        public DelegateCommand NewChildCommand =>
+            _newChildCommand ?? (_newChildCommand = new DelegateCommand(ExecuteNewChildNavigateCommand, CanExecuteNewChildNavigateCommand));
+
         #endregion
 
         public PersonFunctionsViewModel(IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
@@ -101,44 +104,14 @@ namespace FamilyTree.Modules.Person.ViewModels
             _eventAggregator.GetEvent<SelectedTreeChangedEvent>().Subscribe(SetTree);
         }
 
-        #region AddPersonFunctions
-
-        public void ExecuteAddPersonCommand()
-        {
-            // TODO: ha már egyszer használva van a commandparameter, akkor azt kapja meg a függvény...
-            var parameters = new DialogParameters();
-            parameters.Add("SelectedPerson", SelectedPerson);
-
-            // TODO: Nem itt végzi el a műveletet, hanem a dialognál, hogy tudjon jelezni időben, ha valami nem sikerült, majd ha végzett visszaadja az embert, amit hozzáadunk a listához, így nem kell mindenkit lekérdezni, plusz az observable collection is működik.
-            _dialogService.ShowDialog(PersonDialogNames.AddNewPersonDialog, parameters, r =>
-            {
-                if (r.Result != ButtonResult.OK)
-                    return;
-            });
-        }
-
-        public bool CanExecuteAddPersonCommand()
-        {
-            if (SelectedPerson == null)
-                return false;
-
-            return true;
-        }
-
-        #endregion
-
         #region ModifyPersonFunctions
 
         public void ExecuteModifyPersonCommand()
         {
-            var parameters = new DialogParameters();
-            parameters.Add("SelectedPerson", SelectedPerson);
+            var parameters = new NavigationParameters();
+            parameters.Add(NavParamNames.Person, SelectedPerson);
 
-            _dialogService.ShowDialog(PersonDialogNames.ModifyPersonDialog, parameters, r =>
-            {
-                if (r.Result != ButtonResult.OK)
-                    return;
-            });
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ModifyPersonView", parameters);
         }
 
         public bool CanExecuteModifyPersonCommand()
@@ -155,15 +128,10 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void ExecuteShowPersonCommand()
         {
-            var parameters = new DialogParameters();
-            parameters.Add("SelectedPerson", SelectedPerson);
+            var parameters = new NavigationParameters();
+            parameters.Add(NavParamNames.Person, SelectedPerson);
 
-            // TODO: Nem itt végzi el a műveletet, hanem a dialognál, hogy tudjon jelezni időben, ha valami nem sikerült, majd ha végzett visszaadja az embert, amit hozzáadunk a listához, így nem kell mindenkit lekérdezni, plusz az observable collection is működik.
-            _dialogService.ShowDialog(PersonDialogNames.ShowPersonDialog, parameters, r =>
-            {
-                if (r.Result != ButtonResult.OK)
-                    return;
-            });
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "InfoPersonView", parameters);
         }
 
         public bool CanExecuteShowPersonCommand()
@@ -178,17 +146,12 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region DeletePersonFunctions
 
-
         void ExecuteDeletePersonCommand()
         {
-            var parameters = new DialogParameters();
-            parameters.Add("SelectedPerson", SelectedPerson);
+            var parameters = new NavigationParameters();
+            parameters.Add(NavParamNames.Person, SelectedPerson);
 
-            _dialogService.ShowDialog(PersonDialogNames.DeletePersonDialog, parameters, r =>
-            {
-                if (r.Result != ButtonResult.OK)
-                    return;
-            });
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "DeletePersonView", parameters);
         }
 
         bool CanExecuteDeletePersonCommand()
@@ -201,30 +164,12 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        #region RelationshipFunctions
-
-        public void ExecuteNavigateCommand()
-        {
-            //TODO: ez működik, a ListRelationshipView-hoz kell egy attribute
-            var navParams = new NavigationParameters();
-            navParams.Add("SelectedPerson", SelectedPerson);
-
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListRelationshipView", navParams);
-        }
-
-        public bool CanExecuteNavigateCommand()
-        {
-            return SelectedPerson != null;
-        }
-
-        #endregion
-
         #region TreeViewFunctions
 
         public void ExecuteNavigateTreeViewCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add("SelectedTree", FamilyTree);
+            navParams.Add(NavParamNames.Tree, FamilyTree);
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreeView", navParams);
         }
@@ -236,61 +181,75 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        #region NewFunctions
-
         #region NewFatherNavigateCommand
 
-        public void ExecuteNewFatherNavigateCommand(string navigationPath)
+        public void ExecuteNewFatherNavigateCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add("SelectedPerson", SelectedPerson);
+            navParams.Add(NavParamNames.Person, SelectedPerson);
             navParams.Add("NewPersonRole", "Father");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
         }
 
-        public bool CanExecuteNewFatherNavigateCommand(string navigationPath)
+        public bool CanExecuteNewFatherNavigateCommand()
         {
-            return !string.IsNullOrEmpty(navigationPath) && SelectedPerson != null;
+            return SelectedPerson != null && SelectedPerson.Father == null;
         }
 
         #endregion
 
         #region NewMotherNavigateCommand
 
-        public void ExecuteNewMotherNavigateCommand(string navigationPath)
+        public void ExecuteNewMotherNavigateCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add("SelectedPerson", SelectedPerson);
+            navParams.Add(NavParamNames.Person, SelectedPerson);
             navParams.Add("NewPersonRole", "Mother");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
         }
 
-        public bool CanExecuteNewMotherNavigateCommand(string navigationPath)
+        public bool CanExecuteNewMotherNavigateCommand()
         {
-            return !string.IsNullOrEmpty(navigationPath) && SelectedPerson != null;
+            return SelectedPerson != null && SelectedPerson.Mother == null;
         }
 
         #endregion
 
         #region NewChildNavigateCommand
 
-        public void ExecuteNewChildNavigateCommand(string navigationPath)
+        public void ExecuteNewChildNavigateCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add("SelectedPerson", SelectedPerson);
+            navParams.Add(NavParamNames.Person, SelectedPerson);
             navParams.Add("NewPersonRole", "Child");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
         }
 
-        public bool CanExecuteNewChildNavigateCommand(string navigationPath)
+        public bool CanExecuteNewChildNavigateCommand()
         {
-            return !string.IsNullOrEmpty(navigationPath) && SelectedPerson != null;
+            return SelectedPerson != null;
         }
 
         #endregion
+
+        #region NewPairNavigateCommand
+
+        public void ExecuteNewPairCommand()
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add(NavParamNames.Person, SelectedPerson);
+            navParams.Add("NewPersonRole", "Pair");
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+        }
+
+        public bool CanExecuteNewPairCommand()
+        {
+            return SelectedPerson != null && SelectedPerson.Partners != null && SelectedPerson.Partners.Count == 0;
+        }
 
         #endregion
 

@@ -28,7 +28,11 @@ namespace FamilyTree.Modules.Person.Repository
                     ID = 0,
                     FirstName = "László",
                     LastName = "Tóth",
-                    DateOfBirth = new DateTime(1997, 12, 1)
+                    DateOfBirth = new DateTime(1997, 12, 1),
+                    FamilyTree = new Business.FamilyTree()
+                    {
+                        ID = 0
+                    }
                 });
 
             People.Add(
@@ -37,7 +41,11 @@ namespace FamilyTree.Modules.Person.Repository
                     ID = 1,
                     FirstName = "Berci",
                     LastName = "Kutya",
-                    DateOfBirth = new DateTime(2015, 4, 3)
+                    DateOfBirth = new DateTime(2015, 4, 3),
+                    FamilyTree = new Business.FamilyTree()
+                    {
+                        ID = 0
+                    }
                 });
 
             People.Add(
@@ -46,7 +54,11 @@ namespace FamilyTree.Modules.Person.Repository
                     ID = 2,
                     FirstName = "Kutya",
                     LastName = "Liza",
-                    DateOfBirth = new DateTime(2016, 6, 11)
+                    DateOfBirth = new DateTime(2016, 6, 11),
+                    FamilyTree = new Business.FamilyTree()
+                    {
+                        ID = 0
+                    }
                 });
 
             // Mivel már megadtunk 3 személyt
@@ -68,7 +80,14 @@ namespace FamilyTree.Modules.Person.Repository
         {
             await Task.Run(() =>
             {
-                People.RemoveAt(id);
+                foreach(var person in People)
+                {
+                    if (person.ID == id)
+                    {
+                        People.Remove(person);
+                        break;
+                    }
+                }
             });
         }
 

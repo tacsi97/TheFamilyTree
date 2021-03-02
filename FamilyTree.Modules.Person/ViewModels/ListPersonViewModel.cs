@@ -79,7 +79,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             People.Clear();
 
-            var people = await _repository.GetPeopleIncludedIn(SelectedTree.ID);
+            var people = await _repository.GetAllAsync();
 
             foreach (var person in people)
             {
@@ -90,7 +90,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>("SelectedTree");
+            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
