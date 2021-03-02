@@ -8,9 +8,9 @@ namespace FamilyTree.Modules.Person.Views
     /// Interaction logic for PeopleList
     /// </summary>
     [DependentView(RegionNames.FunctionRegion, typeof(PersonFunctions))]
-    public partial class PeopleListView : UserControl
+    public partial class ListPersonView : UserControl
     {
-        public PeopleListView()
+        public ListPersonView()
         {
             InitializeComponent();
         }

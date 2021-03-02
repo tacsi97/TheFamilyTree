@@ -19,11 +19,15 @@ using System.Windows.Controls;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class PeopleListViewModel : BindableBase, INavigationAware
+    public class ListPersonViewModel : BindableBase, INavigationAware
     {
+        #region Fields
+
         private readonly IAsyncRepository<Business.Person> _repository;
-        private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IRegionManager _regionManager;
+
+        #endregion
 
         #region Properties
 
@@ -59,11 +63,11 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public PeopleListViewModel(IAsyncRepository<Business.Person> repository, IDialogService dialogService, IEventAggregator eventAggregator)
+        public ListPersonViewModel(IAsyncRepository<Business.Person> repository, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _repository = repository;
-            _dialogService = dialogService;
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
 
             // TODO: Maybe change this to CommandFactory call
             GetPeopleCommand = new GetPeopleCommand(this);

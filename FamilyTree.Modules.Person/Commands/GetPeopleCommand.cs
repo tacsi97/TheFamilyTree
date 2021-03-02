@@ -7,9 +7,9 @@ using System.Text;
 
 namespace FamilyTree.Modules.Person.Commands
 {
-    public class GetPeopleCommand : CommandBase<PeopleListViewModel>
+    public class GetPeopleCommand : CommandBase<ListPersonViewModel>
     {
-        public GetPeopleCommand(PeopleListViewModel ViewModel) : base(ViewModel)
+        public GetPeopleCommand(ListPersonViewModel ViewModel) : base(ViewModel)
         {
         }
 
