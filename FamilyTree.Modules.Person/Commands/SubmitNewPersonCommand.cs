@@ -8,9 +8,9 @@ using System.Text;
 
 namespace FamilyTree.Modules.Person.Commands
 {
-    public class SubmitNewPersonCommand : CommandBase<NewPersonDialogViewModel>
+    public class SubmitNewPersonCommand : CommandBase<CreatePersonViewModel>
     {
-        public SubmitNewPersonCommand(NewPersonDialogViewModel ViewModel) : base(ViewModel)
+        public SubmitNewPersonCommand(CreatePersonViewModel ViewModel) : base(ViewModel)
         {
         }
 

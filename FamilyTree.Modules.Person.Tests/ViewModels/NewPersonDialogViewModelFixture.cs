@@ -42,7 +42,7 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
         {
             //var boolean = false;
 
-            //var command = new SubmitNewPersonCommand(new NewPersonDialogViewModel(
+            //var command = new SubmitNewPersonCommand(new CreatePersonViewModel(
             //    _repository.Object,
             //    _eventAggregator.Object,
             //    _iUpload.Object));
@@ -81,7 +81,7 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
         //[Fact]
         //public void CanExecuteWithFirstNameNull()
         //{
-        //    var vm = new NewPersonDialogViewModel(_repository.Object);
+        //    var vm = new CreatePersonViewModel(_repository.Object);
 
         //    vm.LastName = "asd";
         //    vm.DateOfBirth = DateTime.Parse("2010-10-10");
@@ -92,7 +92,7 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
         //[Fact]
         //public void CanExecuteWithLastNameNull()
         //{
-        //    var vm = new NewPersonDialogViewModel(_repository.Object);
+        //    var vm = new CreatePersonViewModel(_repository.Object);
 
         //    vm.FirstName = "asd";
         //    vm.DateOfBirth = DateTime.Parse("2010-10-10");
@@ -103,7 +103,7 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
         //[Fact]
         //public void CanExecuteWithDateOfBirthNull()
         //{
-        //    var vm = new NewPersonDialogViewModel(_repository.Object);
+        //    var vm = new CreatePersonViewModel(_repository.Object);
 
         //    vm.LastName = "asd";
         //    vm.FirstName = "asd";
@@ -114,7 +114,7 @@ namespace FamilyTree.Modules.Person.Tests.ViewModels
         //[Fact]
         //public void CanExecuteReturnTrue()
         //{
-        //    var vm = new NewPersonDialogViewModel(_repository.Object);
+        //    var vm = new CreatePersonViewModel(_repository.Object);
 
         //    vm.LastName = "asd";
         //    vm.FirstName = "asd";
