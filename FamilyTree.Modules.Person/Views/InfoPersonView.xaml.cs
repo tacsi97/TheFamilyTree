@@ -9,9 +9,9 @@ namespace FamilyTree.Modules.Person.Views
     /// </summary>
     
     [DependentView(RegionNames.FunctionRegion, typeof(BackPersonView))]
-    public partial class PersonInfoView : UserControl
+    public partial class InfoPersonView : UserControl
     {
-        public PersonInfoView()
+        public InfoPersonView()
         {
             InitializeComponent();
         }

@@ -1,7 +1,9 @@
 ﻿using FamilyTree.Core.Mvvm;
+using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class PersonInfoViewModel : BindableBase, IDialogAware
+    public class InfoPersonViewModel : BindableBase, INavigationAware
     {
         private Business.Person _person;
         public Business.Person Person
@@ -18,32 +20,24 @@ namespace FamilyTree.Modules.Person.ViewModels
             set { SetProperty(ref _person, value); }
         }
 
-        public string Title => "Person info view";
-
-        public event Action<IDialogResult> RequestClose;
-
-
-
-        public PersonInfoViewModel()
+        public InfoPersonViewModel()
         {
 
         }
 
-        public void OnDialogOpened(IDialogParameters parameters)
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Person = parameters.GetValue<Business.Person>("SelectedPerson");
+            Person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
         }
 
-        public void OnDialogClosed()
+        public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-
+            return true;
         }
 
-        public void CloseDialog()
+        public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+            return;
         }
-
-        public bool CanCloseDialog() => true;
     }
 }

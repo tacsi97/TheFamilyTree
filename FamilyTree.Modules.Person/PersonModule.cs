@@ -33,6 +33,7 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<DeletePersonView, DeletePersonViewModel>();
             containerRegistry.RegisterForNavigation<ModifyPersonView, ModifyPersonViewModel>();
             containerRegistry.RegisterForNavigation<CreatePersonView, CreatePersonViewModel>();
+            containerRegistry.RegisterForNavigation<InfoPersonView, InfoPersonViewModel>();
 
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
                 new FakePersonRepository(
@@ -43,8 +44,6 @@ namespace FamilyTree.Modules.Person
                         Code = DatabaseInfo.Password
                     }));
             containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
-
-            containerRegistry.RegisterDialog<PersonInfoView, PersonInfoViewModel>(PersonDialogNames.ShowPersonDialog);
         }
     }
 }
