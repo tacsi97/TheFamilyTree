@@ -1,5 +1,4 @@
 ﻿using FamilyTree.Business;
-using FamilyTree.Modules.Relationship.Core;
 using FamilyTree.Services.PersonConnector.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace FamilyTree.Services.PersonConnector
 
             foreach (var relation in relationships)
             {
-                if (relation.RelationType.Equals(TypeNames.Parent))
+                if (relation.RelationType.Equals("Parent"))
                 {
                     // connect parents
                     if (relation.PersonFrom.Gender.Equals(GenderType.Male))
@@ -26,7 +25,7 @@ namespace FamilyTree.Services.PersonConnector
 
                     relation.PersonTo.Children.Add(relation.PersonFrom);
                 }
-                else if (relation.RelationType.Equals(TypeNames.Child))
+                else if (relation.RelationType.Equals("Child"))
                 {
                     // connect child
                     relation.PersonFrom.Children.Add(relation.PersonTo);
@@ -36,7 +35,7 @@ namespace FamilyTree.Services.PersonConnector
                     else
                         relation.PersonTo.Mother = relation.PersonFrom;
                 }
-                else if (relation.RelationType.Equals(TypeNames.Partner))
+                else if (relation.RelationType.Equals("Partner"))
                 {
                     // nem baj, ha a szülők és a gyerekek nem Relationship-ként vannak tárolva,
                     // mivel feltöltéskor Relationshipként megy fel,

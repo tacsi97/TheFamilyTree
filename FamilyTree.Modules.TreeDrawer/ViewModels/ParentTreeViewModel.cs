@@ -3,7 +3,6 @@ using FamilyTree.Core;
 using FamilyTree.Core.Commands;
 using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
-using FamilyTree.Modules.Relationship.Core;
 using FamilyTree.Modules.TreeDrawer.Model;
 using FamilyTree.Modules.TreeDrawer.Utils;
 using FamilyTree.Services.PersonConnector.Interfaces;
@@ -150,7 +149,7 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
             foreach (var relation in relationships)
             {
-                if (relation.RelationType.Equals(TypeNames.Parent))
+                if (relation.RelationType.Equals("Parent"))
                 {
                     // connect parents
                     if (relation.PersonTo.Gender.Equals(GenderType.Male))
@@ -160,7 +159,7 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
                     dictionary[relation.PersonTo.ID].Children.Add(dictionary[relation.PersonFrom.ID]);
                 }
-                else if (relation.RelationType.Equals(TypeNames.Child))
+                else if (relation.RelationType.Equals("Child"))
                 {
                     // connect child
                     dictionary[relation.PersonFrom.ID].Children.Add(dictionary[relation.PersonTo.ID]);
@@ -170,7 +169,7 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
                     else
                         dictionary[relation.PersonTo.ID].Mother = dictionary[relation.PersonFrom.ID];
                 }
-                else if (relation.RelationType.Equals(TypeNames.Partner))
+                else if (relation.RelationType.Equals("Partner"))
                 {
                     // nem baj, ha a szülők és a gyerekek nem Relationship-ként vannak tárolva,
                     // mivel feltöltéskor Relationshipként megy fel,

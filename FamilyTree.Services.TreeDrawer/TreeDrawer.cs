@@ -1,5 +1,4 @@
 ﻿using FamilyTree.Business;
-using FamilyTree.Modules.Relationship.Core;
 using FamilyTree.Services.TreeDrawer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -107,7 +106,7 @@ namespace FamilyTree.Services.TreeDrawer
                             };
                             node.Person.Partners.ToList().ForEach((relation) =>
                             {
-                                if (relation.RelationType.Equals(TypeNames.Partner))
+                                if (relation.RelationType.Equals("Partner"))
                                     members.Add(relation.PersonTo);
                             });
 
