@@ -41,8 +41,9 @@ namespace FamilyTree.Modules.Relationship
 
             containerRegistry.RegisterForNavigation<ListRelationshipView, ListRelationshipViewModel>();
             containerRegistry.RegisterForNavigation<RelationshipFunctions, RelationshipFunctionsViewModel>();
+            containerRegistry.RegisterForNavigation<DeleteRelationshipView, DeleteRelationshipViewModel>();
+            containerRegistry.RegisterForNavigation<BackRelationshipView, BackRelationshipViewModel>();
 
-            containerRegistry.RegisterDialog<DeleteRelationshipView, DeleteRelationshipViewModel>(Core.DialogNames.DeleteRelationshipDialog);
             containerRegistry.RegisterDialog<EditRelationshipView, EditRelationshipViewModel>(Core.DialogNames.EditRelationshipDialog);
         }
     }

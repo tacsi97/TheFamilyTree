@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FamilyTree.Modules.Relationship.ViewModels
 {
-    public class BackRelationshipViewViewModel : BindableBase
+    public class BackRelationshipViewModel : BindableBase
     {
         #region Fields
 
@@ -24,7 +24,7 @@ namespace FamilyTree.Modules.Relationship.ViewModels
 
         #endregion
 
-        public BackRelationshipViewViewModel(IRegionManager regionManager)
+        public BackRelationshipViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
