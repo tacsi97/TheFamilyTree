@@ -7,7 +7,5 @@ namespace FamilyTree.Modules.Person.Core
     public class NavParamNames
     {
         public static string Person = "Person";
-        
-        public static string Tree = "Tree";
     }
 }
