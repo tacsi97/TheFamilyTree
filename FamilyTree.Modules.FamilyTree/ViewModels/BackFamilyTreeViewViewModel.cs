@@ -10,10 +10,11 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 {
     public class BackFamilyTreeViewViewModel : BindableBase
     {
+        private readonly IRegionManager _regionManager;
+
         #region Commands
 
         private DelegateCommand _navigateBackCommand;
-        private readonly IRegionManager _regionManager;
 
         public DelegateCommand NavigateBackCommand =>
             _navigateBackCommand ?? (_navigateBackCommand = new DelegateCommand(ExecuteNavigateBackCommand, CanExecuteNavigateBackCommand));
@@ -24,6 +25,7 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         {
             _regionManager = regionManager;
         }
+
         // TODO: Dependent View-t kirakni egy külön helyre, mert mindenhol ugyan az.
         public void ExecuteNavigateBackCommand()
         {

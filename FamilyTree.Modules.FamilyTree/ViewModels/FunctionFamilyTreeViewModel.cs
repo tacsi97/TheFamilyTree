@@ -41,9 +41,9 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public DelegateCommand<string> DeleteFamilyTreeNavigateCommand =>
             _deleteFamilyTreeNavigateCommand ?? (_deleteFamilyTreeNavigateCommand = new DelegateCommand<string>(ExecuteDeleteFamilyTreeNavigateCommand, CanExecuteDeleteFamilyTreeNavigateCommand));
 
-        private DelegateCommand<string> _showPeopleNavigateCommand;
-        public DelegateCommand<string> ShowPeopleNavigateCommand =>
-            _showPeopleNavigateCommand ?? (_showPeopleNavigateCommand = new DelegateCommand<string>(ExecuteShowPeopleNavigateCommand, CanExecuteShowPeopleNavigateCommand));
+        private DelegateCommand _showPeopleNavigateCommand;
+        public DelegateCommand ShowPeopleNavigateCommand =>
+            _showPeopleNavigateCommand ?? (_showPeopleNavigateCommand = new DelegateCommand(ExecuteShowPeopleNavigateCommand, CanExecuteShowPeopleNavigateCommand));
 
         #endregion
 
@@ -123,17 +123,17 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
 
         #region ShowPeopleCommand
 
-        public void ExecuteShowPeopleNavigateCommand(string navigationPath)
+        public void ExecuteShowPeopleNavigateCommand()
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Tree, SelectedTree);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath, navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView", navParams);
         }
 
-        public bool CanExecuteShowPeopleNavigateCommand(string navigationPath)
+        public bool CanExecuteShowPeopleNavigateCommand()
         {
-            return navigationPath != null && SelectedTree != null;
+            return SelectedTree != null;
         }
 
         #endregion
