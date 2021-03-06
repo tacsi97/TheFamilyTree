@@ -6,6 +6,8 @@ using FamilyTree.Modules.Person.ViewModels;
 using FamilyTree.Modules.Person.Views;
 using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
+using FamilyTree.Services.TreeTravelsal;
+using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -36,6 +38,8 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<InfoPersonView, InfoPersonViewModel>();
             containerRegistry.RegisterForNavigation<ParentTreePersonView, ParentTreePersonViewModel>();
 
+            containerRegistry.Register<ITreeTravelsalText<Business.Node>, TreeTravelsalText>();
+
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
                 new FakePersonRepository(
                     DatabaseInfo.Uri,
@@ -44,7 +48,6 @@ namespace FamilyTree.Modules.Person
                         UserName = DatabaseInfo.UserName,
                         Code = DatabaseInfo.Password
                     }));
-            containerRegistry.RegisterSingleton<IUpload, UploadNewPersonCommand>();
         }
     }
 }

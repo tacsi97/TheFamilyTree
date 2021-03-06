@@ -169,14 +169,14 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void ExecuteNavigateTreeViewCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add(NavParamNames.Tree, FamilyTree);
+            navParams.Add(NavParamNames.Person, SelectedPerson);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreeView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreePersonView", navParams);
         }
 
         public bool CanExecuteNavigateTreeViewCommand()
         {
-            return FamilyTree != null;
+            return SelectedPerson != null;
         }
 
         #endregion

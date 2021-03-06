@@ -24,7 +24,12 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public Business.Person SelectedPerson { get; set; }
 
-        public String OutputString { get; set; }
+        private string _outputString;
+        public string OutputString
+        {
+            get { return _outputString; }
+            set { SetProperty(ref _outputString, value); }
+        }
 
         #endregion
 
@@ -44,6 +49,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void ExecuteDrawCommand()
         {
+            _treeTravelsal.Builder.Clear();
             var root = new Node(SelectedPerson);
             _treeTravelsal.PostOrder(root);
             OutputString = _treeTravelsal.Builder.ToString();

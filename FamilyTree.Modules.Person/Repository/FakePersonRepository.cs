@@ -32,6 +32,36 @@ namespace FamilyTree.Modules.Person.Repository
                     FamilyTree = new Business.FamilyTree()
                     {
                         ID = 0
+                    },
+                    Mother = new Business.Person()
+                    {
+                        ID = 3,
+                        FirstName = "Erzsébet",
+                        LastName = "Vidos",
+                        Mother = new Business.Person()
+                        {
+                            ID = 4,
+                            FirstName = "Anna",
+                            LastName = "Horváth"
+                        }
+                    },
+                    Father = new Business.Person()
+                    {
+                        ID = 5,
+                        FirstName = "László",
+                        LastName = "Tóth",
+                        Mother = new Business.Person()
+                        {
+                            ID = 6,
+                            FirstName = "Mária",
+                            LastName = "Nagy"
+                        },
+                        Father = new Business.Person()
+                        {
+                            ID = 7,
+                            FirstName = "Győző",
+                            LastName = "Tóth"
+                        }
                     }
                 });
 
