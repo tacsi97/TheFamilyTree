@@ -1,5 +1,7 @@
-﻿using FamilyTree.Modules.Person.Core;
+﻿using FamilyTree.Business;
+using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
+using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -14,12 +16,15 @@ namespace FamilyTree.Modules.Person.ViewModels
         #region Fields
 
         private readonly IAsyncRepository<Business.Person> _repository;
+        private readonly ITreeTravelsalText<Node> _treeTravelsal;
 
         #endregion
 
         #region Properties
 
         public Business.Person SelectedPerson { get; set; }
+
+        public String OutputString { get; set; }
 
         #endregion
 
@@ -31,12 +36,20 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository)
+        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTravelsalText<Business.Node> treeTravelsal)
         {
             _repository = repository;
+            _treeTravelsal = treeTravelsal;
         }
 
         public void ExecuteDrawCommand()
+        {
+            var root = new Node(SelectedPerson);
+            _treeTravelsal.PostOrder(root);
+            OutputString = _treeTravelsal.Builder.ToString();
+        }
+
+        public void GetPeopleInTreeForm()
         {
 
         }

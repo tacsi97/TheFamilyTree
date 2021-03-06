@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.TreeTravelsal.Interfaces\FamilyTree.Services.TreeTravelsal.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

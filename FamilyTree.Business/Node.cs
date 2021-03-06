@@ -23,6 +23,10 @@ namespace FamilyTree.Business
 
         public double Height { get; set; }
 
+        public Node Mother { get; set; }
+
+        public Node Father { get; set; }
+
         public Node LeftMostChild { get; set; }
 
         public Node RightSibling { get; set; }
