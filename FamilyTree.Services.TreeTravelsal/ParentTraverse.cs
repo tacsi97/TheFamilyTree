@@ -5,21 +5,17 @@ using System.Text;
 
 namespace FamilyTree.Services.TreeTravelsal
 {
-    public class TreeTravelsalText : ITreeTravelsalText<Business.Node>
+    public class ParentTraverse : ITreeTraversal<Business.Node>
     {
         #region Properties
 
-        public StringBuilder Builder { get; set; }
-
-        public Business.Node Root { get; set; }
-
-        public Business.Person SelectedPerson { get; set; }
+        public ICollection<Business.Node> Nodes { get; set; }
 
         #endregion
 
-        public TreeTravelsalText()
+        public ParentTraverse()
         {
-            Builder = new StringBuilder();
+            Nodes = new List<Business.Node>();
         }
 
         public void PostOrder(Business.Node node)
@@ -52,10 +48,7 @@ namespace FamilyTree.Services.TreeTravelsal
 
         public void Visit(Business.Node node)
         {
-            Builder.Append(node.Person.FirstName);
-            Builder.Append(" ");
-            Builder.Append(node.Person.LastName);
-            Builder.Append(", ");
+            Nodes.Add(node);
         }
     }
 }

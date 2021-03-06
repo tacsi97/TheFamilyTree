@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
@@ -16,7 +17,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         #region Fields
 
         private readonly IAsyncRepository<Business.Person> _repository;
-        private readonly ITreeTravelsalText<Node> _treeTravelsal;
+        private readonly ITreeTraversal<Node> _treeTravelsal;
 
         #endregion
 
@@ -31,6 +32,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             set { SetProperty(ref _outputString, value); }
         }
 
+        public ObservableCollection<Business.Node> Nodes { get; set; }
+
         #endregion
 
         #region Commands
@@ -41,25 +44,43 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTravelsalText<Business.Node> treeTravelsal)
+        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTraversal<Business.Node> treeTravelsal)
         {
             _repository = repository;
             _treeTravelsal = treeTravelsal;
+
+            Nodes = new ObservableCollection<Node>();
         }
 
         public void ExecuteDrawCommand()
         {
-            _treeTravelsal.Builder.Clear();
-            var root = new Node(SelectedPerson);
-            root.TopCoordinate = 0d;
-            root.LeftCoordinate = 0d;
-            _treeTravelsal.PostOrder(root);
-            OutputString = _treeTravelsal.Builder.ToString();
+            _treeTravelsal.Nodes.Clear();
+            _treeTravelsal.PostOrder(new Node(SelectedPerson));
+            FillNodes(_treeTravelsal.Nodes);
+            Offset();
         }
 
-        public void GetPeopleInTreeForm()
+        public void FillNodes(ICollection<Node> nodes)
         {
+            Nodes.Clear();
 
+            foreach (var node in nodes)
+            {
+                Nodes.Add(node);
+            }
+        }
+
+        public void Offset()
+        {
+            var firstNode = Nodes.ElementAt(0);
+            var left = - firstNode.LeftCoordinate;
+            var top = - firstNode.TopCoordinate;
+
+            foreach (var node in Nodes)
+            {
+                node.TopCoordinate += top;
+                node.LeftCoordinate += left;
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

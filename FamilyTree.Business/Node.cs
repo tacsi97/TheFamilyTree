@@ -34,8 +34,10 @@ namespace FamilyTree.Business
         public Node(Person person)
         {
             Person = person;
-            Width = 50;
+            Width = 75;
             Height = 100;
+            TopCoordinate = 0;
+            LeftCoordinate = 0;
         }
 
         public Node(Person person, double width, double height)
@@ -43,6 +45,8 @@ namespace FamilyTree.Business
             Person = person;
             Width = width;
             Height = height;
+            TopCoordinate = 0;
+            LeftCoordinate = 0;
         }
     }
 }

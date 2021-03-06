@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FamilyTree.Services.TreeTravelsal.Interfaces
 {
-    public interface ITreeTravelsalText<T>
+    public interface ITreeTraversal<T>
     {
-        public StringBuilder Builder { get; set; }
+        ICollection<T> Nodes { get; set; }
 
         void PostOrder(T node);
 
