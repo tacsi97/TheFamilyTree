@@ -39,7 +39,7 @@ namespace FamilyTree.Services.TreeTravelsal
             node.Father = new Business.Node(node.Person.Father);
             node.Father.LeftMostChild = node;
             node.Father.TopCoordinate = node.TopCoordinate - (node.Height + 25);
-            node.Father.LeftCoordinate = node.LeftCoordinate - (node.Width + 25)*0.5;
+            node.Father.LeftCoordinate = node.LeftCoordinate + (node.Width + 25)*0.5;
             PostOrder(node.Father);
 
             Visit(node);
