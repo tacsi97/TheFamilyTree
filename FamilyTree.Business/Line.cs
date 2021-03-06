@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FamilyTree.Business
 {
-    public class Line
+    public class Line : ITreeElement
     {
         public double LeftCoordinate { get; set; }
 

@@ -3,8 +3,6 @@ using FamilyTree.Core;
 using FamilyTree.Core.Commands;
 using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
-using FamilyTree.Modules.TreeDrawer.Model;
-using FamilyTree.Modules.TreeDrawer.Utils;
 using FamilyTree.Services.PersonConnector.Interfaces;
 using FamilyTree.Services.Repository.Interfaces;
 using FamilyTree.Services.TreeDrawer.Interfaces;
@@ -80,36 +78,36 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
         public async Task ExecuteGetRelationships()
         {
-            TreeElements.Clear();
-            // Az összes kapcsolat, ami a fához tartozik
-            var result = await _repository.GetRelationshipsIncludedIn(SelectedTree.ID);
+            //TreeElements.Clear();
+            //// Az összes kapcsolat, ami a fához tartozik
+            //var result = await _repository.GetRelationshipsIncludedIn(SelectedTree.ID);
 
-            var aggregatedPeople = AggregatePeople(result);
+            //var aggregatedPeople = AggregatePeople(result);
 
-            var peopleList = DictionaryToList(aggregatedPeople);
+            //var peopleList = DictionaryToList(aggregatedPeople);
 
-            var nodes = new List<Node>();
+            //var nodes = new List<Node>();
 
-            peopleList.ToList().ForEach((person) =>
-            {
-                nodes.Add(
-                    new Node(person, 100d, 100d)
-                    );
-            });
+            //peopleList.ToList().ForEach((person) =>
+            //{
+            //    nodes.Add(
+            //        new Node(person, 100d, 100d)
+            //        );
+            //});
 
-            // TODO: Person repository is a kapcsolatokat kérdezze le, ott hajtsa végre az összekapcsolást, és adjon vissza egy emberek listát
-            _treeDrawer.SetNodes(nodes);
+            //// TODO: Person repository is a kapcsolatokat kérdezze le, ott hajtsa végre az összekapcsolást, és adjon vissza egy emberek listát
+            //_treeDrawer.SetNodes(nodes);
 
-            _treeDrawer.ArrangeUpperTree(nodes[0]).ToList().ForEach((node) =>
-                TreeElements.Add(new NodeTreeElement(node)));
+            //_treeDrawer.ArrangeUpperTree(nodes[0]).ToList().ForEach((node) =>
+            //    TreeElements.Add(new NodeTreeElement(node)));
 
-            _treeDrawer.ArrangeLowerTree(nodes[0]).ToList().ForEach(node =>
-                TreeElements.Add(new NodeTreeElement(node)));
+            //_treeDrawer.ArrangeLowerTree(nodes[0]).ToList().ForEach(node =>
+            //    TreeElements.Add(new NodeTreeElement(node)));
 
-            _treeDrawer.Createlines().ToList().ForEach((line) =>
-                TreeElements.Add(new LineTreeElement(line)));
+            //_treeDrawer.Createlines().ToList().ForEach((line) =>
+            //    TreeElements.Add(new LineTreeElement(line)));
 
-            Offset();
+            //Offset();
         }
 
         public void ExecuteSelectPersonCommand(Business.Person person)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyTree.Business
 {
-    public class Node
+    public class Node : ITreeElement
     {
         public Person Person { get; set; }
 

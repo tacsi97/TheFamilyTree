@@ -17,7 +17,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         #region Fields
 
         private readonly IAsyncRepository<Business.Person> _repository;
-        private readonly ITreeTraversal<Node> _treeTravelsal;
+        private readonly ITreeTraversal<Node,Line> _treeTravelsal;
 
         #endregion
 
@@ -25,14 +25,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public Business.Person SelectedPerson { get; set; }
 
-        private string _outputString;
-        public string OutputString
-        {
-            get { return _outputString; }
-            set { SetProperty(ref _outputString, value); }
-        }
-
-        public ObservableCollection<Business.Node> Nodes { get; set; }
+        public ObservableCollection<ITreeElement> TreeElements { get; set; }
 
         #endregion
 
@@ -44,42 +37,54 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTraversal<Business.Node> treeTravelsal)
+        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTraversal<Business.Node, Business.Line> treeTravelsal)
         {
             _repository = repository;
             _treeTravelsal = treeTravelsal;
 
-            Nodes = new ObservableCollection<Node>();
+            TreeElements = new ObservableCollection<ITreeElement>();
         }
 
         public void ExecuteDrawCommand()
         {
             _treeTravelsal.Nodes.Clear();
+            _treeTravelsal.Lines.Clear();
             _treeTravelsal.PostOrder(new Node(SelectedPerson));
-            FillNodes(_treeTravelsal.Nodes);
+            FillTreeElements(_treeTravelsal.Nodes);
+            FillTreeElements(_treeTravelsal.Lines);
             Offset();
         }
 
-        public void FillNodes(ICollection<Node> nodes)
+        public void FillTreeElements(ICollection<Node> nodes)
         {
-            Nodes.Clear();
+            TreeElements.Clear();
 
             foreach (var node in nodes)
             {
-                Nodes.Add(node);
+                TreeElements.Add(node);
+            }
+        }
+
+        public void FillTreeElements(ICollection<Line> lines)
+        {
+            foreach (var line in lines)
+            {
+                TreeElements.Add(line);
             }
         }
 
         public void Offset()
         {
-            var firstNode = Nodes.ElementAt(0);
+            var firstNode = TreeElements.ElementAt(0);
             var left = - firstNode.LeftCoordinate;
             var top = - firstNode.TopCoordinate;
 
-            foreach (var node in Nodes)
+            foreach (var node in TreeElements)
             {
                 node.TopCoordinate += top;
                 node.LeftCoordinate += left;
+                node.RigthCoordinate += left;
+                node.BottomCoordinate += top;
             }
         }
 

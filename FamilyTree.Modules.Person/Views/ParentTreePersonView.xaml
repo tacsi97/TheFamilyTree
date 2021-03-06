@@ -8,7 +8,7 @@
         <TextBlock Text="Szülők"/>
         <Button Content="Frissít" Command="{Binding DrawCommand}"/>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Nodes}">
+            <ItemsControl ItemsSource="{Binding TreeElements}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="White" Width="3000" Height="2000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -17,6 +17,14 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type model:Line}">
+                        <Line X1="{Binding LeftCoordinate}"
+                              Y1="{Binding TopCoordinate}"
+                              X2="{Binding RigthCoordinate}"
+                              Y2="{Binding BottomCoordinate}"
+                              Stroke="Black"
+                              StrokeThickness="2"/>
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type model:Node}">
                         <Button Width="{Binding Width}"
                                 Height="{Binding Height}">
