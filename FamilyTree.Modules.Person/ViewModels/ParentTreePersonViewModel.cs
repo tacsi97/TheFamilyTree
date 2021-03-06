@@ -51,6 +51,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             _treeTravelsal.Builder.Clear();
             var root = new Node(SelectedPerson);
+            root.TopCoordinate = 0d;
+            root.LeftCoordinate = 0d;
             _treeTravelsal.PostOrder(root);
             OutputString = _treeTravelsal.Builder.ToString();
         }
