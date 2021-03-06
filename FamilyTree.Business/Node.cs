@@ -34,6 +34,8 @@ namespace FamilyTree.Business
         public Node(Person person)
         {
             Person = person;
+            Width = 50;
+            Height = 100;
         }
 
         public Node(Person person, double width, double height)
