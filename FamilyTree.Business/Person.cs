@@ -68,23 +68,35 @@ namespace FamilyTree.Business
             set { SetProperty(ref _mother, value); }
         }
 
+        private Person _rightSibling;
+        [JsonIgnore]
+        public Person RightSibling
+        {
+            get { return _rightSibling; }
+            set { SetProperty(ref _rightSibling, value); }
+        }
+
         private BitmapImage _image;
         public BitmapImage Image
         {
             get { return _image; }
             set { SetProperty(ref _image, value); }
         }
+        
+        private Person _partner;
+        [JsonIgnore]
+        public Person Partner
+        {
+            get { return _partner; }
+            set { SetProperty(ref _partner, value); }
+        }
 
         [JsonIgnore]
-        public ObservableCollection<Person> Children { get; set; }
-
-        [JsonIgnore]
-        public ObservableCollection<Relationship> Partners { get; set; }
+        public ICollection<Person> Children { get; set; }
 
         public Person()
         {
-            Children = new ObservableCollection<Person>();
-            Partners = new ObservableCollection<Relationship>();
+            Children = new List<Person>();
         }
     }
 }
