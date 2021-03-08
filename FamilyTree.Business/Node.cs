@@ -31,6 +31,8 @@ namespace FamilyTree.Business
 
         public Node RightSibling { get; set; }
 
+        public Node Partner { get; set; }
+
         public Node(Person person)
         {
             Person = person;
