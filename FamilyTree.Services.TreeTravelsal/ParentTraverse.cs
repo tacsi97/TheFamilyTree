@@ -30,10 +30,6 @@ namespace FamilyTree.Services.TreeTravelsal
 
         public void PostOrder(Business.Node node)
         {
-            // TODO: Vagy itt kötögetem össze az embereket, vagy egy másik fa bejárásban
-            // Másik fa bejárás:
-            //      2 service kellene, egyik csak összeköti az embereket, a másik csak kiírja
-            //      kétszer futna le a fa bejárás
             if (node == null || node.Person == null) return;
 
             node.Mother = new Business.Node(node.Person.Mother);
