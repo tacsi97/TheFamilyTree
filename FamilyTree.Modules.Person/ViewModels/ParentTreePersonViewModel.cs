@@ -47,6 +47,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void ExecuteDrawCommand()
         {
+            TreeElements.Clear();
             _treeTravelsal.Nodes.Clear();
             _treeTravelsal.Lines.Clear();
             _treeTravelsal.PostOrder(new Node(SelectedPerson));
@@ -57,8 +58,6 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void FillTreeElements(ICollection<Node> nodes)
         {
-            TreeElements.Clear();
-
             foreach (var node in nodes)
             {
                 TreeElements.Add(node);
