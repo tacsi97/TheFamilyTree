@@ -22,6 +22,39 @@ namespace FamilyTree.Modules.Person.Repository
         public FakePersonRepository(string uri, Business.Token token)
             : base(uri, token)
         {
+            People.Add(new Business.Person()
+            {
+                ID = 8,
+                FirstName = "Anya",
+                Gender = Business.GenderType.Female,
+                Partner = new Business.Person()
+                {
+                    FirstName = "Apa"
+                },
+                Children = new List<Business.Person>()
+                {
+                    new Business.Person()
+                    {
+                        ID = 9,
+                        FirstName = "Gyerek1"
+                    },
+                    new Business.Person()
+                    {
+                        ID = 10,
+                        FirstName = "Gyerek2"
+                    },
+                    new Business.Person()
+                    {
+                        ID = 11,
+                        FirstName = "Gyerek3"
+                    },
+                    new Business.Person()
+                    {
+                        ID = 9,
+                        FirstName = "Gyerek4"
+                    }
+                }
+            });
             People.Add(
                 new Business.Person()
                 {
