@@ -85,35 +85,35 @@ namespace FamilyTree.Services.TreeDrawer
                     checkedNodes.Add(node);
                     if (node.Person.Children.Count != 0)
                     {
-                        if (node.Person.Partners.First().Equals(node.Person))
-                        {
-                            var leftMostPerson = node.Person;
-                            while (true)
-                            {
-                                if (leftMostPerson.Children.FirstOrDefault() != null)
-                                    leftMostPerson = leftMostPerson.Children.FirstOrDefault();
-                                else
-                                    break;
-                            }
-                            node.LeftCoordinate = GetNode(leftMostPerson).LeftCoordinate;
-                        }
-                        else
-                        {
-                            // előző algo miatt
-                            var members = new List<Business.Person>()
-                            {
-                                node.Person
-                            };
-                            node.Person.Partners.ToList().ForEach((relation) =>
-                            {
-                                if (relation.RelationType.Equals("Partner"))
-                                    members.Add(relation.PersonTo);
-                            });
+                        //if (node.Person.Partners.First().Equals(node.Person))
+                        //{
+                        //    var leftMostPerson = node.Person;
+                        //    while (true)
+                        //    {
+                        //        if (leftMostPerson.Children.FirstOrDefault() != null)
+                        //            leftMostPerson = leftMostPerson.Children.FirstOrDefault();
+                        //        else
+                        //            break;
+                        //    }
+                        //    node.LeftCoordinate = GetNode(leftMostPerson).LeftCoordinate;
+                        //}
+                        //else
+                        //{
+                        //    // előző algo miatt
+                        //    var members = new List<Business.Person>()
+                        //    {
+                        //        node.Person
+                        //    };
+                        //    node.Person.Partners.ToList().ForEach((relation) =>
+                        //    {
+                        //        if (relation.RelationType.Equals("Partner"))
+                        //            members.Add(relation.PersonTo);
+                        //    });
 
-                            var index = members.IndexOf(node.Person);
+                        //    var index = members.IndexOf(node.Person);
 
-                            node.LeftCoordinate = GetNode(members[index - 1]).LeftCoordinate + node.Width + HorizontalSpace;
-                        }
+                        //    node.LeftCoordinate = GetNode(members[index - 1]).LeftCoordinate + node.Width + HorizontalSpace;
+                        //}
                     }
                     else
                         node.LeftCoordinate = minX;
@@ -238,15 +238,15 @@ namespace FamilyTree.Services.TreeDrawer
         {
             Node pairNode = null;
 
-            foreach (var relation in node.Person.Partners)
-            {
-                var iterationNode = GetNode(relation.PersonTo);
-                if (!iterationNode.IsChecked)
-                {
-                    pairNode = iterationNode;
-                    break;
-                }
-            }
+            //foreach (var relation in node.Person.Partners)
+            //{
+            //    var iterationNode = GetNode(relation.PersonTo);
+            //    if (!iterationNode.IsChecked)
+            //    {
+            //        pairNode = iterationNode;
+            //        break;
+            //    }
+            //}
 
             return pairNode;
         }

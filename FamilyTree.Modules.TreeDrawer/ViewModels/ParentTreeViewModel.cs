@@ -174,14 +174,14 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
                     // letöltéskor pedig szintén Relationshipként 
                     // módosításkor pedig lekérjük a Relationship objektumot
                     // connect partner
-                    dictionary[relation.PersonFrom.ID].Partners.Add(new Business.Relationship()
-                    {
-                        RelationType = relation.RelationType,
-                        From = relation.From,
-                        To = relation.To,
-                        PersonFrom = dictionary[relation.PersonFrom.ID],
-                        PersonTo = dictionary[relation.PersonTo.ID]
-                    });
+                    //dictionary[relation.PersonFrom.ID].Partners.Add(new Business.Relationship()
+                    //{
+                    //    RelationType = relation.RelationType,
+                    //    From = relation.From,
+                    //    To = relation.To,
+                    //    PersonFrom = dictionary[relation.PersonFrom.ID],
+                    //    PersonTo = dictionary[relation.PersonTo.ID]
+                    //});
 
                     //dictionary[relation.PersonTo.ID].Partners.Add(new Business.Relationship()
                     //{

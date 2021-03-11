@@ -46,7 +46,7 @@ namespace FamilyTree.Modules.TreeDrawer.Utils
 
                 if (person.Father != null)
                 {
-                    var currentPersonIndex = person.Father.Children.IndexOf(person);
+                    var currentPersonIndex = 0; // person.Father.Children.IndexOf(person);
 
                     if (currentPersonIndex != 0)
                     {
