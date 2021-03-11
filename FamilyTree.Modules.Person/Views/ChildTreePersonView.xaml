@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.ChildTreePersonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:model="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <StackPanel x:Name="stackPanel" Orientation="Vertical">
+        <TextBlock Text="Leszármazottak"/>
+        <Button Content="Frissít" Command="{Binding DrawCommand}"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding TreeElements}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Background="White" Width="3000" Height="2000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type model:Line}">
+                        <Line X1="{Binding LeftCoordinate}"
+                              Y1="{Binding TopCoordinate}"
+                              X2="{Binding RigthCoordinate}"
+                              Y2="{Binding BottomCoordinate}"
+                              Stroke="Black"
+                              StrokeThickness="2"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:Node}">
+                        <Button Width="{Binding Width}"
+                                Height="{Binding Height}">
+                            <Button.RenderTransform>
+                                <TranslateTransform X="{Binding LeftCoordinate, Mode=TwoWay}" Y="{Binding TopCoordinate, Mode=TwoWay}"/>
+                            </Button.RenderTransform>
+                            <StackPanel Orientation="Vertical" Background="White">
+                                <Image Width="80" Height="80"/>
+                                <TextBlock TextAlignment="Center">
+                                    <TextBlock.Text>
+                                        <!--Valamiért csak ezzel működik-->
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Person.FirstName"/>
+                                            <Binding Path="Person.LastName"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+            </ItemsControl>
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>

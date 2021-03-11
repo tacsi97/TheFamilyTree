@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
-    public class ParentTreePersonViewModel : BindableBase, INavigationAware
+    public class ChildTreePersoViewModel : BindableBase
     {
         #region Fields
 
@@ -37,7 +37,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTraversal<Business.Node, Business.Line> treeTravelsal)
+        public ChildTreePersoViewModel(IAsyncRepository<Business.Person> repository, ITreeTraversal<Business.Node, Business.Line> treeTravelsal)
         {
             _repository = repository;
             _treeTravelsal = treeTravelsal;
@@ -82,18 +82,6 @@ namespace FamilyTree.Modules.Person.ViewModels
                 node.TopCoordinate += top;
                 node.BottomCoordinate += top;
             }
-            // Szülőknél
-            //var firstNode = TreeElements.FirstOrDefault();
-            //var left = -firstNode.LeftCoordinate;
-            //var top = -firstNode.TopCoordinate;
-
-            //foreach (var node in TreeElements)
-            //{
-            //    node.TopCoordinate += top;
-            //    node.LeftCoordinate += left;
-            //    node.RigthCoordinate += left;
-            //    node.BottomCoordinate += top;
-            //}
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

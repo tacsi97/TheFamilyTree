@@ -248,7 +248,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public bool CanExecuteNewPairCommand()
         {
-            return SelectedPerson != null && SelectedPerson.Partners != null && SelectedPerson.Partners.Count == 0;
+            return SelectedPerson != null && SelectedPerson.Partner != null;
         }
 
         #endregion
