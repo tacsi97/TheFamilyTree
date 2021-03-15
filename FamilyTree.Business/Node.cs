@@ -23,19 +23,11 @@ namespace FamilyTree.Business
 
         public double Height { get; set; }
 
-        public Node Mother { get; set; }
-
-        public Node Father { get; set; }
-
-        public Node LeftMostChild { get; set; }
-
-        public Node RightSibling { get; set; }
-
-        public Node Partner { get; set; }
-
         public Node(Person person)
         {
             Person = person;
+            if (person != null)
+                person.Node = this;
             Width = 75;
             Height = 100;
             TopCoordinate = 0;
