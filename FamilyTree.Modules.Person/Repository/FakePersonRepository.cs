@@ -22,110 +22,39 @@ namespace FamilyTree.Modules.Person.Repository
         public FakePersonRepository(string uri, Business.Token token)
             : base(uri, token)
         {
-            People.Add(new Business.Person()
-            {
-                ID = 8,
-                FirstName = "Anya",
-                Gender = Business.GenderType.Female,
-                Partner = new Business.Person()
-                {
-                    FirstName = "Apa"
-                },
-                Children = new List<Business.Person>()
-                {
-                    new Business.Person()
-                    {
-                        ID = 9,
-                        FirstName = "Gyerek1"
-                    },
-                    new Business.Person()
-                    {
-                        ID = 10,
-                        FirstName = "Gyerek2"
-                    },
-                    new Business.Person()
-                    {
-                        ID = 11,
-                        FirstName = "Gyerek3"
-                    },
-                    new Business.Person()
-                    {
-                        ID = 9,
-                        FirstName = "Gyerek4"
-                    }
-                }
-            });
-            People.Add(
-                new Business.Person()
-                {
-                    ID = 0,
-                    FirstName = "László",
-                    LastName = "Tóth",
-                    DateOfBirth = new DateTime(1997, 12, 1),
-                    FamilyTree = new Business.FamilyTree()
-                    {
-                        ID = 0
-                    },
-                    Mother = new Business.Person()
-                    {
-                        ID = 3,
-                        FirstName = "Erzsébet",
-                        LastName = "Vidos",
-                        Mother = new Business.Person()
-                        {
-                            ID = 4,
-                            FirstName = "Anna",
-                            LastName = "Horváth"
-                        }
-                    },
-                    Father = new Business.Person()
-                    {
-                        ID = 5,
-                        FirstName = "László",
-                        LastName = "Tóth",
-                        Mother = new Business.Person()
-                        {
-                            ID = 6,
-                            FirstName = "Mária",
-                            LastName = "Nagy"
-                        },
-                        Father = new Business.Person()
-                        {
-                            ID = 7,
-                            FirstName = "Győző",
-                            LastName = "Tóth"
-                        }
-                    }
-                });
+            People.Add(new Business.Person() { ID = 1, FirstName = "Anya" });
+            People.Add(new Business.Person() { ID = 2, FirstName = "Apa" });
+            People.Add(new Business.Person() { ID = 3, FirstName = "Gyerek1" });
+            People.Add(new Business.Person() { ID = 4, FirstName = "Gyerek2" });
+            People.Add(new Business.Person() { ID = 5, FirstName = "Gyerek3" });
+            People.Add(new Business.Person() { ID = 6, FirstName = "Gyerek4" });
+            People.Add(new Business.Person() { ID = 7, FirstName = "Gyerek1 Pár" });
+            People.Add(new Business.Person() { ID = 8, FirstName = "Gyerek11" });
+            People.Add(new Business.Person() { ID = 9, FirstName = "Gyerek12" });
+            People.Add(new Business.Person() { ID = 10, FirstName = "Gyerek11 Pár" });
+            // 8,9 anyja
+            AddMother(People.First(person => person.ID == 8), People.First(person => person.ID == 3));
+            AddMother(People.First(person => person.ID == 9), People.First(person => person.ID == 3));
+            // 8,9 apja
+            AddFather(People.First(person => person.ID == 8), People.First(person => person.ID == 7));
+            AddFather(People.First(person => person.ID == 9), People.First(person => person.ID == 7));
+            // 3,4,5,6 anyja
+            AddMother(People.First(person => person.ID == 3), People.First(person => person.ID == 1));
+            AddMother(People.First(person => person.ID == 4), People.First(person => person.ID == 1));
+            AddMother(People.First(person => person.ID == 5), People.First(person => person.ID == 1));
+            AddMother(People.First(person => person.ID == 6), People.First(person => person.ID == 1));
+            // 3,4,5,6 apja
+            AddFather(People.First(person => person.ID == 3), People.First(person => person.ID == 2));
+            AddFather(People.First(person => person.ID == 4), People.First(person => person.ID == 2));
+            AddFather(People.First(person => person.ID == 5), People.First(person => person.ID == 2));
+            AddFather(People.First(person => person.ID == 6), People.First(person => person.ID == 2));
+            // anya és apa
+            AddPair(People.First(person => person.ID == 1), People.First(person => person.ID == 2));
+            // Gyerek1 és Gyerek1 Pár
+            AddPair(People.First(person => person.ID == 3), People.First(person => person.ID == 7));
+            // Gyerek11 és Gyerek11 Pár
+            AddPair(People.First(person => person.ID == 8), People.First(person => person.ID == 10));
 
-            People.Add(
-                new Business.Person()
-                {
-                    ID = 1,
-                    FirstName = "Berci",
-                    LastName = "Kutya",
-                    DateOfBirth = new DateTime(2015, 4, 3),
-                    FamilyTree = new Business.FamilyTree()
-                    {
-                        ID = 0
-                    }
-                });
-
-            People.Add(
-                new Business.Person()
-                {
-                    ID = 2,
-                    FirstName = "Kutya",
-                    LastName = "Liza",
-                    DateOfBirth = new DateTime(2016, 6, 11),
-                    FamilyTree = new Business.FamilyTree()
-                    {
-                        ID = 0
-                    }
-                });
-
-            // Mivel már megadtunk 3 személyt
-            id = 3;
         }
 
         public override async Task<Business.Person> CreateAsync(Business.Person content)
@@ -139,11 +68,29 @@ namespace FamilyTree.Modules.Person.Repository
             });
         }
 
+        public void AddMother(Business.Person child, Business.Person mother)
+        {
+            child.Mother = mother;
+            mother.Children.Add(child);
+        }
+
+        public void AddFather(Business.Person child, Business.Person father)
+        {
+            child.Father = father;
+            father.Children.Add(child);
+        }
+
+        public void AddPair(Business.Person one, Business.Person two)
+        {
+            one.Partner = two;
+            two.Partner = one;
+        }
+
         public override async Task DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
-                foreach(var person in People)
+                foreach (var person in People)
                 {
                     if (person.ID == id)
                     {
