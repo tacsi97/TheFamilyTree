@@ -10,10 +10,10 @@ namespace FamilyTree.Services.TreeTravelsal.Interfaces
 
         ICollection<V> Lines { get; set; }
 
-        void PostOrder(T node);
+        void PostOrder(Business.Person person);
 
-        void PreOrder(T node);
+        void PreOrder(Business.Person person);
 
-        void Visit(T node);
+        void Visit(Business.Person person);
     }
 }
