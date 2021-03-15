@@ -73,6 +73,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             GetPeopleCommand = new GetPeopleCommand(this);
 
             People = new ObservableCollection<Business.Person>();
+
+            ExecuteGetPeopleCommand().FireAndForgetAsync();
         }
 
         public async Task ExecuteGetPeopleCommand()

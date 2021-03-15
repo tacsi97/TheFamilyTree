@@ -1,4 +1,5 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Core.Extensions;
 using FamilyTree.Modules.FamilyTree.Commands;
 using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.PubSubEvents;
@@ -55,6 +56,8 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             Trees = new ObservableCollection<Business.FamilyTree>();
 
             GetTreesCommand = new GetTreesCommand(this);
+
+            ExecuteGetTreesCommand().FireAndForgetAsync();
         }
 
         public async Task ExecuteGetTreesCommand()
