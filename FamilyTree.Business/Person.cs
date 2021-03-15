@@ -38,6 +38,14 @@ namespace FamilyTree.Business
             set { SetProperty(ref _dateOfDeath, value); }
         }
 
+        private Node _node;
+        [JsonIgnore]
+        public Node Node
+        {
+            get { return _node; }
+            set { SetProperty(ref _node, value); }
+        }
+
         private GenderType _gender;
         public GenderType Gender
         {
@@ -89,6 +97,14 @@ namespace FamilyTree.Business
         {
             get { return _partner; }
             set { SetProperty(ref _partner, value); }
+        }
+
+        private Person _leftmostChild;
+        [JsonIgnore]
+        public Person LeftmostChild
+        {
+            get { return _leftmostChild; }
+            set { SetProperty(ref _leftmostChild, value); }
         }
 
         [JsonIgnore]
