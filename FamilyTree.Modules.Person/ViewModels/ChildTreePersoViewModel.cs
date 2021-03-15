@@ -50,7 +50,9 @@ namespace FamilyTree.Modules.Person.ViewModels
             TreeElements.Clear();
             _treeTravelsal.Nodes.Clear();
             _treeTravelsal.Lines.Clear();
-            _treeTravelsal.PostOrder(new Node(SelectedPerson));
+
+            var root = new Node(SelectedPerson);
+            _treeTravelsal.PostOrder(root.Person);
             FillTreeElements(_treeTravelsal.Nodes);
             FillTreeElements(_treeTravelsal.Lines);
             Offset();
