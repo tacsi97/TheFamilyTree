@@ -73,8 +73,6 @@ namespace FamilyTree.Modules.Person.ViewModels
             GetPeopleCommand = new GetPeopleCommand(this);
 
             People = new ObservableCollection<Business.Person>();
-
-            ExecuteGetPeopleCommand().FireAndForgetAsync();
         }
 
         public async Task ExecuteGetPeopleCommand()
@@ -93,6 +91,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
+
+            ExecuteGetPeopleCommand().FireAndForgetAsync();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

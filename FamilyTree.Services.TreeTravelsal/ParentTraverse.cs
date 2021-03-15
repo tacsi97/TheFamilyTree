@@ -28,49 +28,56 @@ namespace FamilyTree.Services.TreeTravelsal
             Lines = new List<Business.Line>();
         }
 
-        public void PostOrder(Business.Node node)
+        public void PostOrder(Person person)
         {
-            if (node == null || node.Person == null) return;
+            if (person == null) return;
 
-            node.Mother = new Business.Node(node.Person.Mother);
-            node.Mother.LeftMostChild = node;
-            node.Mother.TopCoordinate = node.TopCoordinate - (node.Height + 25);
-            node.Mother.LeftCoordinate = node.LeftCoordinate - (node.Width + 25) * 0.5;
-            PostOrder(node.Mother);
+            person.Node = new Node(person);
 
-            node.Father = new Business.Node(node.Person.Father);
-            node.Father.LeftMostChild = node;
-            node.Father.TopCoordinate = node.TopCoordinate - (node.Height + 25);
-            node.Father.LeftCoordinate = node.LeftCoordinate + (node.Width + 25) * 0.5;
-            PostOrder(node.Father);
+            person.Mother.Node = new Business.Node(person.Mother);
+            person.Mother.LeftmostChild.Node = person.Node;
+            person.Mother.Node.TopCoordinate = person.Node.TopCoordinate - (person.Node.Height + 25);
+            person.Mother.Node.LeftCoordinate = person.Node.LeftCoordinate - (person.Node.Width + 25) * 0.5;
+            PostOrder(person.Mother);
 
-            Visit(node);
+            person.Father.Node = new Business.Node(person.Father);
+            person.Father.LeftmostChild.Node = person.Node;
+            person.Father.Node.TopCoordinate = person.Node.TopCoordinate - (person.Node.Height + 25);
+            person.Father.Node.LeftCoordinate = person.Node.LeftCoordinate + (person.Node.Width + 25) * 0.5;
+            PostOrder(person.Father);
 
-            if (node.Mother.Person == null && node.Father.Person == null)
+            Visit(person);
+        }
+
+        public void PreOrder(Person person)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(Person person)
+        {
+            if (person.Mother == null && person.Father == null)
             {
-                node.LeftCoordinate = _leftmostValue;
-                _leftmostValue += node.Width + 25;
+                person.Node.LeftCoordinate = _leftmostValue;
+                _leftmostValue += person.Node.Width + 25;
             }
-            else if (node.Mother.Person == null)
+            else if (person.Mother == null)
             {
-                node.LeftCoordinate = node.Father.LeftCoordinate;
-                CreateArc(node.Mother, node);
+                person.Node.LeftCoordinate = person.Father.Node.LeftCoordinate;
+                CreateArc(person.Mother.Node, person.Node);
             }
-            else if (node.Father.Person == null)
+            else if (person.Father == null)
             {
-                node.LeftCoordinate = node.Mother.LeftCoordinate;
-                CreateArc(node.Father, node);
+                person.Node.LeftCoordinate = person.Mother.Node.LeftCoordinate;
+                CreateArc(person.Father.Node, person.Node);
             }
             else
             {
-                node.LeftCoordinate = (node.Mother.LeftCoordinate + node.Father.LeftCoordinate) * 0.5;
-                CreateArc(node.Mother, node.Father, node);
+                person.Node.LeftCoordinate = (person.Mother.Node.LeftCoordinate + person.Father.Node.LeftCoordinate) * 0.5;
+                CreateArc(person.Mother.Node, person.Father.Node, person.Node);
             }
-        }
 
-        public void PreOrder(Business.Node node)
-        {
-            throw new NotImplementedException();
+            Nodes.Add(person.Node);
         }
 
         public void CreateArc(Business.Point from, Business.Point to)
@@ -135,11 +142,6 @@ namespace FamilyTree.Services.TreeTravelsal
                 RigthCoordinate = (child.LeftCoordinate + child.RigthCoordinate) * 0.5
             });
 
-        }
-
-        public void Visit(Business.Node node)
-        {
-            Nodes.Add(node);
         }
     }
 }

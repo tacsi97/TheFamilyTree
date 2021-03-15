@@ -44,8 +44,6 @@ namespace FamilyTree.Modules.Person.ViewModels
             _treeTravelsal = treeTravelsal;
 
             TreeElements = new ObservableCollection<ITreeElement>();
-
-            ExecuteDrawCommand();
         }
 
         public void ExecuteDrawCommand()
@@ -60,6 +58,15 @@ namespace FamilyTree.Modules.Person.ViewModels
             FillTreeElements(_treeTravelsal.Nodes);
             FillTreeElements(_treeTravelsal.Lines);
             Offset();
+            RemoveNodes(_treeTravelsal.Nodes);
+        }
+
+        public void RemoveNodes(ICollection<Node> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                node.Person.Node = null;
+            }
         }
 
         public void FillTreeElements(ICollection<Node> nodes)
@@ -98,6 +105,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             SelectedPerson = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
+            ExecuteDrawCommand();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

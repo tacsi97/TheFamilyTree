@@ -56,8 +56,6 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
             Trees = new ObservableCollection<Business.FamilyTree>();
 
             GetTreesCommand = new GetTreesCommand(this);
-
-            ExecuteGetTreesCommand().FireAndForgetAsync();
         }
 
         public async Task ExecuteGetTreesCommand()
@@ -75,6 +73,8 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             FamilyTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
+
+            ExecuteGetTreesCommand().FireAndForgetAsync();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

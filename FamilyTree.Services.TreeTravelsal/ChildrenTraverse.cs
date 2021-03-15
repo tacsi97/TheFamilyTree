@@ -21,8 +21,6 @@ namespace FamilyTree.Services.TreeTravelsal
             Lines = new ObservableCollection<Line>();
         }
 
-        // TODO: Az emebereken iterálunk végig, így jó lenne ha az emberben lenne egy hivatkozás a node ra, ami tartalmazza.
-        // mivel így a node-nak is kellenek azok az attribútumok, mint pl leftmostchildren, mother, father...
         public void PostOrder(Person person)
         {
             if (person == null) return;
