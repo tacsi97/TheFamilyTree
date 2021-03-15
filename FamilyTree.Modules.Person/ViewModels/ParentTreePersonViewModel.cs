@@ -1,6 +1,7 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
+using FamilyTree.Services.TreeTravelsal;
 using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -43,6 +44,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             _treeTravelsal = treeTravelsal;
 
             TreeElements = new ObservableCollection<ITreeElement>();
+
+            ExecuteDrawCommand();
         }
 
         public void ExecuteDrawCommand()
@@ -50,7 +53,10 @@ namespace FamilyTree.Modules.Person.ViewModels
             TreeElements.Clear();
             _treeTravelsal.Nodes.Clear();
             _treeTravelsal.Lines.Clear();
-            _treeTravelsal.PostOrder(new Node(SelectedPerson));
+            // TODO: ez elég undorító...
+            ((ChildrenTraverse)_treeTravelsal).LeftmostValue = 0;
+            var root = new Node(SelectedPerson);
+            _treeTravelsal.PostOrder(root.Person);
             FillTreeElements(_treeTravelsal.Nodes);
             FillTreeElements(_treeTravelsal.Lines);
             Offset();
@@ -74,26 +80,19 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void Offset()
         {
-            var lastNode = _treeTravelsal.Nodes.Last();
-            var top = -lastNode.TopCoordinate;
+            var leftmostValue = 0d;
 
-            foreach (var node in TreeElements)
+            foreach (var treeElement in TreeElements)
             {
-                node.TopCoordinate += top;
-                node.BottomCoordinate += top;
+                if (treeElement.LeftCoordinate < leftmostValue)
+                    leftmostValue = treeElement.LeftCoordinate;
             }
-            // Szülőknél
-            //var firstNode = TreeElements.FirstOrDefault();
-            //var left = -firstNode.LeftCoordinate;
-            //var top = -firstNode.TopCoordinate;
 
-            //foreach (var node in TreeElements)
-            //{
-            //    node.TopCoordinate += top;
-            //    node.LeftCoordinate += left;
-            //    node.RigthCoordinate += left;
-            //    node.BottomCoordinate += top;
-            //}
+            foreach (var treeElement in TreeElements)
+            {
+                treeElement.LeftCoordinate += -leftmostValue;
+                treeElement.RigthCoordinate += -leftmostValue;
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
