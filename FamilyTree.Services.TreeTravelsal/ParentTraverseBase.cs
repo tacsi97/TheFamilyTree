@@ -33,16 +33,19 @@ namespace FamilyTree.Services.TreeTravelsal
 
             person.Node = new Node(person);
 
-            person.Mother.Node = new Business.Node(person.Mother);
-            person.Mother.LeftmostChild.Node = person.Node;
-            person.Mother.Node.TopCoordinate = person.Node.TopCoordinate - (person.Node.Height + 25);
-            person.Mother.Node.LeftCoordinate = person.Node.LeftCoordinate - (person.Node.Width + 25) * 0.5;
+            if (person.Mother != null)
+                person.Mother.LeftmostChild = person;
+
+            if (person.Father != null)
+                person.Father.LeftmostChild = person;
+
+            if (person.LeftmostChild != null && person.LeftmostChild.Node != null)
+                person.Node.TopCoordinate = person.LeftmostChild.Node.TopCoordinate - (person.Node.Height + 25);
+
+            // person.Mother.Node.LeftCoordinate = person.Node.LeftCoordinate - (person.Node.Width + 25) * 0.5;
             PostOrder(person.Mother);
 
-            person.Father.Node = new Business.Node(person.Father);
-            person.Father.LeftmostChild.Node = person.Node;
-            person.Father.Node.TopCoordinate = person.Node.TopCoordinate - (person.Node.Height + 25);
-            person.Father.Node.LeftCoordinate = person.Node.LeftCoordinate + (person.Node.Width + 25) * 0.5;
+            // person.Father.Node.LeftCoordinate = person.Node.LeftCoordinate + (person.Node.Width + 25) * 0.5;
             PostOrder(person.Father);
 
             Visit(person);
@@ -61,86 +64,51 @@ namespace FamilyTree.Services.TreeTravelsal
                 LeftmostValue += person.Node.Width + 25;
             }
             else if (person.Mother == null)
-            {
                 person.Node.LeftCoordinate = person.Father.Node.LeftCoordinate;
-                CreateArc(person.Mother.Node, person.Node);
-            }
             else if (person.Father == null)
-            {
                 person.Node.LeftCoordinate = person.Mother.Node.LeftCoordinate;
-                CreateArc(person.Father.Node, person.Node);
-            }
             else
-            {
                 person.Node.LeftCoordinate = (person.Mother.Node.LeftCoordinate + person.Father.Node.LeftCoordinate) * 0.5;
-                CreateArc(person.Mother.Node, person.Father.Node, person.Node);
+
+            // Vonalak
+            // Csak egy szülő van megadva
+            if (person.Father != null ^ person.Mother != null)
+            {
+                var notNullParent = (person.Father != null ? person.Father : person.Mother);
+
+                // |
+                Lines.Add(new Line()
+                {
+                    TopCoordinate = notNullParent.Node.BottomCoordinate,
+                    LeftCoordinate = (notNullParent.Node.LeftCoordinate + notNullParent.Node.RigthCoordinate) * 0.5,
+                    BottomCoordinate = person.Node.TopCoordinate,
+                    RigthCoordinate = (notNullParent.Node.LeftCoordinate + notNullParent.Node.RigthCoordinate) * 0.5
+                });
+            }
+
+            // Két szülő van megadva
+            if(person.Mother != null && person.Father != null)
+            {
+                // node|---|node
+                Lines.Add(new Line()
+                {
+                    TopCoordinate = (person.Mother.Node.TopCoordinate + person.Mother.Node.BottomCoordinate) * 0.5,
+                    LeftCoordinate = person.Mother.Node.RigthCoordinate,
+                    BottomCoordinate = (person.Father.Node.TopCoordinate + person.Father.Node.BottomCoordinate) * 0.5,
+                    RigthCoordinate = person.Father.Node.LeftCoordinate
+                });
+
+                // |
+                Lines.Add(new Line()
+                {
+                    TopCoordinate = (person.Mother.Node.TopCoordinate + person.Mother.Node.BottomCoordinate) * 0.5,
+                    LeftCoordinate = (person.Node.LeftCoordinate + person.Node.RigthCoordinate) * 0.5,
+                    BottomCoordinate = person.Node.TopCoordinate,
+                    RigthCoordinate = (person.Node.LeftCoordinate + person.Node.RigthCoordinate) * 0.5
+                });
             }
 
             Nodes.Add(person.Node);
-        }
-
-        public void CreateArc(Business.Point from, Business.Point to)
-        {
-            var line = new Line();
-
-            line.TopCoordinate = from.Y;
-            line.LeftCoordinate = from.X;
-            line.BottomCoordinate = to.Y;
-            line.RigthCoordinate = to.X;
-
-            Lines.Add(line);
-        }
-
-        public void CreateArc(Business.Node upper, Business.Node lower)
-        {
-            var line = new Line();
-
-            line.TopCoordinate = upper.BottomCoordinate;
-            line.LeftCoordinate = (upper.LeftCoordinate + upper.RigthCoordinate) * 0.5;
-            line.BottomCoordinate = lower.TopCoordinate;
-            line.RigthCoordinate = (lower.LeftCoordinate + lower.RigthCoordinate) * 0.5;
-
-            Lines.Add(line);
-        }
-
-        public void CreateArc(Business.Node mother, Business.Node father, Business.Node child)
-        {
-            // node|---|node
-            Lines.Add(new Line()
-            {
-                TopCoordinate = (mother.TopCoordinate + mother.BottomCoordinate) * 0.5,
-                LeftCoordinate = mother.RigthCoordinate,
-                BottomCoordinate = (father.TopCoordinate + father.BottomCoordinate) * 0.5,
-                RigthCoordinate = father.LeftCoordinate
-            });
-
-            // | 
-            Lines.Add(new Line()
-            {
-                TopCoordinate = (mother.TopCoordinate + mother.BottomCoordinate) * 0.5,
-                LeftCoordinate = (mother.RigthCoordinate + father.LeftCoordinate) * 0.5,
-                BottomCoordinate = mother.BottomCoordinate - (25 * 0.5),
-                RigthCoordinate = (mother.RigthCoordinate + father.LeftCoordinate) * 0.5
-            });
-
-            // ---
-            Lines.Add(new Line()
-            {
-                TopCoordinate = mother.BottomCoordinate - (25 * 0.5),
-                LeftCoordinate = (mother.RigthCoordinate + father.LeftCoordinate) * 0.5,
-                BottomCoordinate = mother.BottomCoordinate - (25 * 0.5),
-                RigthCoordinate = (child.LeftCoordinate + child.RigthCoordinate) * 0.5
-            });
-
-            // |
-            Lines.Add(new Line()
-            {
-                TopCoordinate = mother.BottomCoordinate - (25 * 0.5),
-                LeftCoordinate = (child.LeftCoordinate + child.RigthCoordinate) * 0.5,
-                BottomCoordinate = child.TopCoordinate,
-                RigthCoordinate = (child.LeftCoordinate + child.RigthCoordinate) * 0.5
-            });
-
         }
     }
 }
