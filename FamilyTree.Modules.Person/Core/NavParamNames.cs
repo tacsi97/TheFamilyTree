@@ -9,5 +9,8 @@ namespace FamilyTree.Modules.Person.Core
         public static string Person = "Person";
         
         public static string Tree = "Tree";
+
+        public static string ViewType = "ViewType";
+
     }
 }
