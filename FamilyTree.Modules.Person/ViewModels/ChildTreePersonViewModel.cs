@@ -70,13 +70,16 @@ namespace FamilyTree.Modules.Person.ViewModels
             FillTreeElements(_treeTravelsal.Nodes);
             FillTreeElements(_treeTravelsal.Lines);
             Offset();
+            SetToDefault(_treeTravelsal.Nodes);
         }
 
-        public void RemoveNodes(ICollection<Node> nodes)
+        public void SetToDefault(ICollection<Node> nodes)
         {
             foreach (var node in nodes)
             {
                 node.Person.Node = null;
+                node.Person.LeftmostChild = null;
+                node.Person.RightSibling = null;
             }
         }
 
