@@ -199,7 +199,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public bool CanExecuteNavigateTreeViewCommand()
         {
-            return true;//SelectedPerson != null;
+            return SelectedPerson != null;
         }
 
         #endregion
