@@ -37,8 +37,10 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<CreatePersonView, CreatePersonViewModel>();
             containerRegistry.RegisterForNavigation<InfoPersonView, InfoPersonViewModel>();
             containerRegistry.RegisterForNavigation<ParentTreePersonView, ParentTreePersonViewModel>();
+            containerRegistry.RegisterForNavigation<ChildTreePersonView, ChildTreePersonViewModel>();
 
-            containerRegistry.Register<ITreeTraversal<Business.Node, Business.Line>, ChildrenTraverse>();
+            containerRegistry.Register<ChildrenTraverseBase, ChildrenTraverse>();
+            containerRegistry.Register<ParentTraverseBase, ParentTraverse>();
 
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
                 new FakePersonRepository(
