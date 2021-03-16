@@ -1,4 +1,5 @@
-﻿using FamilyTree.Core;
+﻿using FamilyTree.Business;
+using FamilyTree.Core;
 using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Core;
@@ -21,6 +22,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
+
+        private ViewType _viewType;
 
         #endregion
 
@@ -102,6 +105,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
             _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Subscribe(SetPerson);
             _eventAggregator.GetEvent<SelectedTreeChangedEvent>().Subscribe(SetTree);
+            _eventAggregator.GetEvent<SelectedViewTypeChangedEvent>().Subscribe(SetViewType);
         }
 
         #region ModifyPersonFunctions
@@ -171,12 +175,31 @@ namespace FamilyTree.Modules.Person.ViewModels
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreePersonView", navParams);
+            switch (_viewType)
+            {
+                case ViewType.ListView:
+                    _viewType = ViewType.ParentView;
+                    navParams.Add(NavParamNames.ViewType, _viewType);
+                    _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreePersonView", navParams);
+                    break;
+                case ViewType.ParentView:
+                    _viewType = ViewType.ChildrenView;
+                    navParams.Add(NavParamNames.ViewType, _viewType);
+                    _regionManager.RequestNavigate(RegionNames.ContentRegion, "ChildTreePersonView", navParams);
+                    break;
+                case ViewType.ChildrenView:
+                    _viewType = ViewType.ListView;
+                    navParams.Add(NavParamNames.ViewType, _viewType);
+                    _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView", navParams);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public bool CanExecuteNavigateTreeViewCommand()
         {
-            return SelectedPerson != null;
+            return true;//SelectedPerson != null;
         }
 
         #endregion
@@ -261,6 +284,11 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void SetTree(Business.FamilyTree tree)
         {
             FamilyTree = tree;
+        }
+
+        public void SetViewType(Business.ViewType viewType)
+        {
+            _viewType = viewType;
         }
     }
 

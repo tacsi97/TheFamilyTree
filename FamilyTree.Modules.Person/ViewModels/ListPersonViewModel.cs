@@ -93,6 +93,11 @@ namespace FamilyTree.Modules.Person.ViewModels
             SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
 
             ExecuteGetPeopleCommand().FireAndForgetAsync();
+
+            _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Publish(
+                SelectedPerson);
+            _eventAggregator.GetEvent<SelectedViewTypeChangedEvent>().Publish(
+                navigationContext.Parameters.GetValue<Business.ViewType>(NavParamNames.ViewType));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

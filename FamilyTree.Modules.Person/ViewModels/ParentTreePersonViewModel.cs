@@ -1,9 +1,11 @@
 ﻿using FamilyTree.Business;
+using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using FamilyTree.Services.TreeTravelsal;
 using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -18,13 +20,23 @@ namespace FamilyTree.Modules.Person.ViewModels
         #region Fields
 
         private readonly IAsyncRepository<Business.Person> _repository;
-        private readonly ITreeTraversal<Node, Line> _treeTravelsal;
+        private readonly ParentTraverseBase _treeTravelsal;
+        private readonly IEventAggregator _eventAggregator;
 
         #endregion
 
         #region Properties
 
-        public Business.Person SelectedPerson { get; set; }
+        private Business.Person _selectedPerson;
+        public Business.Person SelectedPerson
+        {
+            get { return _selectedPerson; }
+            set
+            {
+                SetProperty(ref _selectedPerson, value);
+                _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Publish(value);
+            }
+        }
 
         public ObservableCollection<ITreeElement> TreeElements { get; set; }
 
@@ -38,10 +50,11 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ITreeTraversal<Business.Node, Business.Line> treeTravelsal)
+        public ParentTreePersonViewModel(IAsyncRepository<Business.Person> repository, ParentTraverseBase treeTravelsal, IEventAggregator eventAggregator)
         {
             _repository = repository;
             _treeTravelsal = treeTravelsal;
+            _eventAggregator = eventAggregator;
 
             TreeElements = new ObservableCollection<ITreeElement>();
         }
@@ -51,8 +64,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             TreeElements.Clear();
             _treeTravelsal.Nodes.Clear();
             _treeTravelsal.Lines.Clear();
-            // TODO: ez elég undorító...
-            ((ChildrenTraverse)_treeTravelsal).LeftmostValue = 0;
+            _treeTravelsal.LeftmostValue = 0;
             var root = new Node(SelectedPerson);
             _treeTravelsal.PostOrder(root.Person);
             FillTreeElements(_treeTravelsal.Nodes);
@@ -88,17 +100,19 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void Offset()
         {
             var leftmostValue = 0d;
+            var topmostValue = 0d;
 
             foreach (var treeElement in TreeElements)
             {
-                if (treeElement.LeftCoordinate < leftmostValue)
-                    leftmostValue = treeElement.LeftCoordinate;
+                leftmostValue = Math.Min(leftmostValue, treeElement.LeftCoordinate);
+                topmostValue = Math.Min(topmostValue, treeElement.TopCoordinate);
             }
 
             foreach (var treeElement in TreeElements)
             {
                 treeElement.LeftCoordinate += -leftmostValue;
                 treeElement.RigthCoordinate += -leftmostValue;
+                treeElement.TopCoordinate += -topmostValue;
             }
         }
 
@@ -106,6 +120,11 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             SelectedPerson = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
             ExecuteDrawCommand();
+
+            _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Publish(
+                SelectedPerson);
+            _eventAggregator.GetEvent<SelectedViewTypeChangedEvent>().Publish(
+                navigationContext.Parameters.GetValue<Business.ViewType>(NavParamNames.ViewType));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
