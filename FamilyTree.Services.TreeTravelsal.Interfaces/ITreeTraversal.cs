@@ -4,16 +4,12 @@ using System.Text;
 
 namespace FamilyTree.Services.TreeTravelsal.Interfaces
 {
-    public interface ITreeTraversal<T, V>
+    public interface ITreeTraversal<T>
     {
-        ICollection<T> Nodes { get; set; }
+        void PostOrder(T person);
 
-        ICollection<V> Lines { get; set; }
+        void PreOrder(T person);
 
-        void PostOrder(Business.Person person);
-
-        void PreOrder(Business.Person person);
-
-        void Visit(Business.Person person);
+        void Visit(T person);
     }
 }
