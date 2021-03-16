@@ -113,6 +113,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                 treeElement.LeftCoordinate += -leftmostValue;
                 treeElement.RigthCoordinate += -leftmostValue;
                 treeElement.TopCoordinate += -topmostValue;
+                treeElement.BottomCoordinate += -topmostValue;
             }
         }
 
