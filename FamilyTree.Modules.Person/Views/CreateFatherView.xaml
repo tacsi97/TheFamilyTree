@@ -22,6 +22,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+        
         <Label Grid.Row="0"
                Grid.ColumnSpan="5"
                Content="Személy létrehozása"
@@ -29,6 +30,28 @@
                VerticalContentAlignment="Center"
                FontSize="22"
                FontWeight="Bold" />
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Image Source="{Binding NewPerson.Image}"
+                   Height="150"
+                   Width="150"
+                   Grid.Row="0" />
+
+            <Button Grid.Row="1"
+                    Content="+"
+                    Command="{Binding SelectPictureCommand}" />
+        </Grid>
+
+        <Image Source="{Binding SelectedPerson.Image}"
+               Height="150"
+               Width="150"
+               Grid.Row="1"
+               Grid.Column="2"/>
+
         <Grid Margin="10"
               Grid.Row="2">
             <Grid.RowDefinitions>
@@ -85,11 +108,11 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <RadioButton GroupName="PartnerGender"
+                <RadioButton GroupName="FatherGender"
                              IsEnabled="False"
                              IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
                              Content="Férfi" />
-                <RadioButton GroupName="PartnerGender"
+                <RadioButton GroupName="FatherGender"
                              IsEnabled="False"
                              IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
                              Content="Nő" />

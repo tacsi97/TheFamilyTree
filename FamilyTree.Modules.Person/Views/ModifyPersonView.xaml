@@ -46,7 +46,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Image Source="{Binding Image}"
+            <Image Source="{Binding Person.Image}"
                    Height="150" Width="150"
                    Grid.Row="0"/>
             <Button Grid.Row="1" Content="+" Command="{Binding SelectPictureCommand}"/>

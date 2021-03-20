@@ -2,6 +2,7 @@
 using FamilyTree.Core.Commands;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -9,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -24,6 +27,20 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             get { return _asyncCommand; }
             set { SetProperty(ref _asyncCommand, value); }
+        }
+
+        private DelegateCommand _selectPictureCommand;
+        public DelegateCommand SelectPictureCommand =>
+            _selectPictureCommand ?? (_selectPictureCommand = new DelegateCommand(ExecuteSelectPictureCommand));
+
+        void ExecuteSelectPictureCommand()
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+                NewPerson.Image = new BitmapImage(new Uri(op.FileName));
         }
 
         #endregion

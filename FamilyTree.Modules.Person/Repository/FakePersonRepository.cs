@@ -200,6 +200,8 @@ namespace FamilyTree.Modules.Person.Repository
                 original.DateOfBirth = content.DateOfBirth;
                 original.DateOfDeath = content.DateOfDeath;
                 original.Gender = content.Gender;
+                original.Image = content.Image;
+                // -45 perc
             });
         }
     }

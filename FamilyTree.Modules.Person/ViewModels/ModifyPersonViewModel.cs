@@ -94,6 +94,13 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
+        private Business.Person _person;
+        public Business.Person Person
+        {
+            get { return _person; }
+            set { SetProperty(ref _person, value); }
+        }
+
         private BitmapImage _image;
         public BitmapImage Image
         {
@@ -151,7 +158,8 @@ namespace FamilyTree.Modules.Person.ViewModels
                     LastName = LastName,
                     DateOfBirth = DateOfBirth,
                     DateOfDeath = DateOfDeath,
-                    Gender = Gender
+                    Gender = Gender,
+                    Image = Image
                 };
 
                 await _repository.ModifyAsync(person);
@@ -174,14 +182,15 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
+            Person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
 
-            ID = person.ID;
-            FirstName = person.FirstName;
-            LastName = person.LastName;
-            DateOfBirth = person.DateOfBirth;
-            DateOfDeath = person.DateOfDeath;
-            Gender = person.Gender;
+            ID = Person.ID;
+            FirstName = Person.FirstName;
+            LastName = Person.LastName;
+            DateOfBirth = Person.DateOfBirth;
+            DateOfDeath = Person.DateOfDeath;
+            Gender = Person.Gender;
+            Image = Person.Image;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

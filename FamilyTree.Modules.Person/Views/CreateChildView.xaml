@@ -38,24 +38,46 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Source="{Binding NewPerson.Image}"
+                   Height="150"
+                   Width="150"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.RowSpan="4"/>
+            
+            <Button Grid.Row="5"
+                    Content="+"
+                    Command="{Binding SelectPictureCommand}" />
 
             <TextBox Grid.Row="0"
+                     Grid.Column="1"
                      Text="{Binding NewPerson.LastName}" />
             <TextBox Grid.Row="1"
+                     Grid.Column="1"
                      Text="{Binding NewPerson.FirstName}" />
             <DatePicker Grid.Row="2"
+                        Grid.Column="1"
                         SelectedDate="{Binding NewPerson.DateOfBirth}" />
             <DatePicker Grid.Row="3"
+                        Grid.Column="1"
                         SelectedDate="{Binding NewPerson.DateOfDeath}" />
 
             <StackPanel Grid.Row="4"
+                        Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <RadioButton GroupName="NewPersonGender"
+                             Grid.Column="1"
                              IsChecked="{Binding NewPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
                              Content="Férfi" />
                 <RadioButton GroupName="NewPersonGender"
+                             Grid.Column="1"
                              IsChecked="{Binding NewPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
                              Content="Nő" />
             </StackPanel>
@@ -72,6 +94,11 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <Image Source="{Binding Mother.Image}"
+                   Height="150"
+                   Width="150"
+                   Grid.Row="0" />
+
             <TextBlock Grid.Row="0"
                        Text="{Binding Mother.LastName}" />
             <TextBlock Grid.Row="1"
@@ -85,11 +112,11 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <RadioButton GroupName="PartnerGender"
+                <RadioButton GroupName="MotherGender"
                              IsEnabled="False"
                              IsChecked="{Binding Mother.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
                              Content="Férfi" />
-                <RadioButton GroupName="PartnerGender"
+                <RadioButton GroupName="MotherGender"
                              IsEnabled="False"
                              IsChecked="{Binding Mother.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
                              Content="Nő" />
@@ -105,7 +132,12 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
+            
+            <Image Source="{Binding Father.Image}"
+                   Height="150"
+                   Width="150"
+                   Grid.Row="0" />
+            
             <TextBlock Grid.Row="0"
                        Text="{Binding Father.LastName}" />
             <TextBlock Grid.Row="1"
@@ -119,11 +151,11 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <RadioButton GroupName="NewPersonGender"
+                <RadioButton GroupName="FatherGender"
                              IsEnabled="False"
                              IsChecked="{Binding Father.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
                              Content="Férfi" />
-                <RadioButton GroupName="NewPersonGender"
+                <RadioButton GroupName="FatherGender"
                              IsEnabled="False"
                              IsChecked="{Binding Father.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
                              Content="Nő" />
