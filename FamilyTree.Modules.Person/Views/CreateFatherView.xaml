@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.CreateFatherView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
+             xmlns:business="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Width="600"
+             Height="500">
+    <UserControl.Resources>
+        <converters:GenderToBoolConverter x:Key="btg" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="20*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Grid.ColumnSpan="5"
+               Content="Személy létrehozása"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+               FontSize="22"
+               FontWeight="Bold" />
+        <Grid Margin="10"
+              Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0"
+                     Text="{Binding NewPerson.LastName}" />
+            <TextBox Grid.Row="1"
+                     Text="{Binding NewPerson.FirstName}" />
+            <DatePicker Grid.Row="2"
+                        SelectedDate="{Binding NewPerson.DateOfBirth}" />
+            <DatePicker Grid.Row="3"
+                        SelectedDate="{Binding NewPerson.DateOfDeath}" />
+
+            <StackPanel Grid.Row="4"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <RadioButton GroupName="NewPersonGender"
+                             IsChecked="{Binding NewPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
+                             Content="Férfi" />
+                <RadioButton GroupName="NewPersonGender"
+                             IsChecked="{Binding NewPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
+                             Content="Nő" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="10"
+              Grid.Row="2"
+              Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="{Binding SelectedPerson.LastName}" />
+            <TextBlock Grid.Row="1"
+                       Text="{Binding SelectedPerson.FirstName}" />
+            <TextBlock Grid.Row="2"
+                       Text="{Binding SelectedPerson.DateOfBirth}" />
+            <TextBlock Grid.Row="3"
+                       Text="{Binding SelectedPerson.DateOfDeath}" />
+
+            <StackPanel Grid.Row="4"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <RadioButton GroupName="PartnerGender"
+                             IsEnabled="False"
+                             IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
+                             Content="Férfi" />
+                <RadioButton GroupName="PartnerGender"
+                             IsEnabled="False"
+                             IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
+                             Content="Nő" />
+            </StackPanel>
+        </Grid>
+        <Button Grid.Row="3"
+                Grid.ColumnSpan="5"
+                Content="Mentés"
+                Margin="10"
+                Command="{Binding AsyncCommand}" />
+
+        <Grid Margin="10"
+              Grid.Column="1"
+              Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"
+                   Content="Vezetéknév"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+            <Label Grid.Row="1"
+                   Content="Utónév"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+            <Label Grid.Row="2"
+                   Content="Született"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+            <Label Grid.Row="3"
+                   Content="Elhunyt"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+            <Label Grid.Row="4"
+                   Content="Nem"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+        </Grid>
+    </Grid>
+</UserControl>
