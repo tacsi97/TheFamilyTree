@@ -228,7 +228,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateMotherView", navParams);
         }
 
         public bool CanExecuteNewMotherNavigateCommand()
