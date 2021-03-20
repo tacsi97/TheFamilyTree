@@ -12,5 +12,8 @@ namespace FamilyTree.Modules.Person.Core
 
         public static string ViewType = "ViewType";
 
+        public static string Father = "Father";
+
+        public static string Mother = "Mother";
     }
 }
