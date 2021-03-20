@@ -69,8 +69,6 @@ namespace FamilyTree.Services.TreeTravelsal
             {
                 person.Partner.Node = new Node(person.Partner);
 
-                person.Node.LeftCoordinate -= (person.Node.Width + 25) * 0.5;
-
                 person.Partner.Node.LeftCoordinate = person.Node.RigthCoordinate + 25;
                 person.Partner.Node.TopCoordinate = person.Node.TopCoordinate;
 
@@ -117,6 +115,14 @@ namespace FamilyTree.Services.TreeTravelsal
                         LeftCoordinate = (person.Children.First().Node.LeftCoordinate + person.Children.First().Node.RigthCoordinate) * 0.5,
                         BottomCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
                         RigthCoordinate = (person.Children.Last().Node.LeftCoordinate + person.Children.Last().Node.RigthCoordinate) * 0.5,
+                    });
+                else if (person.Children.Count == 1)
+                    Lines.Add(new Line()
+                    {
+                        TopCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
+                        LeftCoordinate = (person.Children.First().Node.LeftCoordinate + person.Children.First().Node.RigthCoordinate) * 0.5,
+                        BottomCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
+                        RigthCoordinate = person.Node.RigthCoordinate + (25 * 0.5)
                     });
                 // sok lefelé
                 foreach (var child in person.Children)
