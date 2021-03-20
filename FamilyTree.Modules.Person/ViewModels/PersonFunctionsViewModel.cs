@@ -243,9 +243,19 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void ExecuteNewChildNavigateCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add(NavParamNames.Person, SelectedPerson);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            if (SelectedPerson.Gender == GenderType.Male)
+            {
+                navParams.Add(NavParamNames.Father, SelectedPerson);
+                navParams.Add(NavParamNames.Mother, SelectedPerson.Partner);
+            }
+            else
+            {
+                navParams.Add(NavParamNames.Mother, SelectedPerson);
+                navParams.Add(NavParamNames.Father, SelectedPerson.Partner);
+            }
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateChildView", navParams);
         }
 
         public bool CanExecuteNewChildNavigateCommand()
