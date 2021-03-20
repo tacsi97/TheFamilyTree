@@ -40,6 +40,7 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<ChildTreePersonView, ChildTreePersonViewModel>();
             containerRegistry.RegisterForNavigation<CreateFatherView, CreateFatherViewModel>();
             containerRegistry.RegisterForNavigation<CreateMotherView, CreateMotherViewModel>();
+            containerRegistry.RegisterForNavigation<CreateChildView, CreateChildViewModel>();
 
             containerRegistry.Register<ChildrenTraverseBase, ChildrenTraverse>();
             containerRegistry.Register<ParentTraverseBase, ParentTraverse>();
