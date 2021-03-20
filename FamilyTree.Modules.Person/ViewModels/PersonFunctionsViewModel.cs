@@ -210,9 +210,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Father");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateFatherView", navParams);
         }
 
         public bool CanExecuteNewFatherNavigateCommand()
@@ -228,7 +227,6 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Mother");
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
         }
@@ -246,7 +244,6 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Child");
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
         }
@@ -271,7 +268,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public bool CanExecuteNewPairCommand()
         {
-            return SelectedPerson != null && SelectedPerson.Partner != null;
+            return SelectedPerson != null && SelectedPerson.Partner == null;
         }
 
         #endregion
