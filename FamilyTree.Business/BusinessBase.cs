@@ -8,6 +8,7 @@ namespace FamilyTree.Business
 {
     public class BusinessBase : BindableBase
     {
+        // TODO: id-t átalakítani string-re, mivel a gráf adatbázis azt fogja használni
         private int _id;
         [JsonProperty("ID")]
         public int ID

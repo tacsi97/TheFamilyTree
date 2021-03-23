@@ -16,7 +16,4 @@
     <ProjectReference Include="..\FamilyTree.Services.TreeTravelsal\FamilyTree.Services.TreeTravelsal.csproj" />
     <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
 </Project>
