@@ -233,7 +233,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public bool CanExecuteNewMotherNavigateCommand()
         {
-            return SelectedPerson != null && SelectedPerson.Mother == null;
+            return true;// SelectedPerson != null && SelectedPerson.Mother == null;
         }
 
         #endregion

@@ -47,13 +47,10 @@ namespace FamilyTree.Modules.Person
             containerRegistry.Register<ParentTraverseBase, ParentTraverse>();
 
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
-                new FakePersonRepository(
+                new LocalGraphRepository(
                     DatabaseInfo.Uri,
-                    new Business.Token()
-                    {
-                        UserName = DatabaseInfo.UserName,
-                        Code = DatabaseInfo.Password
-                    }));
+                    DatabaseInfo.UserName,
+                    DatabaseInfo.Password));
         }
     }
 }

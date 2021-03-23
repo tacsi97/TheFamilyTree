@@ -11,6 +11,7 @@ namespace FamilyTree.Business
     public class Person : BusinessBase
     {
         private string _firstName;
+        [JsonProperty("FirstName")]
         public string FirstName
         {
             get { return _firstName; }
@@ -18,6 +19,7 @@ namespace FamilyTree.Business
         }
 
         private string _lastName;
+        [JsonProperty("LastName")]
         public string LastName
         {
             get { return _lastName; }
@@ -25,6 +27,7 @@ namespace FamilyTree.Business
         }
 
         private DateTime _dateOfBirth;
+        [JsonProperty("DateOfBirth")]
         public DateTime DateOfBirth
         {
             get { return _dateOfBirth; }
@@ -32,6 +35,7 @@ namespace FamilyTree.Business
         }
 
         private DateTime _dateOfDeath;
+        [JsonProperty("DateOfDeath")]
         public DateTime DateOfDeath
         {
             get { return _dateOfDeath; }
@@ -47,6 +51,7 @@ namespace FamilyTree.Business
         }
 
         private GenderType _gender;
+        [JsonProperty("Gender")]
         public GenderType Gender
         {
             get { return _gender; }
@@ -54,6 +59,7 @@ namespace FamilyTree.Business
         }
 
         private FamilyTree _familyTree;
+        [JsonIgnore]
         public FamilyTree FamilyTree
         {
             get { return _familyTree; }
