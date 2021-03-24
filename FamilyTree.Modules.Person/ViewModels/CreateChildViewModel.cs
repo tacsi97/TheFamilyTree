@@ -1,6 +1,7 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.Commands;
 using FamilyTree.Modules.Person.Core;
+using FamilyTree.Modules.Person.Extensions;
 using FamilyTree.Services.Repository.Interfaces;
 using Microsoft.Win32;
 using Prism.Commands;
@@ -11,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -86,7 +86,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             try
             {
-                await _repository.CreateAsync(NewPerson);
+                await _repository.CreateChild(Father, Mother, NewPerson);
 
                 _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView");
             }

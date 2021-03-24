@@ -11,7 +11,7 @@ namespace FamilyTree.Modules.Person.Extensions
 {
     public static class GraphRepositoryExtensions
     {
-        public async static Task CreateMother(IAsyncRepository<Business.Person> asyncRepository, Business.Person child, Business.Person mother)
+        public async static Task CreateMother(this IAsyncRepository<Business.Person> asyncRepository, Business.Person child, Business.Person mother)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -37,7 +37,7 @@ namespace FamilyTree.Modules.Person.Extensions
                 .ExecuteWithoutResultsAsync();
         }
 
-        public async static Task CreateFather(IAsyncRepository<Business.Person> asyncRepository, Business.Person child, Business.Person father)
+        public async static Task CreateFather(this IAsyncRepository<Business.Person> asyncRepository, Business.Person child, Business.Person father)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -63,7 +63,7 @@ namespace FamilyTree.Modules.Person.Extensions
                 .ExecuteWithoutResultsAsync();
         }
 
-        public async static Task CreatePair(IAsyncRepository<Business.Person> asyncRepository, Business.Person selected, Business.Person pair)
+        public async static Task CreatePair(this IAsyncRepository<Business.Person> asyncRepository, Business.Person selected, Business.Person pair)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -89,7 +89,8 @@ namespace FamilyTree.Modules.Person.Extensions
                 .ExecuteWithoutResultsAsync();
         }
 
-        public async static Task CreateChild(IAsyncRepository<Business.Person> asyncRepository, Business.Person selected, Business.Person pair, Business.Person child)
+        // TODO: ezt lehetne konkrétan is megadni, mert tudjuk ki az apa és anya, így nem kell a query-ben kideríteni...
+        public async static Task CreateChild(this IAsyncRepository<Business.Person> asyncRepository, Business.Person selected, Business.Person pair, Business.Person child)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),

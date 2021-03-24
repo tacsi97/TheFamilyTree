@@ -4,6 +4,7 @@ using FamilyTree.Core.Commands;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Modules.Person.Core;
+using FamilyTree.Modules.Person.Extensions;
 using FamilyTree.Services.Repository.Interfaces;
 using Microsoft.Win32;
 using Prism.Commands;
@@ -81,7 +82,7 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             try
             {
-                await _repository.CreateAsync(NewPerson);
+                await _repository.CreateFather(SelectedPerson, NewPerson);
 
                 _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView");
             }
