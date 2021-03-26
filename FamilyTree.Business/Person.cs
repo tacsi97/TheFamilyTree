@@ -90,11 +90,11 @@ namespace FamilyTree.Business
             set { SetProperty(ref _rightSibling, value); }
         }
 
-        private BitmapImage _image;
-        public BitmapImage Image
+        private string _imagePath;
+        public string ImagePath
         {
-            get { return _image; }
-            set { SetProperty(ref _image, value); }
+            get { return _imagePath; }
+            set { SetProperty(ref _imagePath, value); }
         }
         
         private Person _partner;
@@ -111,6 +111,27 @@ namespace FamilyTree.Business
         {
             get { return _leftmostChild; }
             set { SetProperty(ref _leftmostChild, value); }
+        }
+
+        private string _motherID;
+        public string MotherID
+        {
+            get { return _motherID; }
+            set { SetProperty(ref _motherID, value); }
+        }
+
+        private string _fatherID;
+        public string FatherID
+        {
+            get { return _fatherID; }
+            set { SetProperty(ref _fatherID, value); }
+        }
+
+        private string _partnerID;
+        public string PartnerID
+        {
+            get { return _partnerID; }
+            set { SetProperty(ref _partnerID, value); }
         }
 
         [JsonIgnore]
