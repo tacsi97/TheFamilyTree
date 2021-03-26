@@ -53,15 +53,14 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         {
             FamilyTree = new Business.FamilyTree()
             {
-                ID = GlobalID.NewID(),
                 Name = FamilyTreeName,
                 People = new ObservableCollection<Business.Person>()
             };
 
-            await _repository.CreateAsync(FamilyTree);
+            var createdTree = await _repository.CreateAsync(FamilyTree);
 
             var navParams = new NavigationParameters();
-            navParams.Add("FamilyTree", FamilyTree);
+            navParams.Add("FamilyTree", createdTree);
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListFamilyTreeView", navParams);
         }

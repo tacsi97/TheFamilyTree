@@ -27,7 +27,7 @@ namespace FamilyTree.Modules.FamilyTree
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance<IAsyncRepository<Business.FamilyTree>>(
-                new FakeTreeRepository(
+                new FamilyTreeGraphRepository(
                     DatabaseInfo.Uri,
                     new Business.Token()
                     {
