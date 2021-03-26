@@ -135,9 +135,9 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
             });
         }
 
-        private IDictionary<int, Business.Person> AggregatePeople(IEnumerable<Business.Relationship> relationships)
+        private IDictionary<string, Business.Person> AggregatePeople(IEnumerable<Business.Relationship> relationships)
         {
-            var dictionary = new Dictionary<int, Business.Person>();
+            var dictionary = new Dictionary<string, Business.Person>();
 
             foreach (var relation in relationships)
             {
