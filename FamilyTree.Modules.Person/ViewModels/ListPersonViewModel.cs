@@ -83,6 +83,21 @@ namespace FamilyTree.Modules.Person.ViewModels
 
             foreach (var person in people)
             {
+                if (!string.IsNullOrEmpty(person.FatherID))
+                {
+                    person.Father = people.First(p => p.ID == person.FatherID);
+                    person.Father.Children.Add(person);
+                }
+                if (!string.IsNullOrEmpty(person.MotherID))
+                {
+                    person.Mother = people.First(p => p.ID == person.MotherID);
+                    person.Mother.Children.Add(person);
+                }
+                if (!string.IsNullOrEmpty(person.PartnerID))
+                {
+                    person.Partner = people.First(p => p.ID == person.PartnerID);
+                    person.Partner.Partner = person;
+                }
                 person.FamilyTree = SelectedTree;
                 People.Add(person);
             }

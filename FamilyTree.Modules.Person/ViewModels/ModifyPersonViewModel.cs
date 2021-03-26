@@ -32,8 +32,8 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Properties
 
-        private int _id;
-        public int ID
+        private string _id;
+        public string ID
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }
@@ -101,11 +101,11 @@ namespace FamilyTree.Modules.Person.ViewModels
             set { SetProperty(ref _person, value); }
         }
 
-        private BitmapImage _image;
-        public BitmapImage Image
+        private string _imagePath;
+        public string ImagePath
         {
-            get { return _image; }
-            set { SetProperty(ref _image, value); }
+            get { return _imagePath; }
+            set { SetProperty(ref _imagePath, value); }
         }
 
         public string Title => "Személy létrehozása";
@@ -121,7 +121,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
-                Image = new BitmapImage(new Uri(op.FileName));
+                ImagePath = op.FileName;
         }
 
         public ObservableCollection<Business.Person> People { get; set; }
@@ -159,7 +159,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                     DateOfBirth = DateOfBirth,
                     DateOfDeath = DateOfDeath,
                     Gender = Gender,
-                    Image = Image
+                    ImagePath = ImagePath
                 };
 
                 await _repository.ModifyAsync(person);
@@ -190,7 +190,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             DateOfBirth = Person.DateOfBirth;
             DateOfDeath = Person.DateOfDeath;
             Gender = Person.Gender;
-            Image = Person.Image;
+            ImagePath = Person.ImagePath;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

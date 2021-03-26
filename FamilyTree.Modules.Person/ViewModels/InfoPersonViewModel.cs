@@ -29,8 +29,8 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Properties
 
-        private int _id;
-        public int ID
+        private string _id;
+        public string ID
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }

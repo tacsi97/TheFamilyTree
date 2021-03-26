@@ -40,7 +40,7 @@ namespace FamilyTree.Modules.Person.ViewModels
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
-                NewPerson.Image = new BitmapImage(new Uri(op.FileName));
+                NewPerson.ImagePath = op.FileName;
         }
 
         #endregion
