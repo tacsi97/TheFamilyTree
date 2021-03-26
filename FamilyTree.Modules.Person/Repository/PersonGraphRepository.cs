@@ -46,7 +46,7 @@ namespace FamilyTree.Modules.Person.Repository
             }
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
@@ -84,7 +84,7 @@ namespace FamilyTree.Modules.Person.Repository
             return people;
         }
 
-        public async Task<Business.Person> GetAsync(int id)
+        public async Task<Business.Person> GetAsync(string id)
         {
             Business.Person person = null;
 

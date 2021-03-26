@@ -42,7 +42,7 @@ namespace FamilyTree.Services.Repository
             });
         }
 
-        public virtual async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(string id)
         {
             await Task.Run(() =>
             {
@@ -65,7 +65,7 @@ namespace FamilyTree.Services.Repository
             });
         }
 
-        public virtual async Task<T> GetAsync(int id)
+        public virtual async Task<T> GetAsync(string id)
         {
             return await Task.Run(() =>
             {

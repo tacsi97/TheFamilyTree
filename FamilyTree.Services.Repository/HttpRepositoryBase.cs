@@ -83,11 +83,9 @@ namespace FamilyTree.Services.Repository
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="Uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             if (string.IsNullOrEmpty(Uri)) throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
-
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
 
             var response = await _httpClient.DeleteAsync(Uri);
 
@@ -103,11 +101,9 @@ namespace FamilyTree.Services.Repository
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="Uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public async Task<T> GetAsync(int id)
+        public async Task<T> GetAsync(string id)
         {
             if (string.IsNullOrEmpty(Uri)) throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
-
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
 
             // hol van használva az ID???
             var response = await _httpClient.GetAsync(Uri);
