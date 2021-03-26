@@ -44,7 +44,7 @@ namespace FamilyTree.Modules.Person.Repository
             return person;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -55,7 +55,7 @@ namespace FamilyTree.Modules.Person.Repository
 
             await client.Cypher
                 .Match("(person:Person)")
-                .Where<Business.Person>(p => p.ID == id)
+                .Where($"person.ID = '{ id }'")
                 .DetachDelete("person")
                 .ExecuteWithoutResultsAsync();
         }
@@ -75,7 +75,7 @@ namespace FamilyTree.Modules.Person.Repository
                 .ResultsAsync;
         }
 
-        public async Task<Business.Person> GetAsync(int id)
+        public async Task<Business.Person> GetAsync(string id)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -104,13 +104,13 @@ namespace FamilyTree.Modules.Person.Repository
 
             var result = await client.Cypher
                 .Match("(person:Person)")
-                .Where<Business.Person>(p => p.ID == content.ID)
+                .Where($"person.ID = '{ content.ID }'")
                 .Set($"person.FirstName = '{ content.FirstName }'")
                 .Set($"person.LastName = '{ content.LastName }'")
                 .Set($"person.DateOfBirth = datetime('{ content.DateOfBirth:yyyy-MM-dd}')")
                 .Set($"person.DateOfDeath = datetime('{ content.DateOfDeath:yyyy-MM-dd}')")
                 .Set($"person.Gender = '{ content.Gender }'")
-                .Set($"person.ImagePath = '{ content.Image.BaseUri }'")
+                .Set($"person.ImagePath = '{ content.ImagePath }'")
                 .Return<Business.Person>("person")
                 .ResultsAsync;
         }
