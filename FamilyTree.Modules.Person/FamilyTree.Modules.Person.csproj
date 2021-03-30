@@ -5,6 +5,7 @@
     <AssemblyName>FamilyTree.Modules.Person</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>

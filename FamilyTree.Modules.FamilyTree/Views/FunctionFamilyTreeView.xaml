@@ -3,32 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:navnames="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Background="Black">
         <StackPanel Style="{StaticResource func_bar_color}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Orientation="Horizontal">
-            <Button Width="100"
+            <Button Width="150"
                     Height="75"
-                    Content="Új"
                     Command="{Binding NewFamilyTreeNavigateCommand}"
-                    CommandParameter="{x:Static navnames:NavigationNames.CreateFamilyTreeView}" />
-            <Button Width="100"
+                    CommandParameter="{x:Static navnames:NavigationNames.CreateFamilyTreeView}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome Icon="Plus"
+                                    Foreground="White"
+                                    FontSize="20" />
+                    <TextBlock Text=" Új"
+                               FontSize="20" />
+                </StackPanel>
+            </Button>
+            <Button Width="150"
                     Height="75"
-                    Content="Módosít"
                     Command="{Binding ModifyFamilyTreeNavigateCommand}"
-                    CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}" />
-            <Button Width="100"
+                    CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome Icon="Pencil"
+                                    Foreground="White"
+                                    FontSize="20" />
+                    <TextBlock Text=" Módosít"
+                               FontSize="20" />
+                </StackPanel>
+            </Button>
+            <Button Width="150"
                     Height="75"
-                    Content="Töröl"
                     Command="{Binding DeleteFamilyTreeNavigateCommand}"
-                    CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}" />
-            <Button Width="100"
+                    CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}">
+                <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Trash"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Töröl"
+                           FontSize="20" />
+        </StackPanel>
+        </Button>
+            <Button Width="150"
                     Height="75"
-                    Content="Megtekint"
                     Command="{Binding ShowPeopleNavigateCommand}"
-                    CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}" />
+                    CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}">
+                <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Eye"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Megtekint"
+                           FontSize="20" />
+        </StackPanel>
+        </Button>
         </StackPanel>
     </Grid>
 </UserControl>
