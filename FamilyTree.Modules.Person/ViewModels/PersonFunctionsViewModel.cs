@@ -260,7 +260,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public bool CanExecuteNewChildNavigateCommand()
         {
-            return SelectedPerson != null;
+            return SelectedPerson != null && SelectedPerson.Partner != null;
         }
 
         #endregion
