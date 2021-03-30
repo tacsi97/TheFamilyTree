@@ -4,8 +4,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Style="{StaticResource func_bar_color}"
-                Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal">
         <Button Width="100"
                 Height="75"
                 Command="{Binding NavigateBackCommand}">
