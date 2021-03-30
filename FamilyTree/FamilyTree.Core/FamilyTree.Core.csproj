@@ -13,7 +13,4 @@
     <ProjectReference Include="..\..\FamilyTree.Business\FamilyTree.Business.csproj" />
     <ProjectReference Include="..\..\FamilyTree.Services.Repository.Interfaces\FamilyTree.Services.Repository.Interfaces.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Adapters\" />
-  </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Style="{StaticResource func_bar_color}" Orientation="Horizontal">
         <Button Width="100" Height="75" Content="Vissza" Command="{Binding NavigateBackCommand}" />
 
     </StackPanel>

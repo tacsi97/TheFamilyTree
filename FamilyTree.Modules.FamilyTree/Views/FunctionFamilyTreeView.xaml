@@ -4,18 +4,31 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:navnames="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Horizontal">
-        <Button Width="100" Height="75" Content="Új" 
-                Command="{Binding NewFamilyTreeNavigateCommand}"
-                CommandParameter="{x:Static navnames:NavigationNames.CreateFamilyTreeView}"/>
-        <Button Width="100" Height="75" Content="Módosít" 
-                Command="{Binding ModifyFamilyTreeNavigateCommand}"
-                CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}"/>
-        <Button Width="100" Height="75" Content="Töröl" 
-                Command="{Binding DeleteFamilyTreeNavigateCommand}"
-                CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}"/>
-        <Button Width="100" Height="75" Content="Megtekint" 
-                Command="{Binding ShowPeopleNavigateCommand}"
-                CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}"/>
-    </StackPanel>
+    <Grid Background="Black">
+        <StackPanel Style="{StaticResource func_bar_color}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Orientation="Horizontal">
+            <Button Width="100"
+                    Height="75"
+                    Content="Új"
+                    Command="{Binding NewFamilyTreeNavigateCommand}"
+                    CommandParameter="{x:Static navnames:NavigationNames.CreateFamilyTreeView}" />
+            <Button Width="100"
+                    Height="75"
+                    Content="Módosít"
+                    Command="{Binding ModifyFamilyTreeNavigateCommand}"
+                    CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}" />
+            <Button Width="100"
+                    Height="75"
+                    Content="Töröl"
+                    Command="{Binding DeleteFamilyTreeNavigateCommand}"
+                    CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}" />
+            <Button Width="100"
+                    Height="75"
+                    Content="Megtekint"
+                    Command="{Binding ShowPeopleNavigateCommand}"
+                    CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}" />
+        </StackPanel>
+    </Grid>
 </UserControl>

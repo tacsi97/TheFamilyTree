@@ -14,6 +14,9 @@ using FamilyTree.Modules.Person;
 using FamilyTree.Modules.FamilyTree;
 using FamilyTree.Business;
 using FamilyTree.Modules.TreeDrawer;
+using System.Windows.Controls;
+using System.Windows.Media;
+using FamilyTree.Core.Adapters;
 
 namespace FamilyTree
 {
@@ -49,6 +52,25 @@ namespace FamilyTree
             base.ConfigureDefaultRegionBehaviors(regionBehaviors);
 
             regionBehaviors.AddIfMissing(DependentViewRegionBehavior.BehaviorKey, typeof(DependentViewRegionBehavior));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            button.Background = Brushes.Red;
+        }
+
+        private void Button_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var button = sender as Button;
+
+            button.Background = Brushes.Black;
+        }
+
+        private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
         }
     }
 }

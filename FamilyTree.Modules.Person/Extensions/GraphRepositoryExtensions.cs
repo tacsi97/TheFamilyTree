@@ -129,7 +129,7 @@ namespace FamilyTree.Modules.Person.Extensions
                 .ExecuteWithoutResultsAsync();
         }
 
-        public async static Task<IEnumerable<Business.Person>> GetPeopleAsync(Business.FamilyTree familyTree)
+        public async static Task<IEnumerable<Business.Person>> GetPeopleAsync(this IAsyncRepository<Business.Person> asyncRepository, Business.FamilyTree familyTree)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {

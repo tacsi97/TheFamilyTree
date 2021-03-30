@@ -1,17 +1,44 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.PersonFunctions"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"    
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Horizontal">
-        <Button Width="100" Height="75" Content="+Anya" Command="{Binding NewMotherCommand}"/>
-        <Button Width="100" Height="75" Content="+Apa" Command="{Binding NewFatherCommand}"/>
-        <Button Width="100" Height="75" Content="+Gyerek" Command="{Binding NewChildCommand}"/>
-        <Button Width="100" Height="75" Content="+Pár" Command="{Binding NewPairCommand}"/>
-        <Button Width="100" Height="75" Content="Módosít" Command="{Binding ModifyPersonCommand}"/>
-        <Button Width="100" Height="75" Content="Megtekint" Command="{Binding ShowPersonCommand}"/>
-        <Button Width="100" Height="75" Content="Töröl" Command="{Binding DeletePersonCommand}"/>
-        <Button Width="100" Height="75" Content="Nézet váltás" Command="{Binding NavigateTreeViewCommand}"/>
+    <StackPanel HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Orientation="Horizontal"
+                Style="{StaticResource func_bar_color}">
+        <Button Width="100"
+                Height="75"
+                Content="+Anya"
+                Command="{Binding NewMotherCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="+Apa"
+                Command="{Binding NewFatherCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="+Gyerek"
+                Command="{Binding NewChildCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="+Pár"
+                Command="{Binding NewPairCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="Módosít"
+                Command="{Binding ModifyPersonCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="Megtekint"
+                Command="{Binding ShowPersonCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="Töröl"
+                Command="{Binding DeletePersonCommand}" />
+        <Button Width="100"
+                Height="75"
+                Content="Nézet váltás"
+                Command="{Binding NavigateTreeViewCommand}" />
     </StackPanel>
 </UserControl>
