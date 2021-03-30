@@ -1,14 +1,21 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.BackPersonView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Horizontal"
-                Style="{StaticResource func_bar_color}">
+    <StackPanel Orientation="Horizontal">
         <Button Width="100"
                 Height="75"
-                Content="Vissza"
-                Command="{Binding NavigateBackCommand}" />
+                Command="{Binding NavigateBackCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="ArrowLeft"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Vissza"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
 
     </StackPanel>
 </UserControl>
