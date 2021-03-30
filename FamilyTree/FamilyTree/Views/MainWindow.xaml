@@ -30,19 +30,7 @@
 
         <Grid DockPanel.Dock="Left"
               Background="#282828">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <ContentControl Grid.Row="1"
-                            Grid.Column="1"
-                            prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+            <ContentControl Margin="30" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
         </Grid>
     </DockPanel>
 </Window>
