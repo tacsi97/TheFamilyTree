@@ -5,9 +5,8 @@
              xmlns:navnames="clr-namespace:FamilyTree.Core;assembly=FamilyTree.Core"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid Background="Black">
-        <StackPanel Style="{StaticResource func_bar_color}"
-                    HorizontalAlignment="Stretch"
+    <Grid>
+        <StackPanel HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Orientation="Horizontal">
             <Button Width="150"
@@ -39,25 +38,25 @@
                     Command="{Binding DeleteFamilyTreeNavigateCommand}"
                     CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}">
                 <StackPanel Orientation="Horizontal">
-                <fa:FontAwesome Icon="Trash"
-                                Foreground="White"
-                                FontSize="20" />
-                <TextBlock Text=" Töröl"
-                           FontSize="20" />
-        </StackPanel>
-        </Button>
+                    <fa:FontAwesome Icon="Trash"
+                                    Foreground="White"
+                                    FontSize="20" />
+                    <TextBlock Text=" Töröl"
+                               FontSize="20" />
+                </StackPanel>
+            </Button>
             <Button Width="150"
                     Height="75"
                     Command="{Binding ShowPeopleNavigateCommand}"
                     CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}">
                 <StackPanel Orientation="Horizontal">
-                <fa:FontAwesome Icon="Eye"
-                                Foreground="White"
-                                FontSize="20" />
-                <TextBlock Text=" Megtekint"
-                           FontSize="20" />
-        </StackPanel>
-        </Button>
+                    <fa:FontAwesome Icon="Eye"
+                                    Foreground="White"
+                                    FontSize="20" />
+                    <TextBlock Text=" Megtekint"
+                               FontSize="20" />
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

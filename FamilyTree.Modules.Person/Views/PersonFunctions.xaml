@@ -7,8 +7,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <StackPanel HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Orientation="Horizontal"
-                Style="{StaticResource func_bar_color}">
+                Orientation="Horizontal">
         <Button Width="150"
                 Height="75"
                 Command="{Binding NewMotherCommand}">
