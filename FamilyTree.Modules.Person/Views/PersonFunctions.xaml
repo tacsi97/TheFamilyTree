@@ -2,43 +2,100 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <StackPanel HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Orientation="Horizontal"
                 Style="{StaticResource func_bar_color}">
-        <Button Width="100"
+        <Button Width="150"
                 Height="75"
-                Content="+Anya"
-                Command="{Binding NewMotherCommand}" />
-        <Button Width="100"
+                Command="{Binding NewMotherCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Anya"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="+Apa"
-                Command="{Binding NewFatherCommand}" />
-        <Button Width="100"
+                Command="{Binding NewFatherCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Apa"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="+Gyerek"
-                Command="{Binding NewChildCommand}" />
-        <Button Width="100"
+                Command="{Binding NewChildCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Gyerek"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="+Pár"
-                Command="{Binding NewPairCommand}" />
-        <Button Width="100"
+                Command="{Binding NewPairCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Pár"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="Módosít"
-                Command="{Binding ModifyPersonCommand}" />
-        <Button Width="100"
+                Command="{Binding ModifyPersonCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Pencil"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Módosít"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="Megtekint"
-                Command="{Binding ShowPersonCommand}" />
-        <Button Width="100"
+                Command="{Binding ShowPersonCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Eye"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Megtekint"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="Töröl"
-                Command="{Binding DeletePersonCommand}" />
-        <Button Width="100"
+                Command="{Binding DeletePersonCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Trash"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Töröl"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
                 Height="75"
-                Content="Nézet váltás"
-                Command="{Binding NavigateTreeViewCommand}" />
+                Command="{Binding NavigateTreeViewCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Exchange"
+                                Foreground="White"
+                                FontSize="20" />
+                <TextBlock Text=" Nézet váltás"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
     </StackPanel>
 </UserControl>
