@@ -4,7 +4,6 @@ using FamilyTree.Services.Repository.Interfaces;
 using Neo4jClient;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.Extensions

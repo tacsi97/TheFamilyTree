@@ -1,11 +1,3 @@
-using FamilyTree.Business;
-using FamilyTree.Modules.FamilyTree.Repository;
-using FamilyTree.Services.Repository;
-using Moq;
-using System;
-using System.Threading.Tasks;
-using Xunit;
-
 namespace FamilyTree.Modules.FamilyTree.Tests
 {
     //TODO: more integration tests when the server side is completed

@@ -4,9 +4,12 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
              xmlns:business="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Height="700">
     <UserControl.Resources>
         <converters:GenderToBoolConverter x:Key="btg" />
+        <converters:PathConverter x:Key="path" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,22 +18,36 @@
             <ColumnDefinition Width="20*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="4*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                Grid.ColumnSpan="5"
                Content="Személy létrehozása"
-               HorizontalContentAlignment="Center"
-               VerticalContentAlignment="Center"
-               FontSize="22"
+               HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Top"
+               FontSize="24"
                FontWeight="Bold" />
+
+        <Image Source="{Binding Father.ImagePath, Converter={StaticResource path}}"
+               Height="150"
+               Width="150"
+               Grid.Row="1"
+               Grid.Column="0"/>
+        
+        <Image Source="{Binding Mother.ImagePath, Converter={StaticResource path}}"
+               Height="150"
+               Width="150"
+               Grid.Row="1"
+               Grid.Column="2" />
+
         <Grid Margin="10"
               Grid.Row="3"
-              Grid.ColumnSpan="3">
+              Grid.ColumnSpan="3"
+              HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -39,34 +56,56 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Source="{Binding NewPerson.Image}"
+            <Image Source="{Binding NewPerson.ImagePath, Converter={StaticResource path}}"
                    Height="150"
                    Width="150"
                    Grid.Row="0"
                    Grid.Column="0"
-                   Grid.RowSpan="4"/>
-            
+                   Grid.RowSpan="4"
+                   Margin="20,0"/>
+
             <Button Grid.Row="5"
-                    Content="+"
-                    Command="{Binding SelectPictureCommand}" />
-
-            <TextBox Grid.Row="0"
-                     Grid.Column="1"
-                     Text="{Binding NewPerson.LastName}" />
-            <TextBox Grid.Row="1"
-                     Grid.Column="1"
-                     Text="{Binding NewPerson.FirstName}" />
-            <DatePicker Grid.Row="2"
-                        Grid.Column="1"
-                        SelectedDate="{Binding NewPerson.DateOfBirth}" />
-            <DatePicker Grid.Row="3"
-                        Grid.Column="1"
-                        SelectedDate="{Binding NewPerson.DateOfDeath}" />
-
+                    Margin="20,5"
+                    Command="{Binding SelectPictureCommand}">
+                <StackPanel Margin="10,0"
+                            Orientation="Horizontal">
+                    <fa:FontAwesome Icon="Upload"
+                                    FontSize="18"
+                                    Foreground="White" />
+                    <TextBlock Text=" Kép hozzáadása"
+                               FontSize="18" />
+                </StackPanel>
+            </Button>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="0"
+                        Grid.Column="1">
+                <TextBlock Text="Keresztnév" />
+                <TextBox Text="{Binding NewPerson.LastName}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="1"
+                        Grid.Column="1">
+                <TextBlock Text="Vezetéknév" />
+                <TextBox Text="{Binding NewPerson.FirstName}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="2"
+                        Grid.Column="1">
+                <TextBlock Text="Született" />
+                <DatePicker HorizontalAlignment="Stretch"
+                    SelectedDate="{Binding NewPerson.DateOfBirth}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="3"
+                        Grid.Column="1">
+                <TextBlock Text="Elhunyt" />
+                <DatePicker HorizontalAlignment="Stretch"
+                            SelectedDate="{Binding NewPerson.DateOfDeath}" />
+            </StackPanel>
             <StackPanel Grid.Row="4"
                         Grid.Column="1"
                         Orientation="Horizontal"
@@ -100,13 +139,25 @@
                    Grid.Row="0" />
 
             <TextBlock Grid.Row="0"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Text="{Binding Mother.LastName}" />
             <TextBlock Grid.Row="1"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Text="{Binding Mother.FirstName}" />
             <TextBlock Grid.Row="2"
-                       Text="{Binding Mother.DateOfBirth}" />
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Mother.DateOfBirth, StringFormat='{}{0:yyyy.MM.dd}'}" />
             <TextBlock Grid.Row="3"
-                       Text="{Binding Mother.DateOfDeath}" />
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Mother.DateOfDeath, StringFormat='{}{0:yyyy.MM.dd}'}" />
 
             <StackPanel Grid.Row="4"
                         Orientation="Horizontal"
@@ -132,20 +183,27 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
-            <Image Source="{Binding Father.Image}"
-                   Height="150"
-                   Width="150"
-                   Grid.Row="0" />
-            
+
             <TextBlock Grid.Row="0"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Text="{Binding Father.LastName}" />
             <TextBlock Grid.Row="1"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Text="{Binding Father.FirstName}" />
             <TextBlock Grid.Row="2"
-                       Text="{Binding Father.DateOfBirth}" />
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Father.DateOfBirth, StringFormat='{}{0:yyyy.MM.dd}'}" />
             <TextBlock Grid.Row="3"
-                       Text="{Binding Father.DateOfDeath}" />
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Father.DateOfDeath, StringFormat='{}{0:yyyy.MM.dd}'}" />
 
             <StackPanel Grid.Row="4"
                         Orientation="Horizontal"
@@ -163,9 +221,17 @@
         </Grid>
         <Button Grid.Row="4"
                 Grid.ColumnSpan="5"
-                Content="Mentés"
-                Margin="10"
-                Command="{Binding AsyncCommand}" />
+                Margin="200,10"
+                Command="{Binding AsyncCommand}">
+            <StackPanel Margin="5"
+                        Orientation="Horizontal">
+                <fa:FontAwesome Icon="Save"
+                                FontSize="20"
+                                Foreground="White" />
+                <TextBlock Text=" Mentés"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
 
         <Grid Margin="10"
               Grid.Column="1"
@@ -179,27 +245,27 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
                    Content="Vezetéknév"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
             <Label Grid.Row="1"
                    Content="Utónév"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
             <Label Grid.Row="2"
                    Content="Született"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
             <Label Grid.Row="3"
                    Content="Elhunyt"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
             <Label Grid.Row="4"
                    Content="Nem"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
         </Grid>

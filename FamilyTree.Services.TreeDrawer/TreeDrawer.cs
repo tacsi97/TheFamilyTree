@@ -1,6 +1,5 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.TreeDrawer.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -215,8 +214,10 @@ namespace FamilyTree.Services.TreeDrawer
 
             var parentCount = 0;
 
-            if (fatherNode != null) parentCount++;
-            if (motherNode != null) parentCount++;
+            if (fatherNode != null)
+                parentCount++;
+            if (motherNode != null)
+                parentCount++;
 
             if (parentCount == 0)
             {
@@ -270,7 +271,8 @@ namespace FamilyTree.Services.TreeDrawer
 
         public Node GetNode(Business.Person person)
         {
-            if (person == null) return null;
+            if (person == null)
+                return null;
 
             return Nodes.FirstOrDefault((node) => node.Person == person);
         }

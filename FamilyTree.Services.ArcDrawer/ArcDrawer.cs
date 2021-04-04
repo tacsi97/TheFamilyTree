@@ -1,8 +1,5 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.ArcDrawer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Services.ArcDrawer
 {
@@ -10,7 +7,7 @@ namespace FamilyTree.Services.ArcDrawer
     {
         public void CreateArc(Node from, Node to)
         {
-            
+
         }
     }
 }

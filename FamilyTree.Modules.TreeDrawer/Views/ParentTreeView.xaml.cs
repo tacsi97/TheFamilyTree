@@ -1,5 +1,4 @@
-﻿using FamilyTree.Business;
-using FamilyTree.Core;
+﻿using FamilyTree.Core;
 using FamilyTree.Core.Attributes;
 using FamilyTree.Modules.Person.Views;
 using System.Windows.Controls;

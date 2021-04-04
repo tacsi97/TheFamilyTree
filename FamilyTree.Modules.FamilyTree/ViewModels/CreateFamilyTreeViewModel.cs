@@ -2,15 +2,10 @@
 using FamilyTree.Modules.FamilyTree.Commands;
 using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Services.Repository.Interfaces;
-using Newtonsoft.Json;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels

@@ -1,17 +1,12 @@
 ﻿using FamilyTree.Core;
-using FamilyTree.Core.ApplicationCommands;
-using FamilyTree.Modules.Person.Core;
 using FamilyTree.Modules.Person.Repository;
 using FamilyTree.Modules.Person.ViewModels;
 using FamilyTree.Modules.Person.Views;
-using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using FamilyTree.Services.TreeTravelsal;
-using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using System.Net.Http;
 
 namespace FamilyTree.Modules.Person
 {
@@ -48,8 +43,11 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
                 new LocalGraphRepository(
                     DatabaseInfo.Uri,
-                    DatabaseInfo.UserName,
-                    DatabaseInfo.Password));
+                    new Business.Token()
+                    {
+                        UserName = DatabaseInfo.UserName,
+                        Code = DatabaseInfo.Password
+                    }));
         }
     }
 }

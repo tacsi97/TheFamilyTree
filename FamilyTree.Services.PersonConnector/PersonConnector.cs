@@ -1,6 +1,5 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.PersonConnector.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace FamilyTree.Services.PersonConnector

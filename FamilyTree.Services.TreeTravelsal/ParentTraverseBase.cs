@@ -1,7 +1,6 @@
 ﻿using FamilyTree.Business;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Services.TreeTravelsal
 {
@@ -29,7 +28,8 @@ namespace FamilyTree.Services.TreeTravelsal
 
         public void PostOrder(Person person)
         {
-            if (person == null) return;
+            if (person == null)
+                return;
 
             person.Node = new Node(person);
 
@@ -87,7 +87,7 @@ namespace FamilyTree.Services.TreeTravelsal
             }
 
             // Két szülő van megadva
-            if(person.Mother != null && person.Father != null)
+            if (person.Mother != null && person.Father != null)
             {
                 // node|---|node
                 Lines.Add(new Line()

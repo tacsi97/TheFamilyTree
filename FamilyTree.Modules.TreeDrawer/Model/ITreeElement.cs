@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FamilyTree.Modules.TreeDrawer.Model
+﻿namespace FamilyTree.Modules.TreeDrawer.Model
 {
     public interface ITreeElement
     {

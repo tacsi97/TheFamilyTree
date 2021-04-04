@@ -1,7 +1,5 @@
 ﻿using FamilyTree.Business;
-using FamilyTree.Core;
 using FamilyTree.Core.Commands;
-using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Services.PersonConnector.Interfaces;
 using FamilyTree.Services.Repository.Interfaces;
@@ -10,11 +8,9 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.TreeDrawer.ViewModels

@@ -1,11 +1,6 @@
 ﻿using FamilyTree.Business;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Windows;
-using System.Xml.Linq;
 
 namespace FamilyTree.Modules.TreeDrawer.Utils
 {
@@ -18,7 +13,8 @@ namespace FamilyTree.Modules.TreeDrawer.Utils
 
         public void PostOrder(Business.Person person)
         {
-            if (person == null) return;
+            if (person == null)
+                return;
 
             PostOrder(person.LeftmostChild);
             Visit(person);

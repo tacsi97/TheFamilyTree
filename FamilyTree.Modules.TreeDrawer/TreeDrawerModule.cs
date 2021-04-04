@@ -4,7 +4,6 @@ using FamilyTree.Services.PersonConnector.Interfaces;
 using FamilyTree.Services.TreeDrawer.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Regions;
 
 namespace FamilyTree.Modules.TreeDrawer
 {

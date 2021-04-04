@@ -2,13 +2,9 @@
 using FamilyTree.Core.Commands;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.ViewModels
@@ -57,7 +53,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
                 _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // TODO: handle exception
             }

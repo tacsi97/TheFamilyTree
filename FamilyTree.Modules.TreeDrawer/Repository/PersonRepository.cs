@@ -1,9 +1,6 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.Repository;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 
 namespace FamilyTree.Modules.TreeDrawer.Repository
 {

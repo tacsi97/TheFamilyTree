@@ -4,68 +4,112 @@
              xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
              xmlns:business="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
              xmlns:prism="http://prismlibrary.com/"
-             Width="200" Height="600" Background="White"          
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Height="350" Width="500">
     <UserControl.Resources>
-        <converters:GenderToBoolConverter x:Key="btg"/>
+        <converters:GenderToBoolConverter x:Key="btg" />
+        <converters:PathConverter x:Key="path" />
     </UserControl.Resources>
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Content="Személy módosítása"
-               FontSize="12" FontWeight="Bold"/>
-        <Label Grid.Row="3" 
-               Content="Vezetéknév"
-               FontSize="12"/>
-        <Label Grid.Row="5" 
-               Content="Utónév"
-               FontSize="12"/>
-        <Label Grid.Row="7" 
-               Content="Születési idő"
-               FontSize="12"/>
-        <Label Grid.Row="9" 
-               Content="Halálozási idő"
-               FontSize="12"/>
-        <Grid Grid.Row="1">
+        <TextBlock Grid.Row="0"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Text="Személy módosítás"/>
+        <Grid Margin="10"
+              Grid.Row="1"
+              HorizontalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="9*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Image Source="{Binding Person.Image}"
-                   Height="150" Width="150"
-                   Grid.Row="0"/>
-            <Button Grid.Row="1" Content="+" Command="{Binding SelectPictureCommand}"/>
+            <Image Source="{Binding ImagePath, Converter={StaticResource path}}"
+                   Height="150"
+                   Width="150"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.RowSpan="4"
+                   Margin="20,0" />
+
+            <Button Grid.Row="5"
+                    Margin="20,0"
+                    Command="{Binding SelectPictureCommand}">
+                <StackPanel Margin="10,0"
+                            Orientation="Horizontal">
+                    <fa:FontAwesome Icon="Upload"
+                                    FontSize="18"
+                                    Foreground="White" />
+                    <TextBlock Text=" Kép hozzáadása"
+                               FontSize="18" />
+                </StackPanel>
+            </Button>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="0"
+                        Grid.Column="1">
+                <TextBlock Text="Keresztnév" />
+                <TextBox Text="{Binding LastName}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="1"
+                        Grid.Column="1">
+                <TextBlock Text="Vezetéknév" />
+                <TextBox Text="{Binding FirstName}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="2"
+                        Grid.Column="1">
+                <TextBlock Text="Született" />
+                <DatePicker HorizontalAlignment="Stretch"
+                            SelectedDate="{Binding DateOfBirth}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="3"
+                        Grid.Column="1">
+                <TextBlock Text="Elhunyt" />
+                <DatePicker HorizontalAlignment="Stretch"
+                            SelectedDate="{Binding DateOfDeath}" />
+            </StackPanel>
+            <StackPanel Grid.Row="4"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <RadioButton GroupName="NewPersonGender"
+                             Grid.Column="1"
+                             IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
+                             Content="Férfi" />
+                <RadioButton GroupName="NewPersonGender"
+                             Grid.Column="1"
+                             IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
+                             Content="Nő" />
+            </StackPanel>
         </Grid>
-        <TextBox Grid.Row="4"
-            Text="{Binding LastName, Mode=TwoWay}"/>
-        <TextBox Grid.Row="6"
-            Text="{Binding FirstName, Mode=TwoWay}"/>
-        <DatePicker Grid.Row="8"
-                    SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"/>
-        <DatePicker Grid.Row="10"
-                    SelectedDate="{Binding DateOfDeath, Mode=TwoWay}"/>
 
-        <StackPanel Grid.Row="11" Orientation="Horizontal">
-            <RadioButton GroupName="gender" IsChecked="{Binding Gender, Mode=TwoWay, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}" Content="Férfi"/>
-            <RadioButton GroupName="gender" IsChecked="{Binding Gender, Mode=TwoWay, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}" Content="Nő"/>
-        </StackPanel>
-        <Button Grid.Row="12"
-            Content="Mentés"
-                Command="{Binding AsyncCommand}"/>
+        <Button Grid.Row="2"
+                Grid.ColumnSpan="5"
+                Margin="150,10"
+                Command="{Binding AsyncCommand}">
+            <StackPanel Margin="5"
+                        Orientation="Horizontal">
+                <fa:FontAwesome Icon="Save"
+                                FontSize="20"
+                                Foreground="White" />
+                <TextBlock Text=" Mentés"
+                           FontSize="20" />
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

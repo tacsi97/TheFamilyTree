@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Core.Extensions
@@ -14,9 +12,9 @@ namespace FamilyTree.Core.Extensions
             {
                 await task;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
             }
         }
     }

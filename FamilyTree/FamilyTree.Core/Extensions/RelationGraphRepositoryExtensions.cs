@@ -3,7 +3,6 @@ using Neo4jClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Core.Extensions
@@ -21,7 +20,7 @@ namespace FamilyTree.Core.Extensions
                 var familyTree = await gc.Cypher
                     .Match("(:FamilyTree)-[:ROOT]->(p:Person)-[*]-(o:Person)")
                     .Return<Business.Person>("o")
-                    .ResultsAsync; 
+                    .ResultsAsync;
 
                 var result = await gc.Cypher
                     .Match("(p1:Person)-[:IS_INCLUDED]->(ft:FamilyTree)")

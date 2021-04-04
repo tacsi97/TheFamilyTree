@@ -1,8 +1,5 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Modules.TreeDrawer.Adapters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Modules.TreeDrawer.Model
 {

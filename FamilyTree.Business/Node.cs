@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FamilyTree.Business
+﻿namespace FamilyTree.Business
 {
     public class Node : ITreeElement
     {
@@ -28,8 +23,8 @@ namespace FamilyTree.Business
             Person = person;
             if (person != null)
                 person.Node = this;
-            Width = 75;
-            Height = 100;
+            Width = 150;
+            Height = 200;
             TopCoordinate = 0;
             LeftCoordinate = 0;
         }

@@ -1,9 +1,6 @@
 ﻿using FamilyTree.Core.Commands;
 using FamilyTree.Core.Extensions;
 using FamilyTree.Modules.FamilyTree.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Modules.FamilyTree.Commands
 {

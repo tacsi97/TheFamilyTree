@@ -1,22 +1,16 @@
-﻿using Prism.Ioc;
-using FamilyTree.Views;
-using System.Windows;
-using Prism.Modularity;
-using FamilyTree.Modules.Main;
-using FamilyTree.Modules.ModuleName;
-using FamilyTree.Services.Interfaces;
-using FamilyTree.Services;
-using FamilyTree.Core.ApplicationCommands;
-using Prism.Regions;
-using FamilyTree.Core.Attributes;
+﻿using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Core.Behaviors;
-using FamilyTree.Modules.Person;
 using FamilyTree.Modules.FamilyTree;
-using FamilyTree.Business;
+using FamilyTree.Modules.Main;
+using FamilyTree.Modules.Person;
 using FamilyTree.Modules.TreeDrawer;
-using System.Windows.Controls;
-using System.Windows.Media;
-using FamilyTree.Core.Adapters;
+using FamilyTree.Services;
+using FamilyTree.Services.Interfaces;
+using FamilyTree.Views;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
+using System.Windows;
 
 namespace FamilyTree
 {
@@ -27,6 +21,13 @@ namespace FamilyTree
     {
         protected override Window CreateShell()
         {
+            if (!System.IO.Directory.Exists("images"))
+                System.IO.Directory.CreateDirectory("images");
+
+            if (!System.IO.File.Exists("images/default-avatar.png"))
+                System.IO.File.Copy("../../../default-avatar.png", "images/default-avatar.png");
+
+
             return Container.Resolve<MainWindow>();
         }
 
@@ -52,25 +53,6 @@ namespace FamilyTree
             base.ConfigureDefaultRegionBehaviors(regionBehaviors);
 
             regionBehaviors.AddIfMissing(DependentViewRegionBehavior.BehaviorKey, typeof(DependentViewRegionBehavior));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-
-            button.Background = Brushes.Red;
-        }
-
-        private void Button_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var button = sender as Button;
-
-            button.Background = Brushes.Black;
-        }
-
-        private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
         }
     }
 }

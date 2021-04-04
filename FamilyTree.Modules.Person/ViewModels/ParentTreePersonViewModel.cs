@@ -3,7 +3,6 @@ using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using FamilyTree.Services.TreeTravelsal;
-using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -11,7 +10,6 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {

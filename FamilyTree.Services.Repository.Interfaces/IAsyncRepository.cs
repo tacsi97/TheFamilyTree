@@ -1,7 +1,5 @@
 ﻿using FamilyTree.Business;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository.Interfaces

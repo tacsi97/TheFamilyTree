@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text;
-using System.Windows.Media.Imaging;
-using Newtonsoft.Json;
 
 namespace FamilyTree.Business
 {
@@ -96,7 +92,7 @@ namespace FamilyTree.Business
             get { return _imagePath; }
             set { SetProperty(ref _imagePath, value); }
         }
-        
+
         private Person _partner;
         [JsonIgnore]
         public Person Partner
@@ -140,6 +136,7 @@ namespace FamilyTree.Business
         public Person()
         {
             Children = new List<Person>();
+            ImagePath = "images/default-avatar.png";
         }
     }
 }

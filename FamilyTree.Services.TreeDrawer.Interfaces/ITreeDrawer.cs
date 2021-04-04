@@ -1,7 +1,5 @@
 ﻿using FamilyTree.Business;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Services.TreeDrawer.Interfaces
 {

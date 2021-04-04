@@ -1,6 +1,5 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.Attributes;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace FamilyTree.Modules.FamilyTree.Views

@@ -2,7 +2,6 @@
 using FamilyTree.Modules.FamilyTree.Repository;
 using FamilyTree.Modules.FamilyTree.ViewModels;
 using FamilyTree.Modules.FamilyTree.Views;
-using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;

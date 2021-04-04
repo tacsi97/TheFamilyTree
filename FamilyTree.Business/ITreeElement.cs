@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FamilyTree.Business
+﻿namespace FamilyTree.Business
 {
     public interface ITreeElement
     {

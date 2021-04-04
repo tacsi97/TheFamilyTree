@@ -1,13 +1,6 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.Repository;
-using FamilyTree.Services.Repository.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {

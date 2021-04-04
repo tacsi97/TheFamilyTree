@@ -1,19 +1,12 @@
-﻿using FamilyTree.Modules.FamilyTree.Repository;
-using FamilyTree.Modules.FamilyTree.ViewModels;
-using FamilyTree.Services.Repository.Interfaces;
+﻿using FamilyTree.Services.Repository.Interfaces;
 using Moq;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO.Packaging;
-using System.Text;
 using Xunit;
 
 namespace FamilyTree.Modules.FamilyTree.Tests.ViewModels
 {
     public class NewTreeDialogViewModelFixture
     {
-        Mock<IAsyncRepository<Business.FamilyTree>> _repository;
+        readonly Mock<IAsyncRepository<Business.FamilyTree>> _repository;
 
         public NewTreeDialogViewModelFixture()
         {

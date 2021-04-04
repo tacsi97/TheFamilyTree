@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FamilyTree.Modules.Person.Core
+﻿namespace FamilyTree.Modules.Person.Core
 {
     public class PersonDialogNames
     {

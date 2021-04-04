@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FamilyTree.Services.TreeTravelsal.Interfaces
+﻿namespace FamilyTree.Services.TreeTravelsal.Interfaces
 {
     public interface ITreeTraversal<T>
     {

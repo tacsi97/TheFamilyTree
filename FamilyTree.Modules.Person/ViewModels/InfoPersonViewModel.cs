@@ -1,20 +1,13 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Core;
 using FamilyTree.Core.Commands;
-using FamilyTree.Core.Mvvm;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
-using Microsoft.Win32;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -91,28 +84,14 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private BitmapImage _image;
-        public BitmapImage Image
+        private string _imagePath = "";
+        public string ImagePath
         {
-            get { return _image; }
-            set { SetProperty(ref _image, value); }
+            get { return _imagePath; }
+            set { SetProperty(ref _imagePath, value); }
         }
 
         public string Title => "Személy létrehozása";
-
-        private DelegateCommand _selectPictureCommand;
-        public DelegateCommand SelectPictureCommand =>
-            _selectPictureCommand ?? (_selectPictureCommand = new DelegateCommand(ExecuteSelectPictureCommand));
-
-        void ExecuteSelectPictureCommand()
-        {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-                        "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-                Image = new BitmapImage(new Uri(op.FileName));
-        }
 
         public ObservableCollection<Business.Person> People { get; set; }
 
@@ -179,6 +158,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             DateOfBirth = person.DateOfBirth;
             DateOfDeath = person.DateOfDeath;
             Gender = person.Gender;
+            ImagePath = person.ImagePath;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

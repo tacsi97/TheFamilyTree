@@ -1,15 +1,8 @@
-﻿using FamilyTree.Core.Extensions;
-using FamilyTree.Services.Repository;
-using FamilyTree.Services.Repository.Interfaces;
-using Newtonsoft.Json;
-using Prism.Common;
-using System;
+﻿using FamilyTree.Services.Repository;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace FamilyTree.Modules.Person.Repository
 {
@@ -42,7 +35,7 @@ namespace FamilyTree.Modules.Person.Repository
             People.Add(new Business.Person() { ID = "18", FirstName = "Levente" });
             People.Add(new Business.Person() { ID = "19", FirstName = "I. Boleszláv" });
             People.Add(new Business.Person() { ID = "20", FirstName = "Veszprém" });
-            People.Add(new Business.Person() { ID = "21", FirstName = "Ottó"});
+            People.Add(new Business.Person() { ID = "21", FirstName = "Ottó" });
             People.Add(new Business.Person() { ID = "22", FirstName = "Imre" });
             People.Add(new Business.Person() { ID = "23", FirstName = "Gizella", LastName = "Liudolf" });
             People.Add(new Business.Person() { ID = "24", FirstName = "Piast", LastName = "Richeza" });

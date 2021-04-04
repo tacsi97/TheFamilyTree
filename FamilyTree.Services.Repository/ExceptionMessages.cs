@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FamilyTree.Services.Repository
+﻿namespace FamilyTree.Services.Repository
 {
     public class ExceptionMessages
     {

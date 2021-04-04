@@ -1,21 +1,15 @@
 ﻿using FamilyTree.Modules.ModuleName.ViewModels;
-using FamilyTree.Modules.Person.Repository;
-using FamilyTree.Services;
 using FamilyTree.Services.Interfaces;
 using Moq;
 using Prism.Regions;
-using System;
-using System.Collections;
-using System.Linq;
-using System.Net.Http;
 using Xunit;
 
 namespace FamilyTree.Modules.ModuleName.Tests.ViewModels
 {
     public class ViewAViewModelFixture
     {
-        Mock<IMessageService> _messageServiceMock;
-        Mock<IRegionManager> _regionManagerMock;
+        readonly Mock<IMessageService> _messageServiceMock;
+        readonly Mock<IRegionManager> _regionManagerMock;
         const string MessageServiceDefaultMessage = "Some Value";
 
         public ViewAViewModelFixture()

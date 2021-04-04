@@ -1,8 +1,5 @@
 ﻿using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 

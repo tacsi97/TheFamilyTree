@@ -1,9 +1,7 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.Repository.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository
@@ -86,14 +84,15 @@ namespace FamilyTree.Services.Repository
 
                 foreach (var element in Collection)
                 {
-                    if(element.ID == content.ID)
+                    if (element.ID == content.ID)
                     {
                         old = element;
                         break;
                     }
                 }
 
-                if (old == content) return;
+                if (old == content)
+                    return;
 
                 Collection.Remove(old);
                 Collection.Add(content);

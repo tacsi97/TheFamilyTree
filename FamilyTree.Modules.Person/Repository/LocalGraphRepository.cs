@@ -1,28 +1,21 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Core;
-using FamilyTree.Core.DatabaseConnector;
-using FamilyTree.Services.Repository.Interfaces;
-using Neo4j.Driver;
+using FamilyTree.Services.Repository;
 using Neo4jClient;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.Person.Repository
 {
-    public class LocalGraphRepository : Neo4JConnector, IAsyncRepository<Business.Person>
+    public class LocalGraphRepository : LocalRepositoryBase<Business.Person>
     {
-        public Token Token { get; set; }
-        public string Uri { get; set; }
-
-        public LocalGraphRepository(string uri, string user, string password) : base(uri, user, password)
+        public LocalGraphRepository(string uri, Token token) : base(uri, token)
         {
         }
 
-        public async Task<Business.Person> CreateAsync(Business.Person content)
+        public override async Task<Business.Person> CreateAsync(Business.Person content)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -44,7 +37,7 @@ namespace FamilyTree.Modules.Person.Repository
             return person;
         }
 
-        public async Task DeleteAsync(string id)
+        public override async Task DeleteAsync(string id)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -60,7 +53,7 @@ namespace FamilyTree.Modules.Person.Repository
                 .ExecuteWithoutResultsAsync();
         }
 
-        public async Task<IEnumerable<Business.Person>> GetAllAsync()
+        public override async Task<IEnumerable<Business.Person>> GetAllAsync()
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -75,7 +68,7 @@ namespace FamilyTree.Modules.Person.Repository
                 .ResultsAsync;
         }
 
-        public async Task<Business.Person> GetAsync(string id)
+        public override async Task<Business.Person> GetAsync(string id)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),
@@ -93,7 +86,7 @@ namespace FamilyTree.Modules.Person.Repository
             return result.FirstOrDefault();
         }
 
-        public async Task ModifyAsync(Business.Person content)
+        public override async Task ModifyAsync(Business.Person content)
         {
             var client = new GraphClient(
                 new Uri(DatabaseInfo.Uri),

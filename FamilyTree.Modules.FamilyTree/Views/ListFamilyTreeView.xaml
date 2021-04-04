@@ -7,13 +7,14 @@
     <DockPanel LastChildFill="True">
         <Label DockPanel.Dock="Top"
                Content="Családfák"
-               FontSize="24" />
+               FontSize="24"
+               FontWeight="Bold"/>
         <ListView ItemsSource="{Binding Trees}"
                   SelectedItem="{Binding FamilyTree}"
                   BorderThickness="0"
                   Background="Transparent">
             <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
                     <Setter Property="HorizontalContentAlignment"
                             Value="Stretch" />
                 </Style>

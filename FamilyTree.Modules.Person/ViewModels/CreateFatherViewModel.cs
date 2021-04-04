@@ -1,21 +1,15 @@
-﻿using FamilyTree.Business;
-using FamilyTree.Core;
+﻿using FamilyTree.Core;
 using FamilyTree.Core.Commands;
-using FamilyTree.Core.PubSubEvents;
-using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Modules.Person.Extensions;
 using FamilyTree.Services.Repository.Interfaces;
 using Microsoft.Win32;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -43,8 +37,18 @@ namespace FamilyTree.Modules.Person.ViewModels
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-                NewPerson.ImagePath = op.FileName;
+
+            if (op.ShowDialog() == false)
+                return;
+
+            var fileName = Path.GetFileName(op.FileName);
+
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "images", fileName)))
+                File.Copy(
+                    op.FileName,
+                    Path.Combine(Environment.CurrentDirectory, "images", fileName));
+
+            NewPerson.ImagePath = Path.Combine("images", fileName);
         }
 
         #endregion

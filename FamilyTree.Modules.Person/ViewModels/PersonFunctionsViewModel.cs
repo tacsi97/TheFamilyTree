@@ -1,17 +1,12 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Core;
-using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Core;
-using FamilyTree.Modules.Person.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
