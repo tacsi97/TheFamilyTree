@@ -28,11 +28,13 @@
 
                         <TextBlock Text="{Binding Name}"
                                    Grid.Column="0"
-                                   Style="{StaticResource sub_title}"/>
+                                   Style="{StaticResource sub_title}"
+                                   FontWeight="Normal"/>
 
                         <TextBlock Text="{Binding People.Count}"
                                    Grid.Column="1"
-                                   Style="{StaticResource sub_title}"/>
+                                   Style="{StaticResource sub_title}"
+                                   FontWeight="Normal"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
