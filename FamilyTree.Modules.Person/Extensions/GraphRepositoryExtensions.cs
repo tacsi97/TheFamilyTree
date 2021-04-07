@@ -33,7 +33,8 @@ namespace FamilyTree.Modules.Person.Extensions
                 .Set($"mother.ImagePath = '{ mother.ImagePath }'")
                 .Set($"child.{ nameof(child.MotherID) } = mother.ID")
                 .With("child, mother")
-                .Create("(child)-[:CHILD_OF]->(mother)")
+                .Match("(mother)-[:MEMBER_OF]->(ft:FamilyTree)")
+                .Create("(ft)<-[:MEMBER_OF]-(child)-[:CHILD_OF]->(mother)")
                 .ExecuteWithoutResultsAsync();
         }
 
@@ -60,7 +61,8 @@ namespace FamilyTree.Modules.Person.Extensions
                 .Set($"father.ImagePath = '{ father.ImagePath }'")
                 .Set($"child.{ nameof(child.FatherID) } = father.ID")
                 .With("child, father")
-                .Create("(child)-[:CHILD_OF]->(father)")
+                .Match("(father)-[:MEMBER_OF]->(ft:FamilyTree)")
+                .Create("(ft)<-[:MEMBER_OF]-(child)-[:CHILD_OF]->(father)")
                 .ExecuteWithoutResultsAsync();
         }
 
@@ -88,6 +90,9 @@ namespace FamilyTree.Modules.Person.Extensions
                 .Set($"selected.{ nameof(selected.PartnerID) } = pair.ID")
                 .With("selected, pair")
                 .Create("(selected)-[:PARTNER_OF]->(pair)")
+                .With("selected, pair")
+                .Match("(selected)-[:MEMBER_OF]->(ft:FamilyTree)")
+                .Create("(pair)-[:MEMBER_OF]->(ft)")
                 .ExecuteWithoutResultsAsync();
         }
 
@@ -125,19 +130,23 @@ namespace FamilyTree.Modules.Person.Extensions
                 .With("child, father")
                 .Create("(child)<-[:FATHER_OF]-(father)")
                 .Set($"child.{ nameof(child.FatherID) } = father.ID")
+                .With("child, father")
+                .Match("(father)-[:MEMBER_OF]->(ft:FamilyTree)")
+                .With("child, ft")
+                .Create("(child)-[:MEMBER_OF]->(ft)")
                 .ExecuteWithoutResultsAsync();
         }
 
-        public async static Task<IEnumerable<Business.Person>> GetPeopleAsync(this IAsyncRepository<Business.Person> asyncRepository, Business.FamilyTree familyTree)
+        public async static Task<IEnumerable<Business.Person>> GetPeopleAsync(this IAsyncRepository<Business.Person> asyncRepository, Business.FamilyTree tree)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
                 await gc.ConnectAsync();
 
                 return await gc.Cypher
-                    .Match("(person:Person)-[:MEMBER_OF]->(ft:FamilyTree)")
-                    .Where($"ft.{ nameof(familyTree.ID)} = '{ familyTree.ID }'")
-                    .Return<Business.Person>("person")
+                    .Match("(ft:FamilyTree)<-[:MEMBER_OF]-(p:Person)")
+                    .Where($"ft.{ nameof(tree.ID) } = '{ tree.ID }'")
+                    .ReturnDistinct<Business.Person>("p")
                     .ResultsAsync;
             }
         }

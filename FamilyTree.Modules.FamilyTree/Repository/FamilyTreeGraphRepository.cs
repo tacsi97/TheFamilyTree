@@ -50,6 +50,12 @@ namespace FamilyTree.Modules.FamilyTree.Repository
                 .Where($"ft.ID = '{ id }'")
                 .DetachDelete("ft")
                 .ExecuteWithoutResultsAsync();
+
+            await _graphClient.Cypher
+                .Match("(p:Person)")
+                .Where("NOT (p)--()")
+                .Delete("p")
+                .ExecuteWithoutResultsAsync();
         }
 
         public override async Task<IEnumerable<Business.FamilyTree>> GetAllAsync()
