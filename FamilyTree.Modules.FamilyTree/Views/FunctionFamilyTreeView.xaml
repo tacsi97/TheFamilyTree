@@ -14,11 +14,8 @@
                     Command="{Binding NewFamilyTreeNavigateCommand}"
                     CommandParameter="{x:Static navnames:NavigationNames.CreateFamilyTreeView}">
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome Icon="Plus"
-                                    Foreground="White"
-                                    FontSize="20" />
-                    <TextBlock Text=" Új"
-                               FontSize="20" />
+                    <fa:FontAwesome Icon="Plus" VerticalAlignment="Center" />
+                    <TextBlock Text=" Új" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Width="150"
@@ -26,11 +23,8 @@
                     Command="{Binding ModifyFamilyTreeNavigateCommand}"
                     CommandParameter="{x:Static navnames:NavigationNames.ModifyFamilyTreeView}">
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome Icon="Pencil"
-                                    Foreground="White"
-                                    FontSize="20" />
-                    <TextBlock Text=" Módosít"
-                               FontSize="20" />
+                    <fa:FontAwesome Icon="Pencil" VerticalAlignment="Center" />
+                    <TextBlock Text=" Módosít" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Width="150"
@@ -38,11 +32,8 @@
                     Command="{Binding DeleteFamilyTreeNavigateCommand}"
                     CommandParameter="{x:Static navnames:NavigationNames.DeleteFamilyTreeView}">
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome Icon="Trash"
-                                    Foreground="White"
-                                    FontSize="20" />
-                    <TextBlock Text=" Töröl"
-                               FontSize="20" />
+                    <fa:FontAwesome Icon="Trash" VerticalAlignment="Center" />
+                    <TextBlock Text=" Töröl" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Width="150"
@@ -50,11 +41,8 @@
                     Command="{Binding ShowPeopleNavigateCommand}"
                     CommandParameter="{x:Static navnames:NavigationNames.PeopleListView}">
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome Icon="Eye"
-                                    Foreground="White"
-                                    FontSize="20" />
-                    <TextBlock Text=" Megtekint"
-                               FontSize="20" />
+                    <fa:FontAwesome Icon="Eye" VerticalAlignment="Center" />
+                    <TextBlock Text=" Megtekint" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </StackPanel>

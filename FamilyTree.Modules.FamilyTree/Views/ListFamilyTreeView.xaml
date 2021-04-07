@@ -5,10 +5,9 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Label DockPanel.Dock="Top"
-               Content="Családfák"
-               FontSize="24"
-               FontWeight="Bold"/>
+        <TextBlock DockPanel.Dock="Top"
+               Text="Családfák"
+               Style="{StaticResource title}"/>
         <ListView ItemsSource="{Binding Trees}"
                   SelectedItem="{Binding FamilyTree}"
                   BorderThickness="0"
@@ -29,13 +28,11 @@
 
                         <TextBlock Text="{Binding Name}"
                                    Grid.Column="0"
-                                   FontSize="16"
-                                   HorizontalAlignment="Center" />
+                                   Style="{StaticResource sub_title}"/>
 
                         <TextBlock Text="{Binding People.Count}"
                                    Grid.Column="1"
-                                   FontSize="16"
-                                   HorizontalAlignment="Center" />
+                                   Style="{StaticResource sub_title}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

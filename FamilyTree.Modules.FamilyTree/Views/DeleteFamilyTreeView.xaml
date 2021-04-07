@@ -12,36 +12,28 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Content="Családfa törlése"
-               HorizontalContentAlignment="Center"
-               FontSize="24"
-               FontWeight="Bold" />
+        <TextBlock Grid.Row="0"
+               Text="Családfa törlése"
+               Style="{StaticResource sub_title}"/>
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
             <TextBlock Text="{Binding FamilyTree.Name}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                       Style="{StaticResource description}"/>
             <TextBlock Text="{Binding FamilyTree.People.Count}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+                       Style="{StaticResource description}"
                        Margin="10,0,5,0" />
             <TextBlock Text="fő"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                       Style="{StaticResource description}"/>
         </StackPanel>
         <Button Margin="25,10"
                 Command="{Binding DeleteCommand}"
                 Grid.Row="3">
             <StackPanel Margin="5"
                         Orientation="Horizontal">
-                <fa:FontAwesome Icon="Trash"
-                                FontSize="20"
-                                Foreground="White" />
-                <TextBlock Text=" Törlés"
-                           FontSize="20" />
+                <fa:FontAwesome Icon="Trash" VerticalAlignment="Center" />
+                <TextBlock Text=" Törlés" VerticalAlignment="Center" />
             </StackPanel>
         </Button>
     </Grid>

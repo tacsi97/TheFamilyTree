@@ -19,8 +19,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   FontSize="24"
-                   FontWeight="Bold"
+                   Style="{StaticResource sub_title}"
                    Text="Személy adatok">
         </TextBlock>
 
@@ -52,7 +51,7 @@
             <StackPanel Orientation="Vertical"
                         Grid.Row="1"
                         Grid.Column="1">
-                <TextBlock FontSize="16"
+                <TextBlock Style="{StaticResource description}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Text="{Binding FirstName}" />
@@ -60,7 +59,7 @@
             <StackPanel Orientation="Vertical"
                         Grid.Row="2"
                         Grid.Column="1">
-                <TextBlock FontSize="16"
+                <TextBlock Style="{StaticResource description}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Text="{Binding LastName}" />
@@ -68,7 +67,7 @@
             <StackPanel Orientation="Vertical"
                         Grid.Row="3"
                         Grid.Column="1">
-                <TextBlock FontSize="16"
+                <TextBlock Style="{StaticResource description}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Text="{Binding DateOfBirth, StringFormat='{}{0:yyyy.MM.dd}'}" />
@@ -76,7 +75,7 @@
             <StackPanel Orientation="Vertical"
                         Grid.Row="4"
                         Grid.Column="1">
-                <TextBlock FontSize="16"
+                <TextBlock Style="{StaticResource description}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Text="{Binding DateOfDeath, StringFormat='{}{0:yyyy.MM.dd}'}" />
@@ -90,12 +89,14 @@
                              Grid.Column="1"
                              IsEnabled="False"
                              IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
-                             Content="Férfi" />
+                             Content="Férfi"
+                             Foreground="White"/>
                 <RadioButton GroupName="NewPersonGender"
                              Grid.Column="1"
                              IsEnabled="False"
                              IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
-                             Content="Nő" />
+                             Content="Nő"
+                             Foreground="White"/>
             </StackPanel>
         </Grid>
     </Grid>

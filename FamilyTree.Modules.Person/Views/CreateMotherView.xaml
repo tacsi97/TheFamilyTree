@@ -25,13 +25,10 @@
             <RowDefinition Height="1.5*" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0"
-               Grid.ColumnSpan="5"
-               Content="Személy létrehozása"
-               HorizontalContentAlignment="Left"
-               VerticalContentAlignment="Top"
-               FontSize="24"
-               FontWeight="Bold" />
+        <TextBlock Grid.Row="0"
+                   Grid.ColumnSpan="5"
+                   Text="Személy létrehozása"
+                   Style="{StaticResource sub_title}" />
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="8*" />
@@ -49,10 +46,9 @@
                 <StackPanel Margin="5"
                             Orientation="Horizontal">
                     <fa:FontAwesome Icon="Upload"
-                                    FontSize="20"
-                                    Foreground="White" />
+                                    VerticalAlignment="Center" />
                     <TextBlock Text=" Kép hozzáadása"
-                               FontSize="20" />
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </Grid>
@@ -86,10 +82,12 @@
                      Margin="5"
                      Text="{Binding NewPerson.FirstName}" />
             <DatePicker Grid.Row="2"
+                        Foreground="Black"
                         Margin="5"
                         HorizontalAlignment="Stretch"
                         SelectedDate="{Binding NewPerson.DateOfBirth}" />
             <DatePicker Grid.Row="3"
+                        Foreground="Black"
                         Margin="5"
                         HorizontalAlignment="Stretch"
                         SelectedDate="{Binding NewPerson.DateOfDeath}" />
@@ -100,10 +98,12 @@
                         VerticalAlignment="Center">
                 <RadioButton GroupName="NewPersonGender"
                              IsChecked="{Binding NewPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
-                             Content="Férfi" />
+                             Content="Férfi"
+                             Foreground="White" />
                 <RadioButton GroupName="NewPersonGender"
                              IsChecked="{Binding NewPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
-                             Content="Nő" />
+                             Content="Nő"
+                             Foreground="White" />
             </StackPanel>
         </Grid>
 
@@ -119,22 +119,22 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
-                       FontSize="16"
+                       Style="{StaticResource description}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="{Binding SelectedPerson.LastName}" />
             <TextBlock Grid.Row="1"
-                       FontSize="16"
+                       Style="{StaticResource description}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="{Binding SelectedPerson.FirstName}" />
             <TextBlock Grid.Row="2"
-                       FontSize="16"
+                       Style="{StaticResource description}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="{Binding SelectedPerson.DateOfBirth, StringFormat='{}{0:yyyy.MM.dd}'}" />
             <TextBlock Grid.Row="3"
-                       FontSize="16"
+                       Style="{StaticResource description}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="{Binding SelectedPerson.DateOfDeath, StringFormat='{}{0:yyyy.MM.dd}'}" />
@@ -146,11 +146,13 @@
                 <RadioButton GroupName="FatherGender"
                              IsEnabled="False"
                              IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
-                             Content="Férfi" />
+                             Content="Férfi"
+                             Foreground="White" />
                 <RadioButton GroupName="FatherGender"
                              IsEnabled="False"
                              IsChecked="{Binding SelectedPerson.Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
-                             Content="Nő" />
+                             Content="Nő"
+                             Foreground="White" />
             </StackPanel>
         </Grid>
         <Button Grid.Row="3"
@@ -160,10 +162,9 @@
             <StackPanel Margin="5"
                         Orientation="Horizontal">
                 <fa:FontAwesome Icon="Save"
-                                FontSize="20"
-                                Foreground="White" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Mentés"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
 
@@ -177,31 +178,31 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0"
-                   Content="Vezetéknév"
-                   FontSize="18"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
-            <Label Grid.Row="1"
-                   Content="Utónév"
-                   FontSize="18"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
-            <Label Grid.Row="2"
-                   Content="Született"
-                   FontSize="18"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
-            <Label Grid.Row="3"
-                   Content="Elhunyt"
-                   FontSize="18"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
-            <Label Grid.Row="4"
-                   Content="Nem"
-                   FontSize="18"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+            <TextBlock Grid.Row="0"
+                       Text="Vezetéknév"
+                       Style="{StaticResource description}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1"
+                       Text="Utónév"
+                       Style="{StaticResource description}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <TextBlock Grid.Row="2"
+                       Text="Született"
+                       Style="{StaticResource description}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <TextBlock Grid.Row="3"
+                       Text="Elhunyt"
+                       Style="{StaticResource description}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <TextBlock Grid.Row="4"
+                       Text="Nem"
+                       Style="{StaticResource description}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </UserControl>

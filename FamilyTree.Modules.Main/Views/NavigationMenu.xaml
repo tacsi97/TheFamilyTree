@@ -20,11 +20,11 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome FontSize="24"
-                                    Foreground="White"
-                                    Icon="{Binding Icon}" />
-                    <TextBlock FontSize="24"
-                               Text="{Binding Caption}" />
+                    <fa:FontAwesome Icon="{Binding Icon}"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource title}" />
+                    <TextBlock Text="{Binding Caption}"
+                               Style="{StaticResource title}" />
                 </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>

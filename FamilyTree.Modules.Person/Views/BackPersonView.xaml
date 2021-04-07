@@ -9,9 +9,7 @@
                 Height="75"
                 Command="{Binding NavigateBackCommand}">
             <StackPanel Orientation="Horizontal">
-                <fa:FontAwesome Icon="ArrowLeft"
-                                Foreground="White"
-                                FontSize="20" />
+                <fa:FontAwesome Icon="ArrowLeft" VerticalAlignment="Center" />
                 <TextBlock Text=" Vissza"
                            FontSize="20" />
             </StackPanel>

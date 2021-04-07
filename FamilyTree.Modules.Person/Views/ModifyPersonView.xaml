@@ -6,7 +6,8 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             Height="350" Width="500">
+             Height="350"
+             Width="500">
     <UserControl.Resources>
         <converters:GenderToBoolConverter x:Key="btg" />
         <converters:PathConverter x:Key="path" />
@@ -18,9 +19,8 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
-                   FontSize="24"
-                   FontWeight="Bold"
-                   Text="Személy módosítás"/>
+                   Style="{StaticResource sub_title}"
+                   Text="Személy módosítás" />
         <Grid Margin="10"
               Grid.Row="1"
               HorizontalAlignment="Center">
@@ -45,41 +45,45 @@
                    Margin="20,0" />
 
             <Button Grid.Row="5"
-                    Margin="20,0"
+                    Margin="20,5"
                     Command="{Binding SelectPictureCommand}">
                 <StackPanel Margin="10,0"
                             Orientation="Horizontal">
                     <fa:FontAwesome Icon="Upload"
-                                    FontSize="18"
-                                    Foreground="White" />
+                                    VerticalAlignment="Center" />
                     <TextBlock Text=" Kép hozzáadása"
-                               FontSize="18" />
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <StackPanel Orientation="Vertical"
                         Grid.Row="0"
                         Grid.Column="1">
-                <TextBlock Text="Keresztnév" />
+                <TextBlock Text="Keresztnév"
+                           Style="{StaticResource description}" />
                 <TextBox Text="{Binding LastName}" />
             </StackPanel>
             <StackPanel Orientation="Vertical"
                         Grid.Row="1"
                         Grid.Column="1">
-                <TextBlock Text="Vezetéknév" />
+                <TextBlock Text="Vezetéknév"
+                           Style="{StaticResource description}" />
                 <TextBox Text="{Binding FirstName}" />
             </StackPanel>
             <StackPanel Orientation="Vertical"
                         Grid.Row="2"
                         Grid.Column="1">
-                <TextBlock Text="Született" />
+                <TextBlock Text="Született"
+                           Style="{StaticResource description}" />
                 <DatePicker HorizontalAlignment="Stretch"
                             SelectedDate="{Binding DateOfBirth}" />
             </StackPanel>
             <StackPanel Orientation="Vertical"
                         Grid.Row="3"
                         Grid.Column="1">
-                <TextBlock Text="Elhunyt" />
+                <TextBlock Text="Elhunyt"
+                           Style="{StaticResource description}" />
                 <DatePicker HorizontalAlignment="Stretch"
+                            Foreground="Black"
                             SelectedDate="{Binding DateOfDeath}" />
             </StackPanel>
             <StackPanel Grid.Row="4"
@@ -90,11 +94,13 @@
                 <RadioButton GroupName="NewPersonGender"
                              Grid.Column="1"
                              IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
-                             Content="Férfi" />
+                             Content="Férfi"
+                             Foreground="White" />
                 <RadioButton GroupName="NewPersonGender"
                              Grid.Column="1"
                              IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
-                             Content="Nő" />
+                             Content="Nő"
+                             Foreground="White" />
             </StackPanel>
         </Grid>
 
@@ -105,10 +111,9 @@
             <StackPanel Margin="5"
                         Orientation="Horizontal">
                 <fa:FontAwesome Icon="Save"
-                                FontSize="20"
-                                Foreground="White" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Mentés"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
     </Grid>

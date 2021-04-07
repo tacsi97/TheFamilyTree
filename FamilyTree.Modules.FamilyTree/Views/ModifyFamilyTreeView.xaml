@@ -14,15 +14,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0"
-               Content="Családfa módosítása"
-               HorizontalContentAlignment="Center"
-               FontSize="24"
-               FontWeight="Bold" />
+        <TextBlock Grid.Row="0"
+                   Text="Családfa módosítása"
+                   Style="{StaticResource title}" />
         <StackPanel Grid.Row="1"
                     Orientation="Vertical">
-            <Label Margin="10,0,10,0"
-                   Content="Családfa neve" />
+            <TextBlock Margin="10,0,10,0"
+                       Text="Családfa neve"
+                       Style="{StaticResource description}" />
             <TextBox Margin="10,0,10,10"
                      Text="{Binding SelectedTree.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
@@ -32,10 +31,9 @@
             <StackPanel Margin="5"
                         Orientation="Horizontal">
                 <fa:FontAwesome Icon="Save"
-                                FontSize="20"
-                                Foreground="White" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Mentés"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
     </Grid>

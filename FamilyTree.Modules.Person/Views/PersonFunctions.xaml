@@ -13,10 +13,9 @@
                 Command="{Binding NewMotherCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="UserPlus"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Anya"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
         <Button Width="150"
@@ -24,21 +23,9 @@
                 Command="{Binding NewFatherCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="UserPlus"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Apa"
-                           FontSize="20" />
-            </StackPanel>
-        </Button>
-        <Button Width="150"
-                Height="75"
-                Command="{Binding NewChildCommand}">
-            <StackPanel Orientation="Horizontal">
-                <fa:FontAwesome Icon="UserPlus"
-                                Foreground="White"
-                                FontSize="20" />
-                <TextBlock Text=" Gyerek"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
         <Button Width="150"
@@ -46,10 +33,19 @@
                 Command="{Binding NewPairCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="UserPlus"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Pár"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding NewChildCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Gyerek"
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
         <Button Width="150"
@@ -57,10 +53,9 @@
                 Command="{Binding ModifyPersonCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="Pencil"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Módosít"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
         <Button Width="150"
@@ -68,10 +63,9 @@
                 Command="{Binding ShowPersonCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="Eye"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Megtekint"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
         <Button Width="150"
@@ -79,10 +73,9 @@
                 Command="{Binding DeletePersonCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="Trash"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Töröl"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
         <Button Width="150"
@@ -90,10 +83,9 @@
                 Command="{Binding NavigateTreeViewCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="Exchange"
-                                Foreground="White"
-                                FontSize="20" />
+                                VerticalAlignment="Center" />
                 <TextBlock Text=" Nézet váltás"
-                           FontSize="20" />
+                           VerticalAlignment="Center" />
             </StackPanel>
         </Button>
     </StackPanel>

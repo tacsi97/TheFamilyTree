@@ -102,7 +102,8 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
+            if (navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree) is Business.FamilyTree tree)
+                SelectedTree = tree;
 
             ExecuteGetPeopleCommand().FireAndForgetAsync();
 

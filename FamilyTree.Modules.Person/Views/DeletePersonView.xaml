@@ -1,8 +1,11 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.DeletePersonView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Height="180"
+             Width="250">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -11,17 +14,26 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="Biztosan törli?"
-                   TextAlignment="Center"/>
+                   Text="Személy törlése"
+                   Style="{StaticResource sub_title}"/>
 
         <TextBlock Grid.Row="1"
                    Text="{Binding SelectedPerson.FirstName}"
-                   TextAlignment="Center"/>
+                   TextAlignment="Center"
+                   Style="{StaticResource description}"/>
 
-        <Button Grid.Row="2" Grid.Column="0"
-                Content="Törlöm"
-                Command="{Binding DeleteCommand}"
-                IsDefault="True"/>
+        <Button Grid.Row="2"
+                Grid.Column="0"
+                Margin="25,10"
+                Command="{Binding DeleteCommand}">
+            <StackPanel Margin="5"
+                        Orientation="Horizontal">
+                <fa:FontAwesome Icon="Trash"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Törlés"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
 
     </Grid>
 </UserControl>

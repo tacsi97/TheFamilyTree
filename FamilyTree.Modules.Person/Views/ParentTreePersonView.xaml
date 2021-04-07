@@ -11,8 +11,7 @@
     <StackPanel x:Name="stackPanel"
                 Orientation="Vertical">
         <TextBlock Text="Szülők"
-                   FontSize="24"
-                   FontWeight="Bold" />
+                   Style="{StaticResource title}" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding TreeElements}">

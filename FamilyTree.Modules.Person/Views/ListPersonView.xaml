@@ -8,10 +8,9 @@
         <converter:PathConverter x:Key="imageConverter" />
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        <Label DockPanel.Dock="Top"
-               FontSize="24"
-               FontWeight="Bold"
-               Content="Emberek" />
+        <TextBlock DockPanel.Dock="Top"
+                   Style="{StaticResource title}"
+                   Text="Emberek" />
         <ListView Background="Transparent"
                   BorderThickness="0"
                   ItemsSource="{Binding People}"
@@ -46,9 +45,7 @@
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Source="{Binding ImagePath, Converter={StaticResource imageConverter}}" />
-                        <TextBlock FontSize="20"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
+                        <TextBlock Style="{StaticResource description}"
                                    Grid.Row="0"
                                    Grid.Column="1">
                             <TextBlock.Text>
@@ -58,9 +55,7 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                        <TextBlock FontSize="18"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
+                        <TextBlock Style="{StaticResource description}"
                                    Grid.Row="1"
                                    Grid.Column="1">
                             <TextBlock.Text>
