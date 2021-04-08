@@ -43,7 +43,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             {
                 SetProperty(ref _selectedPerson, value);
                 NewFatherCommand.RaiseCanExecuteChanged();
-                NewMotherCommand.RaiseCanExecuteChanged();
+                NewParentsCommand.RaiseCanExecuteChanged();
                 NewChildCommand.RaiseCanExecuteChanged();
                 NewPairCommand.RaiseCanExecuteChanged();
                 ModifyPersonCommand.RaiseCanExecuteChanged();
@@ -78,9 +78,9 @@ namespace FamilyTree.Modules.Person.ViewModels
         public DelegateCommand NewFatherCommand =>
             _newFatherCommand ?? (_newFatherCommand = new DelegateCommand(ExecuteNewFatherNavigateCommand, CanExecuteNewFatherNavigateCommand));
 
-        private DelegateCommand _newMotherCommand;
-        public DelegateCommand NewMotherCommand =>
-            _newMotherCommand ?? (_newMotherCommand = new DelegateCommand(ExecuteNewMotherNavigateCommand, CanExecuteNewMotherNavigateCommand));
+        private DelegateCommand _newParentsCommand;
+        public DelegateCommand NewParentsCommand =>
+            _newParentsCommand ?? (_newParentsCommand = new DelegateCommand(ExecuteNewParentsNavigateCommand, CanExecuteNewParentsNavigateCommand));
 
         private DelegateCommand _newPairCommand;
         public DelegateCommand NewPairCommand =>
@@ -216,17 +216,17 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        #region NewMotherNavigateCommand
+        #region NewParentsNavigateCommand
 
-        public void ExecuteNewMotherNavigateCommand()
+        public void ExecuteNewParentsNavigateCommand()
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateMotherView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateParentsView", navParams);
         }
 
-        public bool CanExecuteNewMotherNavigateCommand()
+        public bool CanExecuteNewParentsNavigateCommand()
         {
             return SelectedPerson != null && SelectedPerson.Mother == null;
         }

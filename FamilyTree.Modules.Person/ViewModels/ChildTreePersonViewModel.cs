@@ -45,6 +45,10 @@ namespace FamilyTree.Modules.Person.ViewModels
         public DelegateCommand DrawCommand =>
             _drawCommand ?? (_drawCommand = new DelegateCommand(ExecuteDrawCommand));
 
+        private DelegateCommand<Business.Person> _selectPersonCommand;
+        public DelegateCommand<Business.Person> SelectPersonCommand =>
+            _selectPersonCommand ?? (_selectPersonCommand = new DelegateCommand<Business.Person>(ExecuteSelectPersonCommand));
+
         #endregion
 
         public ChildTreePersonViewModel(IAsyncRepository<Business.Person> repository, ChildrenTraverseBase treeTravelsal, IEventAggregator eventAggregator)
@@ -78,6 +82,11 @@ namespace FamilyTree.Modules.Person.ViewModels
                 node.Person.LeftmostChild = null;
                 node.Person.RightSibling = null;
             }
+        }
+
+        public void ExecuteSelectPersonCommand(Business.Person person)
+        {
+            SelectedPerson = person;
         }
 
         public void FillTreeElements(ICollection<Node> nodes)

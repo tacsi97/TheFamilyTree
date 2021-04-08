@@ -2,17 +2,21 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:model="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
              xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <converters:PathConverter x:Key="path" />
     </UserControl.Resources>
-    <StackPanel x:Name="stackPanel"
-                Orientation="Vertical">
-        <TextBlock Text="Szülők"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Szülők"
                    Style="{StaticResource title}" />
-        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding TreeElements}">
                 <ItemsControl.ItemsPanel>
@@ -37,6 +41,13 @@
                     <DataTemplate DataType="{x:Type model:Node}">
                         <Button Width="{Binding Width}"
                                 Height="{Binding Height}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+AncestorType={x:Type ScrollViewer}}, Path=DataContext.SelectPersonCommand}"
+                                                           CommandParameter="{Binding Person}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <Button.RenderTransform>
                                 <TranslateTransform X="{Binding LeftCoordinate, Mode=TwoWay}"
                                                     Y="{Binding TopCoordinate, Mode=TwoWay}" />
@@ -60,5 +71,5 @@
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>
-    </StackPanel>
+    </Grid>
 </UserControl>

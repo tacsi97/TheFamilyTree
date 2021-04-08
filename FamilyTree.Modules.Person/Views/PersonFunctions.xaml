@@ -10,21 +10,11 @@
                 Orientation="Horizontal">
         <Button Width="150"
                 Height="75"
-                Command="{Binding NewMotherCommand}">
+                Command="{Binding NewParentsCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:FontAwesome Icon="UserPlus"
                                 VerticalAlignment="Center" />
-                <TextBlock Text=" Anya"
-                           VerticalAlignment="Center" />
-            </StackPanel>
-        </Button>
-        <Button Width="150"
-                Height="75"
-                Command="{Binding NewFatherCommand}">
-            <StackPanel Orientation="Horizontal">
-                <fa:FontAwesome Icon="UserPlus"
-                                VerticalAlignment="Center" />
-                <TextBlock Text=" Apa"
+                <TextBlock Text=" Szülők"
                            VerticalAlignment="Center" />
             </StackPanel>
         </Button>

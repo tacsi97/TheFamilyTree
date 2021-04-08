@@ -3,26 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:model="clr-namespace:FamilyTree.Business;assembly=FamilyTree.Business"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:converters="clr-namespace:FamilyTree.Modules.Person.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <converters:PathConverter x:Key="path" />
     </UserControl.Resources>
-    <StackPanel x:Name="stackPanel"
-                Orientation="Vertical">
-        <TextBlock Text="Leszármazottak"
-                   Style="{StaticResource title}"/>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="Leszármazottak"
+                   Style="{StaticResource title}" />
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible">
             <ItemsControl ItemsSource="{Binding TreeElements}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Width="3000"
                                 Height="2000"
                                 HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-
-                        </Canvas>
+                                VerticalAlignment="Stretch"
+                                ScrollViewer.CanContentScroll="True" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>
@@ -37,6 +42,13 @@
                     <DataTemplate DataType="{x:Type model:Node}">
                         <Button Width="{Binding Width}"
                                 Height="{Binding Height}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+AncestorType={x:Type ScrollViewer}}, Path=DataContext.SelectPersonCommand}"
+                                                           CommandParameter="{Binding Person}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <Button.RenderTransform>
                                 <TranslateTransform X="{Binding LeftCoordinate, Mode=TwoWay}"
                                                     Y="{Binding TopCoordinate, Mode=TwoWay}" />
@@ -60,5 +72,5 @@
                 </ItemsControl.Resources>
             </ItemsControl>
         </ScrollViewer>
-    </StackPanel>
+    </Grid>
 </UserControl>
