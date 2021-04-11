@@ -1,23 +1,16 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Core;
 using FamilyTree.Core.Commands;
-using FamilyTree.Core.PubSubEvents;
-using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Modules.Person.Core;
 using FamilyTree.Services.Repository.Interfaces;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -32,8 +25,8 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Properties
 
-        private int _id;
-        public int ID
+        private string _id;
+        public string ID
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }
@@ -61,8 +54,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private DateTime _dateOfBirth;
-        public DateTime DateOfBirth
+        private DateTime? _dateOfBirth;
+        public DateTime? DateOfBirth
         {
             get { return _dateOfBirth; }
             set
@@ -72,8 +65,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private DateTime _dateOfDeath;
-        public DateTime DateOfDeath
+        private DateTime? _dateOfDeath;
+        public DateTime? DateOfDeath
         {
             get { return _dateOfDeath; }
             set
@@ -94,11 +87,25 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private BitmapImage _image;
-        public BitmapImage Image
+        private bool _isDead;
+        public bool IsDead
         {
-            get { return _image; }
-            set { SetProperty(ref _image, value); }
+            get { return _isDead; }
+            set { SetProperty(ref _isDead, value); }
+        }
+
+        private Business.Person _person;
+        public Business.Person Person
+        {
+            get { return _person; }
+            set { SetProperty(ref _person, value); }
+        }
+
+        private string _imagePath = "";
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set { SetProperty(ref _imagePath, value); }
         }
 
         public string Title => "Személy létrehozása";
@@ -113,8 +120,18 @@ namespace FamilyTree.Modules.Person.ViewModels
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-                Image = new BitmapImage(new Uri(op.FileName));
+
+            if (op.ShowDialog() == false)
+                return;
+
+            var fileName = Path.GetFileName(op.FileName);
+
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "images", fileName)))
+                File.Copy(
+                    op.FileName,
+                    Path.Combine(Environment.CurrentDirectory, "images", fileName));
+
+            ImagePath = Path.Combine("images", fileName);
         }
 
         public ObservableCollection<Business.Person> People { get; set; }
@@ -151,7 +168,9 @@ namespace FamilyTree.Modules.Person.ViewModels
                     LastName = LastName,
                     DateOfBirth = DateOfBirth,
                     DateOfDeath = DateOfDeath,
-                    Gender = Gender
+                    Gender = Gender,
+                    ImagePath = ImagePath,
+                    IsDead = IsDead
                 };
 
                 await _repository.ModifyAsync(person);
@@ -174,14 +193,16 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
+            Person = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
 
-            ID = person.ID;
-            FirstName = person.FirstName;
-            LastName = person.LastName;
-            DateOfBirth = person.DateOfBirth;
-            DateOfDeath = person.DateOfDeath;
-            Gender = person.Gender;
+            ID = Person.ID;
+            FirstName = Person.FirstName;
+            LastName = Person.LastName;
+            DateOfBirth = Person.DateOfBirth;
+            DateOfDeath = Person.DateOfDeath;
+            Gender = Person.Gender;
+            ImagePath = Person.ImagePath;
+            IsDead = Person.IsDead;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

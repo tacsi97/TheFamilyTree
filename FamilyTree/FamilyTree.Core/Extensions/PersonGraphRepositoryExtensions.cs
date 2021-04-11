@@ -1,10 +1,7 @@
-﻿using FamilyTree.Core;
-using FamilyTree.Services.Repository.Interfaces;
+﻿using FamilyTree.Services.Repository.Interfaces;
 using Neo4jClient;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Core.Extensions

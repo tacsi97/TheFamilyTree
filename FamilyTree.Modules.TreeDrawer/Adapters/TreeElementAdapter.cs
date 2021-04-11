@@ -1,7 +1,4 @@
 ﻿using FamilyTree.Modules.TreeDrawer.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Modules.TreeDrawer.Adapters
 {

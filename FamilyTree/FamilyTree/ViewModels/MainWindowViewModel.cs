@@ -1,14 +1,10 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.ApplicationCommands;
-using FamilyTree.Modules.FamilyTree.Repository;
-using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
-using System.Net.Http;
-using System.Windows.Input;
 
 namespace FamilyTree.ViewModels
 {
@@ -64,7 +60,7 @@ namespace FamilyTree.ViewModels
         {
             _dialogService.ShowDialog(DialogNames.NewTreeDialog, null, r =>
             {
-                
+
             });
         }
     }

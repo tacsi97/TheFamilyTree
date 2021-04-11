@@ -1,16 +1,12 @@
-﻿using FamilyTree.Core;
-using FamilyTree.Core.ApplicationCommands;
+﻿using FamilyTree.Business;
+using FamilyTree.Core;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Core;
-using FamilyTree.Modules.Person.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -21,6 +17,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
+
+        private ViewType _viewType;
 
         #endregion
 
@@ -45,7 +43,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             {
                 SetProperty(ref _selectedPerson, value);
                 NewFatherCommand.RaiseCanExecuteChanged();
-                NewMotherCommand.RaiseCanExecuteChanged();
+                NewParentsCommand.RaiseCanExecuteChanged();
                 NewChildCommand.RaiseCanExecuteChanged();
                 NewPairCommand.RaiseCanExecuteChanged();
                 ModifyPersonCommand.RaiseCanExecuteChanged();
@@ -80,9 +78,9 @@ namespace FamilyTree.Modules.Person.ViewModels
         public DelegateCommand NewFatherCommand =>
             _newFatherCommand ?? (_newFatherCommand = new DelegateCommand(ExecuteNewFatherNavigateCommand, CanExecuteNewFatherNavigateCommand));
 
-        private DelegateCommand _newMotherCommand;
-        public DelegateCommand NewMotherCommand =>
-            _newMotherCommand ?? (_newMotherCommand = new DelegateCommand(ExecuteNewMotherNavigateCommand, CanExecuteNewMotherNavigateCommand));
+        private DelegateCommand _newParentsCommand;
+        public DelegateCommand NewParentsCommand =>
+            _newParentsCommand ?? (_newParentsCommand = new DelegateCommand(ExecuteNewParentsNavigateCommand, CanExecuteNewParentsNavigateCommand));
 
         private DelegateCommand _newPairCommand;
         public DelegateCommand NewPairCommand =>
@@ -102,6 +100,7 @@ namespace FamilyTree.Modules.Person.ViewModels
 
             _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Subscribe(SetPerson);
             _eventAggregator.GetEvent<SelectedTreeChangedEvent>().Subscribe(SetTree);
+            _eventAggregator.GetEvent<SelectedViewTypeChangedEvent>().Subscribe(SetViewType);
         }
 
         #region ModifyPersonFunctions
@@ -171,7 +170,26 @@ namespace FamilyTree.Modules.Person.ViewModels
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreePersonView", navParams);
+            switch (_viewType)
+            {
+                case ViewType.ListView:
+                    _viewType = ViewType.ParentView;
+                    navParams.Add(NavParamNames.ViewType, _viewType);
+                    _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParentTreePersonView", navParams);
+                    break;
+                case ViewType.ParentView:
+                    _viewType = ViewType.ChildrenView;
+                    navParams.Add(NavParamNames.ViewType, _viewType);
+                    _regionManager.RequestNavigate(RegionNames.ContentRegion, "ChildTreePersonView", navParams);
+                    break;
+                case ViewType.ChildrenView:
+                    _viewType = ViewType.ListView;
+                    navParams.Add(NavParamNames.ViewType, _viewType);
+                    _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListPersonView", navParams);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public bool CanExecuteNavigateTreeViewCommand()
@@ -187,9 +205,8 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Father");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateFatherView", navParams);
         }
 
         public bool CanExecuteNewFatherNavigateCommand()
@@ -199,18 +216,17 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #endregion
 
-        #region NewMotherNavigateCommand
+        #region NewParentsNavigateCommand
 
-        public void ExecuteNewMotherNavigateCommand()
+        public void ExecuteNewParentsNavigateCommand()
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Mother");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateParentsView", navParams);
         }
 
-        public bool CanExecuteNewMotherNavigateCommand()
+        public bool CanExecuteNewParentsNavigateCommand()
         {
             return SelectedPerson != null && SelectedPerson.Mother == null;
         }
@@ -222,15 +238,24 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void ExecuteNewChildNavigateCommand()
         {
             var navParams = new NavigationParameters();
-            navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Child");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            if (SelectedPerson.Gender == GenderType.Male)
+            {
+                navParams.Add(NavParamNames.Father, SelectedPerson);
+                navParams.Add(NavParamNames.Mother, SelectedPerson.Partner);
+            }
+            else
+            {
+                navParams.Add(NavParamNames.Mother, SelectedPerson);
+                navParams.Add(NavParamNames.Father, SelectedPerson.Partner);
+            }
+
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreateChildView", navParams);
         }
 
         public bool CanExecuteNewChildNavigateCommand()
         {
-            return SelectedPerson != null;
+            return SelectedPerson != null && SelectedPerson.Partner != null;
         }
 
         #endregion
@@ -241,14 +266,13 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             var navParams = new NavigationParameters();
             navParams.Add(NavParamNames.Person, SelectedPerson);
-            navParams.Add("NewPersonRole", "Pair");
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePersonView", navParams);
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "CreatePartnerView", navParams);
         }
 
         public bool CanExecuteNewPairCommand()
         {
-            return SelectedPerson != null && SelectedPerson.Partners != null && SelectedPerson.Partners.Count == 0;
+            return SelectedPerson != null && SelectedPerson.Partner == null;
         }
 
         #endregion
@@ -261,6 +285,11 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void SetTree(Business.FamilyTree tree)
         {
             FamilyTree = tree;
+        }
+
+        public void SetViewType(Business.ViewType viewType)
+        {
+            _viewType = viewType;
         }
     }
 

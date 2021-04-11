@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FamilyTree.Services.Repository.Interfaces\FamilyTree.Services.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
   </ItemGroup>
 
 </Project>

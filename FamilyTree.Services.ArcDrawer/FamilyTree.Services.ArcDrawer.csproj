@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FamilyTree.Business\FamilyTree.Business.csproj" />
+    <ProjectReference Include="..\FamilyTree.Services.ArcDrawer.Interfaces\FamilyTree.Services.ArcDrawer.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,22 +1,19 @@
+using FamilyTree.Core.ApplicationCommands;
+using FamilyTree.Core.Commands;
+using FamilyTree.Services.Repository.Interfaces;
+using Moq;
+using Prism.Commands;
+using Prism.Events;
 using System;
 using Xunit;
-using Moq;
-using FamilyTree.Services.Repository.Interfaces;
-using FamilyTree.Modules.Person.ViewModels;
-using Prism.Mvvm;
-using Prism.Events;
-using FamilyTree.Core.Commands;
-using FamilyTree.Modules.Person.Commands;
-using FamilyTree.Core.ApplicationCommands;
-using Prism.Commands;
 
 namespace FamilyTree.Modules.Person.Tests.ViewModels
 {
     public class NewPersonDialogViewModelFixture
     {
-        Mock<IAsyncRepository<Business.Person>> _repository;
-        Mock<IEventAggregator> _eventAggregator;
-        Mock<IUpload> _iUpload;
+        readonly Mock<IAsyncRepository<Business.Person>> _repository;
+        readonly Mock<IEventAggregator> _eventAggregator;
+        readonly Mock<IUpload> _iUpload;
 
         public NewPersonDialogViewModelFixture()
         {

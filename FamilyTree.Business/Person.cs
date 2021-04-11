@@ -1,15 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text;
-using System.Windows.Media.Imaging;
-using Newtonsoft.Json;
 
 namespace FamilyTree.Business
 {
     public class Person : BusinessBase
     {
+        private bool _isDead;
+        public bool IsDead
+        {
+            get { return _isDead; }
+            set { SetProperty(ref _isDead, value); }
+        }
+
         private string _firstName;
         public string FirstName
         {
@@ -24,18 +27,26 @@ namespace FamilyTree.Business
             set { SetProperty(ref _lastName, value); }
         }
 
-        private DateTime _dateOfBirth;
-        public DateTime DateOfBirth
+        private DateTime? _dateOfBirth;
+        public DateTime? DateOfBirth
         {
             get { return _dateOfBirth; }
             set { SetProperty(ref _dateOfBirth, value); }
         }
 
-        private DateTime _dateOfDeath;
-        public DateTime DateOfDeath
+        private DateTime? _dateOfDeath;
+        public DateTime? DateOfDeath
         {
             get { return _dateOfDeath; }
             set { SetProperty(ref _dateOfDeath, value); }
+        }
+
+        private Node _node;
+        [JsonIgnore]
+        public Node Node
+        {
+            get { return _node; }
+            set { SetProperty(ref _node, value); }
         }
 
         private GenderType _gender;
@@ -46,6 +57,7 @@ namespace FamilyTree.Business
         }
 
         private FamilyTree _familyTree;
+        [JsonIgnore]
         public FamilyTree FamilyTree
         {
             get { return _familyTree; }
@@ -68,23 +80,65 @@ namespace FamilyTree.Business
             set { SetProperty(ref _mother, value); }
         }
 
-        private BitmapImage _image;
-        public BitmapImage Image
+        private Person _rightSibling;
+        [JsonIgnore]
+        public Person RightSibling
         {
-            get { return _image; }
-            set { SetProperty(ref _image, value); }
+            get { return _rightSibling; }
+            set { SetProperty(ref _rightSibling, value); }
+        }
+
+        private string _imagePath;
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set { SetProperty(ref _imagePath, value); }
+        }
+
+        private Person _partner;
+        [JsonIgnore]
+        public Person Partner
+        {
+            get { return _partner; }
+            set { SetProperty(ref _partner, value); }
+        }
+
+        private Person _leftmostChild;
+        [JsonIgnore]
+        public Person LeftmostChild
+        {
+            get { return _leftmostChild; }
+            set { SetProperty(ref _leftmostChild, value); }
+        }
+
+        private string _motherID;
+        public string MotherID
+        {
+            get { return _motherID; }
+            set { SetProperty(ref _motherID, value); }
+        }
+
+        private string _fatherID;
+        public string FatherID
+        {
+            get { return _fatherID; }
+            set { SetProperty(ref _fatherID, value); }
+        }
+
+        private string _partnerID;
+        public string PartnerID
+        {
+            get { return _partnerID; }
+            set { SetProperty(ref _partnerID, value); }
         }
 
         [JsonIgnore]
-        public ObservableCollection<Person> Children { get; set; }
-
-        [JsonIgnore]
-        public ObservableCollection<Relationship> Partners { get; set; }
+        public ICollection<Person> Children { get; set; }
 
         public Person()
         {
-            Children = new ObservableCollection<Person>();
-            Partners = new ObservableCollection<Relationship>();
+            Children = new List<Person>();
+            ImagePath = "images/default-avatar.png";
         }
     }
 }

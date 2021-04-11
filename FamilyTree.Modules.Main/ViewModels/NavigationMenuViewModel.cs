@@ -1,14 +1,9 @@
 ﻿using FamilyTree.Business;
-using FamilyTree.Core;
 using FamilyTree.Core.ApplicationCommands;
 using FamilyTree.Core.Mvvm;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FamilyTree.Modules.Main.ViewModels
 {
@@ -34,7 +29,7 @@ namespace FamilyTree.Modules.Main.ViewModels
             _selectCommand ?? (_selectCommand = new DelegateCommand<NavigationItem>(ExecuteSelectCommand));
 
         #endregion
-        
+
         public NavigationMenuViewModel(IRegionManager regionManager, IApplicationCommand applicationCommand) :
             base(regionManager)
         {
@@ -42,16 +37,15 @@ namespace FamilyTree.Modules.Main.ViewModels
             _applicationCommand = applicationCommand;
 
             MenuItems = new ObservableCollection<NavigationItem>();
-            
+
             InitializeMenu();
         }
 
         private void InitializeMenu()
         {
             //The navigation path should match with the .xaml name
-            MenuItems.Add(new NavigationItem() { Caption = "Főoldal", NavigationPath = "MainPage" });
-            MenuItems.Add(new NavigationItem() { Caption = "Családfák", NavigationPath = "ListFamilyTreeView" });
-            MenuItems.Add(new NavigationItem() { Caption = "Fa", NavigationPath = "ParentTreeView" });
+            MenuItems.Add(new NavigationItem() { Icon = "Home", Caption = " Főoldal", NavigationPath = "MainPage" });
+            MenuItems.Add(new NavigationItem() { Icon = "Tree", Caption = " Családfák", NavigationPath = "ListFamilyTreeView" });
         }
 
         void ExecuteSelectCommand(NavigationItem navigationItem)

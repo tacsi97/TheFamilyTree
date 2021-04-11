@@ -3,7 +3,6 @@ using FamilyTree.Services.Repository.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -58,8 +57,8 @@ namespace FamilyTree.Services.Repository
                 throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
 
             var data = new StringContent(
-                JsonConvert.SerializeObject(content), 
-                Encoding.UTF8, 
+                JsonConvert.SerializeObject(content),
+                Encoding.UTF8,
                 MediaTypeNames.Application.Json);
 
             // TODO: tranzakció vagy https://stackoverflow.com/questions/39190018/how-to-get-object-using-httpclient-with-response-ok-in-web-api
@@ -83,11 +82,10 @@ namespace FamilyTree.Services.Repository
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="Uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
-            if (string.IsNullOrEmpty(Uri)) throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
-
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
+            if (string.IsNullOrEmpty(Uri))
+                throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
 
             var response = await _httpClient.DeleteAsync(Uri);
 
@@ -103,11 +101,10 @@ namespace FamilyTree.Services.Repository
         /// <returns>The response of the request</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="Uri"/> parameter is null or empty</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="id"/> is lesser than 0</exception>
-        public async Task<T> GetAsync(int id)
+        public async Task<T> GetAsync(string id)
         {
-            if (string.IsNullOrEmpty(Uri)) throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
-
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), ExceptionMessages.MustBeEqualOrGreaterThanZero);
+            if (string.IsNullOrEmpty(Uri))
+                throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
 
             // hol van használva az ID???
             var response = await _httpClient.GetAsync(Uri);
@@ -125,7 +122,8 @@ namespace FamilyTree.Services.Repository
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="Uri"/> is null or empty</exception>
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            if (string.IsNullOrEmpty(Uri)) throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
+            if (string.IsNullOrEmpty(Uri))
+                throw new ArgumentNullException(nameof(Uri), ExceptionMessages.ValueIsNull);
 
             var response = await _httpClient.GetAsync(Uri);
 
@@ -143,13 +141,15 @@ namespace FamilyTree.Services.Repository
         /// <exception cref="ArgumentNullException">Thrown when any of the parameters are null or empty</exception>
         public async Task ModifyAsync(T content)
         {
-            if (content == null) throw new ArgumentNullException(nameof(content));
+            if (content == null)
+                throw new ArgumentNullException(nameof(content));
 
-            if (string.IsNullOrEmpty(Uri)) throw new ArgumentNullException(nameof(Uri));
+            if (string.IsNullOrEmpty(Uri))
+                throw new ArgumentNullException(nameof(Uri));
 
             var data = new StringContent(
-                JsonConvert.SerializeObject(content), 
-                Encoding.UTF8, 
+                JsonConvert.SerializeObject(content),
+                Encoding.UTF8,
                 MediaTypeNames.Application.Json);
 
             var response = await _httpClient.PutAsync(Uri, data);

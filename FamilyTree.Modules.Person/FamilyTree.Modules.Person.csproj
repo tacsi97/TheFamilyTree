@@ -5,6 +5,7 @@
     <AssemblyName>FamilyTree.Modules.Person</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
@@ -15,8 +16,5 @@
     <ProjectReference Include="..\FamilyTree.Services.TreeTravelsal.Interfaces\FamilyTree.Services.TreeTravelsal.Interfaces.csproj" />
     <ProjectReference Include="..\FamilyTree.Services.TreeTravelsal\FamilyTree.Services.TreeTravelsal.csproj" />
     <ProjectReference Include="..\FamilyTree\FamilyTree.Core\FamilyTree.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

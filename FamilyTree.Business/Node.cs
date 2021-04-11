@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FamilyTree.Business
+﻿namespace FamilyTree.Business
 {
-    public class Node
+    public class Node : ITreeElement
     {
         public Person Person { get; set; }
 
@@ -23,17 +18,15 @@ namespace FamilyTree.Business
 
         public double Height { get; set; }
 
-        public Node Mother { get; set; }
-
-        public Node Father { get; set; }
-
-        public Node LeftMostChild { get; set; }
-
-        public Node RightSibling { get; set; }
-
         public Node(Person person)
         {
             Person = person;
+            if (person != null)
+                person.Node = this;
+            Width = 150;
+            Height = 200;
+            TopCoordinate = 0;
+            LeftCoordinate = 0;
         }
 
         public Node(Person person, double width, double height)
@@ -41,6 +34,8 @@ namespace FamilyTree.Business
             Person = person;
             Width = width;
             Height = height;
+            TopCoordinate = 0;
+            LeftCoordinate = 0;
         }
     }
 }

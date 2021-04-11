@@ -1,11 +1,6 @@
 ﻿using FamilyTree.Business;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Windows;
-using System.Xml.Linq;
 
 namespace FamilyTree.Modules.TreeDrawer.Utils
 {
@@ -16,16 +11,17 @@ namespace FamilyTree.Modules.TreeDrawer.Utils
 
         }
 
-        public void PostOrder(Node node)
+        public void PostOrder(Business.Person person)
         {
-            if (node == null) return;
+            if (person == null)
+                return;
 
-            PostOrder(node.LeftMostChild);
-            Visit(node);
-            PostOrder(node.RightSibling);
+            PostOrder(person.LeftmostChild);
+            Visit(person);
+            PostOrder(person.RightSibling);
         }
 
-        public void Visit(Node node)
+        public void Visit(Business.Person person)
         {
 
         }
@@ -36,22 +32,21 @@ namespace FamilyTree.Modules.TreeDrawer.Utils
 
             foreach (var person in people)
             {
-                var node = new Node(person);
 
                 if (person.Children != null)
                 {
-                    node.LeftMostChild = new Node(person.Children.ElementAt(0));
-                    nodes.Add(node);
+                    person.LeftmostChild.Node = new Node(person.Children.ElementAt(0));
+                    nodes.Add(person.Node);
                 }
 
                 if (person.Father != null)
                 {
-                    var currentPersonIndex = person.Father.Children.IndexOf(person);
+                    var currentPersonIndex = 0; // person.Father.Children.IndexOf(person);
 
                     if (currentPersonIndex != 0)
                     {
-                        node.RightSibling = new Node(person.Father.Children.ElementAt(currentPersonIndex - 1));
-                        nodes.Add(node);
+                        person.RightSibling.Node = new Node(person.Father.Children.ElementAt(currentPersonIndex - 1));
+                        nodes.Add(person.Node);
                     }
                 }
             }

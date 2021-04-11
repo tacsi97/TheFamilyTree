@@ -1,10 +1,6 @@
 ﻿using FamilyTree.Business;
-using FamilyTree.Core;
 using FamilyTree.Core.Commands;
-using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
-using FamilyTree.Modules.TreeDrawer.Model;
-using FamilyTree.Modules.TreeDrawer.Utils;
 using FamilyTree.Services.PersonConnector.Interfaces;
 using FamilyTree.Services.Repository.Interfaces;
 using FamilyTree.Services.TreeDrawer.Interfaces;
@@ -12,11 +8,9 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.TreeDrawer.ViewModels
@@ -80,36 +74,36 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
 
         public async Task ExecuteGetRelationships()
         {
-            TreeElements.Clear();
-            // Az összes kapcsolat, ami a fához tartozik
-            var result = await _repository.GetRelationshipsIncludedIn(SelectedTree.ID);
+            //TreeElements.Clear();
+            //// Az összes kapcsolat, ami a fához tartozik
+            //var result = await _repository.GetRelationshipsIncludedIn(SelectedTree.ID);
 
-            var aggregatedPeople = AggregatePeople(result);
+            //var aggregatedPeople = AggregatePeople(result);
 
-            var peopleList = DictionaryToList(aggregatedPeople);
+            //var peopleList = DictionaryToList(aggregatedPeople);
 
-            var nodes = new List<Node>();
+            //var nodes = new List<Node>();
 
-            peopleList.ToList().ForEach((person) =>
-            {
-                nodes.Add(
-                    new Node(person, 100d, 100d)
-                    );
-            });
+            //peopleList.ToList().ForEach((person) =>
+            //{
+            //    nodes.Add(
+            //        new Node(person, 100d, 100d)
+            //        );
+            //});
 
-            // TODO: Person repository is a kapcsolatokat kérdezze le, ott hajtsa végre az összekapcsolást, és adjon vissza egy emberek listát
-            _treeDrawer.SetNodes(nodes);
+            //// TODO: Person repository is a kapcsolatokat kérdezze le, ott hajtsa végre az összekapcsolást, és adjon vissza egy emberek listát
+            //_treeDrawer.SetNodes(nodes);
 
-            _treeDrawer.ArrangeUpperTree(nodes[0]).ToList().ForEach((node) =>
-                TreeElements.Add(new NodeTreeElement(node)));
+            //_treeDrawer.ArrangeUpperTree(nodes[0]).ToList().ForEach((node) =>
+            //    TreeElements.Add(new NodeTreeElement(node)));
 
-            _treeDrawer.ArrangeLowerTree(nodes[0]).ToList().ForEach(node =>
-                TreeElements.Add(new NodeTreeElement(node)));
+            //_treeDrawer.ArrangeLowerTree(nodes[0]).ToList().ForEach(node =>
+            //    TreeElements.Add(new NodeTreeElement(node)));
 
-            _treeDrawer.Createlines().ToList().ForEach((line) =>
-                TreeElements.Add(new LineTreeElement(line)));
+            //_treeDrawer.Createlines().ToList().ForEach((line) =>
+            //    TreeElements.Add(new LineTreeElement(line)));
 
-            Offset();
+            //Offset();
         }
 
         public void ExecuteSelectPersonCommand(Business.Person person)
@@ -137,9 +131,9 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
             });
         }
 
-        private IDictionary<int, Business.Person> AggregatePeople(IEnumerable<Business.Relationship> relationships)
+        private IDictionary<string, Business.Person> AggregatePeople(IEnumerable<Business.Relationship> relationships)
         {
-            var dictionary = new Dictionary<int, Business.Person>();
+            var dictionary = new Dictionary<string, Business.Person>();
 
             foreach (var relation in relationships)
             {
@@ -176,14 +170,14 @@ namespace FamilyTree.Modules.TreeDrawer.ViewModels
                     // letöltéskor pedig szintén Relationshipként 
                     // módosításkor pedig lekérjük a Relationship objektumot
                     // connect partner
-                    dictionary[relation.PersonFrom.ID].Partners.Add(new Business.Relationship()
-                    {
-                        RelationType = relation.RelationType,
-                        From = relation.From,
-                        To = relation.To,
-                        PersonFrom = dictionary[relation.PersonFrom.ID],
-                        PersonTo = dictionary[relation.PersonTo.ID]
-                    });
+                    //dictionary[relation.PersonFrom.ID].Partners.Add(new Business.Relationship()
+                    //{
+                    //    RelationType = relation.RelationType,
+                    //    From = relation.From,
+                    //    To = relation.To,
+                    //    PersonFrom = dictionary[relation.PersonFrom.ID],
+                    //    PersonTo = dictionary[relation.PersonTo.ID]
+                    //});
 
                     //dictionary[relation.PersonTo.ID].Partners.Add(new Business.Relationship()
                     //{

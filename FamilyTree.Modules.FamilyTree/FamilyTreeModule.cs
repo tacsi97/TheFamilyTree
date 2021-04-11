@@ -2,7 +2,6 @@
 using FamilyTree.Modules.FamilyTree.Repository;
 using FamilyTree.Modules.FamilyTree.ViewModels;
 using FamilyTree.Modules.FamilyTree.Views;
-using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -27,7 +26,7 @@ namespace FamilyTree.Modules.FamilyTree
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance<IAsyncRepository<Business.FamilyTree>>(
-                new FakeTreeRepository(
+                new FamilyTreeGraphRepository(
                     DatabaseInfo.Uri,
                     new Business.Token()
                     {

@@ -1,7 +1,5 @@
 ﻿using FamilyTree.Business;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository.Interfaces
@@ -35,7 +33,7 @@ namespace FamilyTree.Services.Repository.Interfaces
         /// </summary>
         /// <param name="id">The ID of the <typeparamref name="BusinessBase"/> object.</param>
         /// <returns>The object with the corresponding ID or null if there isn't any object</returns>
-        Task<T> GetAsync(int id);
+        Task<T> GetAsync(string id);
 
         /// <summary>
         /// This function inserts a <typeparamref name="T"/> object to the dataset, 
@@ -58,6 +56,6 @@ namespace FamilyTree.Services.Repository.Interfaces
         /// </summary>
         /// <param name="id">The ID of the <typeparamref name="T"/> object, you want to remove</param>
         /// <returns></returns>
-        Task DeleteAsync(int id);
+        Task DeleteAsync(string id);
     }
 }

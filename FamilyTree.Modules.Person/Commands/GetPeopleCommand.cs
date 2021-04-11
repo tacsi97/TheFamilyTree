@@ -2,8 +2,6 @@
 using FamilyTree.Core.Extensions;
 using FamilyTree.Modules.Person.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Modules.Person.Commands
 {

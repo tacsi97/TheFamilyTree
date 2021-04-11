@@ -1,8 +1,6 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.Repository.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Services.Repository
@@ -35,13 +33,13 @@ namespace FamilyTree.Services.Repository
 
         public abstract Task<IEnumerable<T>> GetAllAsync();
 
-        public abstract Task<T> GetAsync(int id);
+        public abstract Task<T> GetAsync(string id);
 
         public abstract Task<T> CreateAsync(T content);
 
         public abstract Task ModifyAsync(T content);
 
-        public abstract Task DeleteAsync(int id);
+        public abstract Task DeleteAsync(string id);
 
         #endregion
     }

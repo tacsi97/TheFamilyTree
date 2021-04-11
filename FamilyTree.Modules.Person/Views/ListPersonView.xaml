@@ -1,33 +1,76 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.ListPersonView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:converter="clr-namespace:FamilyTree.Modules.Person.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <converter:PathConverter x:Key="imageConverter" />
+    </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        <Label DockPanel.Dock="Top" Content="Emberek"/>
-        <Button DockPanel.Dock="Top" Content="Frissít" Command="{Binding GetPeopleCommand}"/>
-        <ListView ItemsSource="{Binding People}" SelectedItem="{Binding SelectedPerson}">
+        <TextBlock DockPanel.Dock="Top"
+                   Style="{StaticResource title}"
+                   Text="Emberek" />
+        <ListView Background="Transparent"
+                  BorderThickness="0"
+                  ItemsSource="{Binding People}"
+                  SelectedItem="{Binding SelectedPerson}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="Business.Person">
-                    <DockPanel LastChildFill="True">
-                        <Image DockPanel.Dock="Left"/>
-                        <TextBlock DockPanel.Dock="Top">
+                    <Grid HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          MinHeight="100"
+                          MinWidth="300">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Margin="10"
+                               Height="90"
+                               Width="90"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               Grid.RowSpan="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage CacheOption="OnLoad"
+                                             DecodePixelWidth="90"
+                                             UriSource="{Binding ImagePath, Converter={StaticResource imageConverter}}" />
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Style="{StaticResource description}"
+                                   Grid.Row="0"
+                                   Grid.Column="1">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
-                                    <Binding Path="FirstName"/>
-                                    <Binding Path="LastName"/>
+                                    <Binding Path="FirstName" />
+                                    <Binding Path="LastName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                        <TextBlock>
+                        <TextBlock Style="{StaticResource description}"
+                                   Grid.Row="1"
+                                   Grid.Column="1">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0}-{1}">
-                                    <Binding Path="DateOfBirth"/>
-                                    <Binding Path="DateOfDeath"/>
+                                <MultiBinding StringFormat="{}{0:yyyy.MM.dd}-{1:yyyy.MM.dd}">
+                                    <Binding Path="DateOfBirth" />
+                                    <Binding Path="DateOfDeath" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                    </DockPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

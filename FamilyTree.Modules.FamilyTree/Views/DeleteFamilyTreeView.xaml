@@ -1,22 +1,40 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.FamilyTree.Views.DeleteFamilyTreeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"      
-             Height="75" Width="200"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             Height="180"
+             Width="250"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Szeretnéd töröli a következőt?"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Grid.Row="0"/>
-        <TextBlock Text="{Binding FamilyTree.Name}"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Grid.Row="1"/>
-        <Button Content="Törlöm" Command="{Binding DeleteCommand}"
-                Grid.Row="2"/>
+        <TextBlock Grid.Row="0"
+               Text="Családfa törlése"
+               Style="{StaticResource sub_title}"/>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="{Binding FamilyTree.Name}"
+                       Style="{StaticResource description}"/>
+            <TextBlock Text="{Binding FamilyTree.People.Count}"
+                       Style="{StaticResource description}"
+                       Margin="10,0,5,0" />
+            <TextBlock Text="fő"
+                       Style="{StaticResource description}"/>
+        </StackPanel>
+        <Button Margin="25,10"
+                Command="{Binding DeleteCommand}"
+                Grid.Row="3">
+            <StackPanel Margin="5"
+                        Orientation="Horizontal">
+                <fa:FontAwesome Icon="Trash" VerticalAlignment="Center" />
+                <TextBlock Text=" Törlés" VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

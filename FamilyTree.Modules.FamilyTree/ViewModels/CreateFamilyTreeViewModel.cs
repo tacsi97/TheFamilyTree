@@ -2,15 +2,10 @@
 using FamilyTree.Modules.FamilyTree.Commands;
 using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Services.Repository.Interfaces;
-using Newtonsoft.Json;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
@@ -53,15 +48,14 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         {
             FamilyTree = new Business.FamilyTree()
             {
-                ID = GlobalID.NewID(),
                 Name = FamilyTreeName,
                 People = new ObservableCollection<Business.Person>()
             };
 
-            await _repository.CreateAsync(FamilyTree);
+            var createdTree = await _repository.CreateAsync(FamilyTree);
 
             var navParams = new NavigationParameters();
-            navParams.Add("FamilyTree", FamilyTree);
+            navParams.Add("FamilyTree", createdTree);
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListFamilyTreeView", navParams);
         }

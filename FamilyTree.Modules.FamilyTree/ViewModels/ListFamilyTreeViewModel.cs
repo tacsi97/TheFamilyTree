@@ -1,16 +1,12 @@
-﻿using FamilyTree.Core;
+﻿using FamilyTree.Core.Extensions;
 using FamilyTree.Modules.FamilyTree.Commands;
 using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Modules.FamilyTree.PubSubEvents;
 using FamilyTree.Services.Repository.Interfaces;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels
@@ -72,6 +68,8 @@ namespace FamilyTree.Modules.FamilyTree.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             FamilyTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
+
+            ExecuteGetTreesCommand().FireAndForgetAsync();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

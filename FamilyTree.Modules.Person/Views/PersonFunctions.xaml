@@ -1,17 +1,82 @@
 ﻿<UserControl x:Class="FamilyTree.Modules.Person.Views.PersonFunctions"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"    
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Horizontal">
-        <Button Width="100" Height="75" Content="+Anya" Command="{Binding NewMotherCommand}"/>
-        <Button Width="100" Height="75" Content="+Apa" Command="{Binding NewFatherCommand}"/>
-        <Button Width="100" Height="75" Content="+Gyerek" Command="{Binding NewChildCommand}"/>
-        <Button Width="100" Height="75" Content="+Pár" Command="{Binding NewPairCommand}"/>
-        <Button Width="100" Height="75" Content="Módosít" Command="{Binding ModifyPersonCommand}"/>
-        <Button Width="100" Height="75" Content="Megtekint" Command="{Binding ShowPersonCommand}"/>
-        <Button Width="100" Height="75" Content="Töröl" Command="{Binding DeletePersonCommand}"/>
-        <Button Width="100" Height="75" Content="Nézet váltás" Command="{Binding NavigateTreeViewCommand}"/>
+    <StackPanel HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Orientation="Horizontal">
+        <Button Width="150"
+                Height="75"
+                Command="{Binding NewParentsCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Szülők"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding NewPairCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Pár"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding NewChildCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="UserPlus"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Gyerek"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding ModifyPersonCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Pencil"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Módosít"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding ShowPersonCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Eye"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Megtekint"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding DeletePersonCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Trash"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Töröl"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+        <Button Width="150"
+                Height="75"
+                Command="{Binding NavigateTreeViewCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:FontAwesome Icon="Exchange"
+                                VerticalAlignment="Center" />
+                <TextBlock Text=" Nézet váltás"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
     </StackPanel>
 </UserControl>

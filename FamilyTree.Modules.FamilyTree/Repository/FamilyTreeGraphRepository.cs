@@ -1,148 +1,121 @@
 ﻿using FamilyTree.Core;
+using FamilyTree.Core.Extensions;
 using FamilyTree.Services.Repository;
-using FamilyTree.Services.Repository.Interfaces;
-using Neo4j.Driver;
 using Neo4jClient;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.Repository
 {
     public class FamilyTreeGraphRepository : LocalRepositoryBase<Business.FamilyTree>
     {
+        private readonly GraphClient _graphClient;
+
         public FamilyTreeGraphRepository(string uri, Business.Token token)
             : base(uri, token)
         {
+            _graphClient = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password);
+            _graphClient.ConnectAsync().FireAndForgetAsync();
         }
 
         public override async Task<Business.FamilyTree> CreateAsync(Business.FamilyTree template)
         {
-            using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
-            {
-                await gc.ConnectAsync();
+            var result = await _graphClient.Cypher
+                .Create("(ft:FamilyTree)<-[:MEMBER_OF]-(person:Person)")
+                .Set($"ft.{ nameof(template.Name) } = '{ template.Name }'")
+                .Set($"ft.{ nameof(template.ID) } = apoc.create.uuid()")
+                .Set($"person.{ nameof(template.ID) } = apoc.create.uuid()")
+                .Return<Business.FamilyTree>("ft")
+                .ResultsAsync;
 
-                await gc.Cypher
-                    .Create("(ft:FamilyTree)")
-                    .Set($"ft.Name = '{ template.Name }'")
-                    .Set($"ft.ID = { template.ID }")
-                    .Create("(pair:Person)<-[:TO]-(rel:Relationship)-[:FROM]->(p:Person)-[:IS_INCLUDED]->(ft)")
-                    .Set($"p.ID = { GlobalID.NewID() }")
-                    .Set($"pair.ID = { GlobalID.NewID() }")
-                    .Set($"rel.ID = {GlobalID.NewID()}")
-                    .ExecuteWithoutResultsAsync();
+            var tree = result.First();
 
-                // TODO: lekérdezni az előzőleg beszúrt emberkét
-                return new Business.FamilyTree();
-            }
+            var people = await _graphClient.Cypher
+                .Match("(person:Person)-[:MEMBER_OF]->(ft:FamilyTree)")
+                .Where($"ft.{ nameof(tree.ID)} = '{ tree.ID }'")
+                .Return<Business.Person>("person")
+                .ResultsAsync;
+
+            tree.People.Add(people.First());
+
+            return result.First();
         }
 
-        public override async Task DeleteAsync(int id)
+        public override async Task DeleteAsync(string id)
         {
-            using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
-            {
-                await gc.ConnectAsync();
+            await _graphClient.Cypher
+                .Match("(ft:FamilyTree)")
+                .Where($"ft.ID = '{ id }'")
+                .DetachDelete("ft")
+                .ExecuteWithoutResultsAsync();
 
-                await gc.Cypher
-                    .Match("(ft:FamilyTree)")
-                    .Where($"ft.ID = { id }")
-                    .DetachDelete("ft")
-                    .ExecuteWithoutResultsAsync();
-            }
+            await _graphClient.Cypher
+                .Match("(p:Person)")
+                .Where("NOT (p)--()")
+                .Delete("p")
+                .ExecuteWithoutResultsAsync();
         }
 
         public override async Task<IEnumerable<Business.FamilyTree>> GetAllAsync()
         {
-            var trees = new List<Business.FamilyTree>();
+            var result = await _graphClient.Cypher
+                .Match("(ft:FamilyTree)")
+                .Return<Business.FamilyTree>("ft")
+                .ResultsAsync;
 
-            using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
+            var trees = result;
+
+            foreach (var tree in result)
             {
-                await gc.ConnectAsync();
-
-                var result = await gc.Cypher
-                    .Match("(ft:FamilyTree)")
-                    .Return<Business.FamilyTree>("ft")
+                var people = await _graphClient.Cypher
+                    .Match("(p:Person)-[:MEMBER_OF]->(ft:FamilyTree)")
+                    .Where($"ft.ID = '{ tree.ID }'")
+                    .Return<Business.Person>("p")
                     .ResultsAsync;
 
-                foreach (var tree in result)
+                tree.People.Clear();
+
+                foreach (var person in people)
                 {
-                    var people = await gc.Cypher
-                        .Match("(p:Person)-[:IS_INCLUDED]->(ft:FamilyTree)")
-                        .Where($"ft.ID = { tree.ID }")
-                        .Return<Business.Person>("p")
-                        .ResultsAsync;
-
-                    tree.People.Clear();
-
-                    foreach (var person in people)
-                    {
-                        tree.People.Add(person);
-                    }
-
-                    trees.Add(tree);
+                    tree.People.Add(person);
                 }
 
-                var resultOne = await gc.Cypher
-                    .Match("(node)")
-                    .Return<int>("count(node)")
-                    .ResultsAsync;
-
-                var resultTwo = await gc.Cypher
-                    .Match("()-[rel:IN_RELATIONSHIP]->()")
-                    .Return<int>("count(rel)")
-                    .ResultsAsync;
-
-                var numberOfIDs = 0;
-
-                foreach (var integer in resultOne)
-                {
-                    numberOfIDs += integer;
-                }
-
-                foreach (var integer in resultTwo)
-                {
-                    numberOfIDs += integer;
-                }
-
-                GlobalID.SetID(numberOfIDs);
+                trees.ToList().Add(tree);
             }
+
             return trees;
         }
 
-        public override async Task<Business.FamilyTree> GetAsync(int id)
+        public override async Task<Business.FamilyTree> GetAsync(string id)
         {
-            Business.FamilyTree tree = null;
+            var result = await _graphClient.Cypher
+                .Match("(ft:FamilyTree)")
+                .Where($"ft.ID = '{ id }'")
+                .Return<Business.FamilyTree>("ft")
+                .ResultsAsync;
 
-            using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
-            {
-                await gc.ConnectAsync();
+            var tree = result.First();
 
-                var result = await gc.Cypher
-                    .Match("(ft:FamilyTree)")
-                    .Where($"ft.ID = '{ id }'")
-                    .Return<Business.FamilyTree>("ft")
-                    .ResultsAsync;
+            var people = await _graphClient.Cypher
+                .Match("(person:Person)-[:MEMBER_OF]->(ft:FamilyTree)")
+                .Where($"ft.{ nameof(tree.ID)} = '{ tree.ID }'")
+                .Return<Business.Person>("person")
+                .ResultsAsync;
 
-                tree = result.GetEnumerator().Current;
-            }
+            tree.People.Add(people.First());
 
             return tree;
         }
 
         public override async Task ModifyAsync(Business.FamilyTree template)
         {
-            using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
-            {
-                await gc.ConnectAsync();
-
-                await gc.Cypher
-                    .Match("(ft:FamilyTree)")
-                    .Where($"ft.ID = { template.ID }")
-                    .Set($"ft.Name = '{ template.Name }'")
-                    .ExecuteWithoutResultsAsync();
-            }
+            await _graphClient.Cypher
+                .Match("(ft:FamilyTree)")
+                .Where($"ft.{ nameof(template.ID) } = '{ template.ID }'")
+                .Set($"ft.{ nameof(template.Name) } = '{ template.Name }'")
+                .ExecuteWithoutResultsAsync();
         }
     }
 }

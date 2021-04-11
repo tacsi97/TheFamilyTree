@@ -1,17 +1,12 @@
 ﻿using FamilyTree.Core;
-using FamilyTree.Core.ApplicationCommands;
-using FamilyTree.Modules.Person.Core;
 using FamilyTree.Modules.Person.Repository;
 using FamilyTree.Modules.Person.ViewModels;
 using FamilyTree.Modules.Person.Views;
-using FamilyTree.Services.Repository;
 using FamilyTree.Services.Repository.Interfaces;
 using FamilyTree.Services.TreeTravelsal;
-using FamilyTree.Services.TreeTravelsal.Interfaces;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using System.Net.Http;
 
 namespace FamilyTree.Modules.Person
 {
@@ -34,14 +29,20 @@ namespace FamilyTree.Modules.Person
             containerRegistry.RegisterForNavigation<ListPersonView, ListPersonViewModel>();
             containerRegistry.RegisterForNavigation<DeletePersonView, DeletePersonViewModel>();
             containerRegistry.RegisterForNavigation<ModifyPersonView, ModifyPersonViewModel>();
-            containerRegistry.RegisterForNavigation<CreatePersonView, CreatePersonViewModel>();
             containerRegistry.RegisterForNavigation<InfoPersonView, InfoPersonViewModel>();
             containerRegistry.RegisterForNavigation<ParentTreePersonView, ParentTreePersonViewModel>();
+            containerRegistry.RegisterForNavigation<ChildTreePersonView, ChildTreePersonViewModel>();
+            containerRegistry.RegisterForNavigation<CreateFatherView, CreateFatherViewModel>();
+            containerRegistry.RegisterForNavigation<CreateMotherView, CreateMotherViewModel>();
+            containerRegistry.RegisterForNavigation<CreateChildView, CreateChildViewModel>();
+            containerRegistry.RegisterForNavigation<CreatePartnerView, CreatePartnerViewModel>();
+            containerRegistry.RegisterForNavigation<CreateParentsView, CreateParentsViewModel>();
 
-            containerRegistry.Register<ITreeTravelsalText<Business.Node>, TreeTravelsalText>();
+            containerRegistry.Register<ChildrenTraverseBase, ChildrenTraverse>();
+            containerRegistry.Register<ParentTraverseBase, ParentTraverse>();
 
             containerRegistry.RegisterInstance<IAsyncRepository<Business.Person>>(
-                new FakePersonRepository(
+                new LocalGraphRepository(
                     DatabaseInfo.Uri,
                     new Business.Token()
                     {

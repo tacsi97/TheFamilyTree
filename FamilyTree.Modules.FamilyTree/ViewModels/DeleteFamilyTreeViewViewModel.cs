@@ -2,12 +2,8 @@
 using FamilyTree.Modules.FamilyTree.Commands;
 using FamilyTree.Modules.FamilyTree.Core;
 using FamilyTree.Services.Repository.Interfaces;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyTree.Modules.FamilyTree.ViewModels

@@ -1,6 +1,5 @@
 ﻿using FamilyTree.Business;
 using FamilyTree.Services.PersonConnector.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace FamilyTree.Services.PersonConnector
@@ -42,23 +41,23 @@ namespace FamilyTree.Services.PersonConnector
                     // letöltéskor pedig szintén Relationshipként 
                     // módosításkor pedig lekérjük a Relationship objektumot
                     // connect partner
-                    relation.PersonFrom.Partners.Add(new Business.Relationship()
-                    {
-                        RelationType = relation.RelationType,
-                        From = relation.From,
-                        To = relation.To,
-                        PersonFrom = relation.PersonFrom,
-                        PersonTo = relation.PersonTo
-                    });
+                    //relation.PersonFrom.Partner = new Business.Relationship()
+                    //{
+                    //    RelationType = relation.RelationType,
+                    //    From = relation.From,
+                    //    To = relation.To,
+                    //    PersonFrom = relation.PersonFrom,
+                    //    PersonTo = relation.PersonTo
+                    //};
 
-                    relation.PersonTo.Partners.Add(new Business.Relationship()
-                    {
-                        RelationType = relation.RelationType,
-                        From = relation.From,
-                        To = relation.To,
-                        PersonFrom = relation.PersonTo,
-                        PersonTo = relation.PersonFrom
-                    });
+                    //relation.PersonTo.Partners.Add(new Business.Relationship()
+                    //{
+                    //    RelationType = relation.RelationType,
+                    //    From = relation.From,
+                    //    To = relation.To,
+                    //    PersonFrom = relation.PersonTo,
+                    //    PersonTo = relation.PersonFrom
+                    //});
                 }
 
             }

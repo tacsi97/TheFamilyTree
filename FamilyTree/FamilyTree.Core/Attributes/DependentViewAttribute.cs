@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyTree.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class DependentViewAttribute: Attribute
+    public class DependentViewAttribute : Attribute
     {
         public string Region { get; set; }
 

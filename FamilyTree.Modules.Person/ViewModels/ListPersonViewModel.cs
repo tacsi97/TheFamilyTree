@@ -1,21 +1,15 @@
-﻿using FamilyTree.Core;
-using FamilyTree.Core.Extensions;
+﻿using FamilyTree.Core.Extensions;
 using FamilyTree.Core.PubSubEvents;
 using FamilyTree.Modules.Person.Commands;
 using FamilyTree.Modules.Person.Core;
-using FamilyTree.Modules.Person.Repository;
+using FamilyTree.Modules.Person.Extensions;
 using FamilyTree.Services.Repository.Interfaces;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace FamilyTree.Modules.Person.ViewModels
 {
@@ -79,10 +73,28 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             People.Clear();
 
-            var people = await _repository.GetAllAsync();
+            var people = await _repository.GetPeopleAsync(SelectedTree);
 
             foreach (var person in people)
             {
+                if (!string.IsNullOrEmpty(person.FatherID))
+                {
+                    person.Father = people.FirstOrDefault(p => p.ID == person.FatherID);
+                    if (person.Father != null)
+                        person.Father.Children.Add(person);
+                }
+                if (!string.IsNullOrEmpty(person.MotherID))
+                {
+                    person.Mother = people.FirstOrDefault(p => p.ID == person.MotherID);
+                    if (person.Mother != null)
+                        person.Mother.Children.Add(person);
+                }
+                if (!string.IsNullOrEmpty(person.PartnerID))
+                {
+                    person.Partner = people.FirstOrDefault(p => p.ID == person.PartnerID);
+                    if (person.Partner != null)
+                        person.Partner.Partner = person;
+                }
                 person.FamilyTree = SelectedTree;
                 People.Add(person);
             }
@@ -90,7 +102,15 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            SelectedTree = navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree);
+            if (navigationContext.Parameters.GetValue<Business.FamilyTree>(NavParamNames.Tree) is Business.FamilyTree tree)
+                SelectedTree = tree;
+
+            ExecuteGetPeopleCommand().FireAndForgetAsync();
+
+            _eventAggregator.GetEvent<SelectedPersonChangedEvent>().Publish(
+                SelectedPerson);
+            _eventAggregator.GetEvent<SelectedViewTypeChangedEvent>().Publish(
+                navigationContext.Parameters.GetValue<Business.ViewType>(NavParamNames.ViewType));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

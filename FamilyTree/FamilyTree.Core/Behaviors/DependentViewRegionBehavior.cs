@@ -4,9 +4,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
-using System.Text;
 
 namespace FamilyTree.Core.Behaviors
 {
@@ -15,8 +13,7 @@ namespace FamilyTree.Core.Behaviors
         private readonly IContainerExtension _container;
 
         public const string BehaviorKey = "DependentViewRegionBehavior";
-
-        Dictionary<object, IList<DependentViewInfo>> _dependentViewCache = new Dictionary<object, IList<DependentViewInfo>>();
+        readonly Dictionary<object, IList<DependentViewInfo>> _dependentViewCache = new Dictionary<object, IList<DependentViewInfo>>();
 
         public DependentViewRegionBehavior(IContainerExtension container)
         {
