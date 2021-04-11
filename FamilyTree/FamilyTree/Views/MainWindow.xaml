@@ -30,7 +30,8 @@
 
         <Grid DockPanel.Dock="Left"
               Background="#282828">
-            <ContentControl Margin="30" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+            <ContentControl Margin="30"
+                            prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
         </Grid>
     </DockPanel>
 </Window>

@@ -11,7 +11,7 @@ namespace FamilyTree.Modules.Person.Repository
 {
     public class PersonGraphRepository : LocalRepositoryBase<Business.Person>
     {
-        private readonly GraphClient _graphClient;
+        protected readonly GraphClient _graphClient;
 
         // TODO: GraphRepositoryBase class, mivel sok az azonosság a függvényeknél
         // Write függvények csak módosítani nem adnak vissza értéket
@@ -26,20 +26,18 @@ namespace FamilyTree.Modules.Person.Repository
         public override async Task<Business.Person> CreateAsync(Business.Person template)
         {
             // TODO: kép kezelés (elérési útvonal)
-            await _graphClient.Cypher
+            var result = await _graphClient.Cypher
                 .Match("(ft:FamilyTree)")
                 .Where($"ft.ID = { template.FamilyTree.ID }")
                 .Create("(p:Person)-[:IS_INCLUDED]->(ft)")
                 .Set($"p.ID = { template.ID }")
                 .Set($"p.FirstName = '{ template.FirstName }'")
                 .Set($"p.LastName = '{ template.LastName }'")
-                .Set($"p.DateOfBirth = date('{ template.DateOfBirth:yyyy-MM-dd}')")
-                .Set($"p.DateOfDeath = date('{ template.DateOfDeath:yyyy-MM-dd}')")
                 .Set($"p.Gender = '{ template.Gender }'")
-                .ExecuteWithoutResultsAsync();
+                .Return<Business.Person>("p")
+                .ResultsAsync;
 
-            // TODO: lekérdezni az előzőleg beszúrt emberkét
-            return new Business.Person();
+            return result.FirstOrDefault();
         }
 
         public override async Task DeleteAsync(string id)
@@ -76,16 +74,29 @@ namespace FamilyTree.Modules.Person.Repository
         public override async Task ModifyAsync(Business.Person template)
         {
             // TODO: kép kezelés (elérési útvonal)
-            await _graphClient.Cypher
+            var result = await _graphClient.Cypher
                 .Match("(p:Person)")
                 .Where($"p.ID = { template.ID }")
                 .Set($"p.FirstName = '{ template.FirstName }'")
+                .Set($"p.{ nameof(template.IsDead) } = { template.IsDead }")
                 .Set($"p.LastName = '{ template.LastName }'")
-                .Set($"p.DateOfBirth = date('{ template.DateOfBirth:yyyy-MM-dd}')")
-                .Set($"p.DateOfDeath = date('{ template.DateOfDeath:yyyy-MM-dd}')")
                 .Set($"p.Gender = '{ template.Gender }'")
+                .Return<Business.Person>("p")
+                .ResultsAsync;
 
-                .ExecuteWithoutResultsAsync();
+            if (template.DateOfBirth != null)
+                await _graphClient.Cypher
+                    .Match("(template:Person)")
+                    .Where($"template.{ nameof(template.ID) } = '{ result.FirstOrDefault().ID }'")
+                    .Set($"template.{ nameof(template.DateOfBirth) } = date('{ template.DateOfBirth:yyyy-MM-dd}')")
+                    .ExecuteWithoutResultsAsync();
+
+            if (template.DateOfDeath != null && template.IsDead)
+                await _graphClient.Cypher
+                    .Match("(template:Person)")
+                    .Where($"template.{ nameof(template.ID) } = '{ result.FirstOrDefault().ID }'")
+                    .Set($"template.{ nameof(template.DateOfDeath) } = date('{ template.DateOfDeath:yyyy-MM-dd}')")
+                    .ExecuteWithoutResultsAsync();
         }
     }
 }

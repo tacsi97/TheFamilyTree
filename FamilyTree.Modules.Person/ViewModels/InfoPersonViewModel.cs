@@ -51,8 +51,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private DateTime _dateOfBirth;
-        public DateTime DateOfBirth
+        private DateTime? _dateOfBirth;
+        public DateTime? DateOfBirth
         {
             get { return _dateOfBirth; }
             set
@@ -62,8 +62,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private DateTime _dateOfDeath;
-        public DateTime DateOfDeath
+        private DateTime? _dateOfDeath;
+        public DateTime? DateOfDeath
         {
             get { return _dateOfDeath; }
             set
@@ -89,6 +89,13 @@ namespace FamilyTree.Modules.Person.ViewModels
         {
             get { return _imagePath; }
             set { SetProperty(ref _imagePath, value); }
+        }
+
+        private bool _isDead;
+        public bool IsDead
+        {
+            get { return _isDead; }
+            set { SetProperty(ref _isDead, value); }
         }
 
         public string Title => "Személy létrehozása";
@@ -159,6 +166,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             DateOfDeath = person.DateOfDeath;
             Gender = person.Gender;
             ImagePath = person.ImagePath;
+            IsDead = person.IsDead;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

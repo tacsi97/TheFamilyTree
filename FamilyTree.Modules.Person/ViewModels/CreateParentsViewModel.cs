@@ -79,14 +79,20 @@ namespace FamilyTree.Modules.Person.ViewModels
 
         #region Properties
 
-        private Business.Person _mother = new Business.Person();
+        private Business.Person _mother = new Business.Person()
+        {
+            Gender = Business.GenderType.Female
+        };
         public Business.Person Mother
         {
             get { return _mother; }
             set { SetProperty(ref _mother, value); }
         }
 
-        private Business.Person _father = new Business.Person();
+        private Business.Person _father = new Business.Person()
+        {
+            Gender = Business.GenderType.Male
+        };
         public Business.Person Father
         {
             get { return _father; }

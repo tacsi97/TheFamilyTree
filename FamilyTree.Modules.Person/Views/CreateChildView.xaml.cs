@@ -1,6 +1,7 @@
 ﻿using FamilyTree.Core;
 using FamilyTree.Core.Attributes;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace FamilyTree.Modules.Person.Views
 {

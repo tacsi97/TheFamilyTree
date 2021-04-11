@@ -70,12 +70,27 @@ namespace FamilyTree.Modules.Person.Repository
                 .Where($"person.ID = '{ content.ID }'")
                 .Set($"person.FirstName = '{ content.FirstName }'")
                 .Set($"person.LastName = '{ content.LastName }'")
-                .Set($"person.DateOfBirth = datetime('{ content.DateOfBirth:yyyy-MM-dd}')")
-                .Set($"person.DateOfDeath = datetime('{ content.DateOfDeath:yyyy-MM-dd}')")
+                .Set($"person.{ nameof(content.DateOfBirth) } = null")
+                .Set($"person.{ nameof(content.DateOfDeath) } = null")
                 .Set($"person.Gender = '{ content.Gender }'")
                 .Set($"person.ImagePath = '{ content.ImagePath }'")
+                .Set($"person.{ nameof(content.IsDead) } = { content.IsDead }")
                 .Return<Business.Person>("person")
                 .ResultsAsync;
+
+            if (content.DateOfBirth != null)
+                await _graphClient.Cypher
+                    .Match("(content:Person)")
+                    .Where($"content.{ nameof(content.ID) } = '{ result.FirstOrDefault().ID }'")
+                    .Set($"content.{ nameof(content.DateOfBirth) } = date('{ content.DateOfBirth:yyyy-MM-dd}')")
+                    .ExecuteWithoutResultsAsync();
+
+            if (content.DateOfDeath != null && content.IsDead)
+                await _graphClient.Cypher
+                    .Match("(content:Person)")
+                    .Where($"content.{ nameof(content.ID) } = '{ result.FirstOrDefault().ID }'")
+                    .Set($"content.{ nameof(content.DateOfDeath) } = date('{ content.DateOfDeath:yyyy-MM-dd}')")
+                    .ExecuteWithoutResultsAsync();
         }
     }
 }

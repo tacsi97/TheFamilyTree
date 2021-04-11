@@ -77,8 +77,6 @@ namespace FamilyTree.Modules.Person.ViewModels
             _repository = repository;
             _regionManager = regionManager;
 
-            NewPerson = new Business.Person();
-
             AsyncCommand = new AsyncCommand(Submit, CanExecuteSubmit);
         }
 
@@ -104,6 +102,10 @@ namespace FamilyTree.Modules.Person.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             SelectedPerson = navigationContext.Parameters.GetValue<Business.Person>(NavParamNames.Person);
+            if (SelectedPerson.Gender == Business.GenderType.Male)
+                NewPerson.Gender = Business.GenderType.Female;
+            else
+                NewPerson.Gender = Business.GenderType.Male;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

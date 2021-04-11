@@ -27,7 +27,11 @@
                                 Height="2000"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                ScrollViewer.CanContentScroll="True" />
+                                ScrollViewer.CanContentScroll="True">
+                            <Canvas.RenderTransform>
+                                <ScaleTransform x:Name="st" />
+                            </Canvas.RenderTransform>
+                        </Canvas>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>

@@ -39,10 +39,11 @@ namespace FamilyTree.Modules.Person.Extensions
                     .Where($"child.{ nameof(child.ID) } = '{ child.ID }'")
                     .Create("(child)<-[:MOTHER_OF]-(mother:Person)")
                     .Set("mother.ID = apoc.create.uuid()")
+                    .Set($"mother.{ nameof(mother.IsDead) } = { mother.IsDead }")
                     .Set($"mother.FirstName = '{ mother.FirstName }'")
                     .Set($"mother.LastName = '{ mother.LastName }'")
-                    .Set($"mother.DateOfBirth = datetime('{ mother.DateOfBirth:yyyy-MM-dd}')")
-                    .Set($"mother.DateOfDeath = datetime('{ mother.DateOfDeath:yyyy-MM-dd}')")
+                    .Set($"mother.{ nameof(mother.DateOfBirth) } = null")
+                    .Set($"mother.{ nameof(mother.DateOfDeath) } = null")
                     .Set($"mother.Gender = '{ mother.Gender }'")
                     .Set($"mother.ImagePath = '{ mother.ImagePath }'")
                     .Set($"child.{ nameof(child.MotherID) } = mother.ID")
@@ -51,6 +52,21 @@ namespace FamilyTree.Modules.Person.Extensions
                     .Create("(ft)<-[:MEMBER_OF]-(mother)<-[:CHILD_OF]-(child)")
                     .Return<Business.Person>("mother")
                     .ResultsAsync;
+
+                if (mother.DateOfBirth != null)
+                    await gc.Cypher
+                        .Match("(mother:Person)")
+                        .Where($"mother.{ nameof(mother.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"mother.{ nameof(mother.DateOfBirth) } = date('{ mother.DateOfBirth:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
+                if (mother.DateOfDeath != null && mother.IsDead)
+                    await gc.Cypher
+                        .Match("(mother:Person)")
+                        .Where($"mother.{ nameof(mother.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"mother.{ nameof(mother.DateOfDeath) } = date('{ mother.DateOfDeath:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
 
                 return result.FirstOrDefault();
             }
@@ -67,10 +83,11 @@ namespace FamilyTree.Modules.Person.Extensions
                     .Where($"child.{ nameof(child.ID) } = '{ child.ID }'")
                     .Create("(child)<-[:FATHER_OF]-(father:Person)")
                     .Set("father.ID = apoc.create.uuid()")
+                    .Set($"father.{ nameof(father.IsDead) } = { father.IsDead }")
                     .Set($"father.FirstName = '{ father.FirstName }'")
                     .Set($"father.LastName = '{ father.LastName }'")
-                    .Set($"father.DateOfBirth = datetime('{ father.DateOfBirth:yyyy-MM-dd}')")
-                    .Set($"father.DateOfDeath = datetime('{ father.DateOfDeath:yyyy-MM-dd}')")
+                    .Set($"father.{ nameof(father.DateOfBirth) } = null")
+                    .Set($"father.{ nameof(father.DateOfDeath) } = null")
                     .Set($"father.Gender = '{ father.Gender }'")
                     .Set($"father.ImagePath = '{ father.ImagePath }'")
                     .Set($"child.{ nameof(child.FatherID) } = father.ID")
@@ -80,26 +97,42 @@ namespace FamilyTree.Modules.Person.Extensions
                     .Return<Business.Person>("father")
                     .ResultsAsync;
 
+                if (father.DateOfBirth != null)
+                    await gc.Cypher
+                        .Match("(father:Person)")
+                        .Where($"father.{ nameof(father.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"father.{ nameof(father.DateOfBirth) } = date('{ father.DateOfBirth:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
+                if (father.DateOfDeath != null && father.IsDead)
+                    await gc.Cypher
+                        .Match("(father:Person)")
+                        .Where($"father.{ nameof(father.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"father.{ nameof(father.DateOfDeath) } = date('{ father.DateOfDeath:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
+
                 return result.FirstOrDefault();
             }
         }
 
-        public async static Task CreatePair(this IAsyncRepository<Business.Person> asyncRepository, Business.Person selected, Business.Person pair)
+        public async static Task<Business.Person> CreatePair(this IAsyncRepository<Business.Person> asyncRepository, Business.Person selected, Business.Person pair)
         {
             using (var gc = new GraphClient(new Uri(DatabaseInfo.Uri), DatabaseInfo.UserName, DatabaseInfo.Password))
             {
                 await gc.ConnectAsync();
 
-                await gc.Cypher
+                var result = await gc.Cypher
                     .Match("(selected:Person)")
                     .Where($"selected.{ nameof(selected.ID) } = '{ selected.ID }'")
                     .With("selected")
                     .Create("(selected)<-[:PARTNER_OF]-(pair:Person)")
                     .Set("pair.ID = apoc.create.uuid()")
+                    .Set($"pair.{ nameof(pair.IsDead) } = { pair.IsDead }")
                     .Set($"pair.FirstName = '{ pair.FirstName }'")
                     .Set($"pair.LastName = '{ pair.LastName }'")
-                    .Set($"pair.DateOfBirth = datetime('{ pair.DateOfBirth:yyyy-MM-dd}')")
-                    .Set($"pair.DateOfDeath = datetime('{ pair.DateOfDeath:yyyy-MM-dd}')")
+                    .Set($"pair.{ nameof(pair.DateOfBirth) } = null")
+                    .Set($"pair.{ nameof(pair.DateOfDeath) } = null")
                     .Set($"pair.Gender = '{ pair.Gender }'")
                     .Set($"pair.ImagePath = '{ pair.ImagePath }'")
                     .Set($"selected.{ nameof(selected.PartnerID) } = pair.ID")
@@ -108,7 +141,25 @@ namespace FamilyTree.Modules.Person.Extensions
                     .With("selected, pair")
                     .Match("(selected)-[:MEMBER_OF]->(ft:FamilyTree)")
                     .Create("(pair)-[:MEMBER_OF]->(ft)")
-                    .ExecuteWithoutResultsAsync();
+                    .Return<Business.Person>("pair")
+                    .ResultsAsync;
+
+                if (pair.DateOfBirth != null)
+                    await gc.Cypher
+                        .Match("(pair:Person)")
+                        .Where($"pair.{ nameof(pair.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"pair.{ nameof(pair.DateOfBirth) } = date('{ pair.DateOfBirth:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
+                if (pair.DateOfDeath != null && pair.IsDead)
+                    await gc.Cypher
+                        .Match("(pair:Person)")
+                        .Where($"pair.{ nameof(pair.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"pair.{ nameof(pair.DateOfDeath) } = date('{ pair.DateOfDeath:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
+                return result.FirstOrDefault();
+
             }
         }
 
@@ -119,16 +170,17 @@ namespace FamilyTree.Modules.Person.Extensions
             {
                 await gc.ConnectAsync();
 
-                await gc.Cypher
+                var result = await gc.Cypher
                     .Match("(selected:Person)-[:PARTNER_OF]->(pair:Person)")
                     .Where($"selected.{ nameof(selected.ID) } = '{ selected.ID }'")
                     .With("selected, pair")
                     .Create("(selected)<-[:CHILD_OF]-(child:Person)-[:CHILD_OF]->(pair)")
                     .Set("child.ID = apoc.create.uuid()")
+                    .Set($"child.{ nameof(child.IsDead) } = { child.IsDead }")
                     .Set($"child.FirstName = '{ child.FirstName }'")
                     .Set($"child.LastName = '{ child.LastName }'")
-                    .Set($"child.DateOfBirth = datetime('{ child.DateOfBirth:yyyy-MM-dd}')")
-                    .Set($"child.DateOfDeath = datetime('{ child.DateOfDeath:yyyy-MM-dd}')")
+                    .Set($"child.{ nameof(child.DateOfBirth) } = null")
+                    .Set($"child.{ nameof(child.DateOfDeath) } = null")
                     .Set($"child.Gender = '{ child.Gender }'")
                     .Set($"child.ImagePath = '{ child.ImagePath }'")
                     .With("child")
@@ -147,7 +199,22 @@ namespace FamilyTree.Modules.Person.Extensions
                     .Match("(father)-[:MEMBER_OF]->(ft:FamilyTree)")
                     .With("child, ft")
                     .Create("(child)-[:MEMBER_OF]->(ft)")
-                    .ExecuteWithoutResultsAsync();
+                    .Return<Business.Person>("child")
+                    .ResultsAsync;
+
+                if (child.DateOfBirth != null)
+                    await gc.Cypher
+                        .Match("(child:Person)")
+                        .Where($"child.{ nameof(child.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"child.{ nameof(child.DateOfBirth) } = date('{ child.DateOfBirth:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
+
+                if (child.DateOfDeath != null && child.IsDead)
+                    await gc.Cypher
+                        .Match("(child:Person)")
+                        .Where($"child.{ nameof(child.ID) } = '{ result.FirstOrDefault().ID }'")
+                        .Set($"child.{ nameof(child.DateOfDeath) } = date('{ child.DateOfDeath:yyyy-MM-dd}')")
+                        .ExecuteWithoutResultsAsync();
             }
         }
 

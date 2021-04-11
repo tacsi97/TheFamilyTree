@@ -6,11 +6,12 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             Height="350"
+             Height="400"
              Width="500">
     <UserControl.Resources>
         <converters:GenderToBoolConverter x:Key="btg" />
         <converters:PathConverter x:Key="path" />
+        <converters:BoolToVisibility x:Key="boolToVisibility" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,88 +22,91 @@
         <TextBlock Grid.Row="0"
                    Style="{StaticResource sub_title}"
                    Text="Személy módosítás" />
-        <Grid Margin="10"
-              Grid.Row="1"
-              HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="1">
+            <Grid Margin="10"
+                  HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Image Source="{Binding ImagePath, Converter={StaticResource path}}"
-                   Height="150"
-                   Width="150"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.RowSpan="4"
-                   Margin="20,0" />
+                <Image Source="{Binding ImagePath, Converter={StaticResource path}}"
+                       Height="150"
+                       Width="150"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.RowSpan="4"
+                       Margin="20,0" />
 
-            <Button Grid.Row="5"
-                    Margin="20,5"
-                    Command="{Binding SelectPictureCommand}">
-                <StackPanel Margin="10,0"
-                            Orientation="Horizontal">
-                    <fa:FontAwesome Icon="Upload"
-                                    VerticalAlignment="Center" />
-                    <TextBlock Text=" Kép hozzáadása"
-                               VerticalAlignment="Center" />
+                <Button Grid.Row="5"
+                        Margin="20,5"
+                        Command="{Binding SelectPictureCommand}">
+                    <StackPanel Margin="10,0"
+                                Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Upload"
+                                        VerticalAlignment="Center" />
+                        <TextBlock Text=" Kép hozzáadása"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <StackPanel Orientation="Vertical"
+                            Grid.Row="0"
+                            Grid.Column="1">
+                    <TextBlock Text="Keresztnév"
+                               Style="{StaticResource description}" />
+                    <TextBox Text="{Binding LastName}" />
                 </StackPanel>
-            </Button>
-            <StackPanel Orientation="Vertical"
-                        Grid.Row="0"
-                        Grid.Column="1">
-                <TextBlock Text="Keresztnév"
-                           Style="{StaticResource description}" />
-                <TextBox Text="{Binding LastName}" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical"
-                        Grid.Row="1"
-                        Grid.Column="1">
-                <TextBlock Text="Vezetéknév"
-                           Style="{StaticResource description}" />
-                <TextBox Text="{Binding FirstName}" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical"
-                        Grid.Row="2"
-                        Grid.Column="1">
-                <TextBlock Text="Született"
-                           Style="{StaticResource description}" />
-                <DatePicker HorizontalAlignment="Stretch"
-                            SelectedDate="{Binding DateOfBirth}" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical"
-                        Grid.Row="3"
-                        Grid.Column="1">
-                <TextBlock Text="Elhunyt"
-                           Style="{StaticResource description}" />
-                <DatePicker HorizontalAlignment="Stretch"
-                            Foreground="Black"
-                            SelectedDate="{Binding DateOfDeath}" />
-            </StackPanel>
-            <StackPanel Grid.Row="4"
-                        Grid.Column="1"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <RadioButton GroupName="NewPersonGender"
-                             Grid.Column="1"
-                             IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
-                             Content="Férfi"
-                             Foreground="White" />
-                <RadioButton GroupName="NewPersonGender"
-                             Grid.Column="1"
-                             IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
-                             Content="Nő"
-                             Foreground="White" />
-            </StackPanel>
-        </Grid>
+                <StackPanel Orientation="Vertical"
+                            Grid.Row="1"
+                            Grid.Column="1">
+                    <TextBlock Text="Vezetéknév"
+                               Style="{StaticResource description}" />
+                    <TextBox Text="{Binding FirstName}" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Grid.Row="2"
+                            Grid.Column="1">
+                    <TextBlock Text="Született"
+                               Style="{StaticResource description}" />
+                    <DatePicker HorizontalAlignment="Stretch"
+                                SelectedDate="{Binding DateOfBirth}" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Grid.Row="3"
+                            Grid.Column="1">
+                    <CheckBox Content="Elhunyt"
+                              x:Name="status"
+                              Foreground="White"
+                              IsChecked="{Binding IsDead}" />
+                    <DatePicker Visibility="{Binding ElementName=status, Path=IsChecked, Converter={StaticResource boolToVisibility}}"
+                                SelectedDate="{Binding DateOfDeath}"
+                                HorizontalAlignment="Stretch"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4"
+                            Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <RadioButton GroupName="NewPersonGender"
+                                 Grid.Column="1"
+                                 IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Male}}"
+                                 Content="Férfi"
+                                 Foreground="White" />
+                    <RadioButton GroupName="NewPersonGender"
+                                 Grid.Column="1"
+                                 IsChecked="{Binding Gender, Converter={StaticResource btg}, ConverterParameter={x:Static business:GenderType.Female}}"
+                                 Content="Nő"
+                                 Foreground="White" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
 
         <Button Grid.Row="2"
                 Grid.ColumnSpan="5"

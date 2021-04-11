@@ -54,8 +54,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private DateTime _dateOfBirth;
-        public DateTime DateOfBirth
+        private DateTime? _dateOfBirth;
+        public DateTime? DateOfBirth
         {
             get { return _dateOfBirth; }
             set
@@ -65,8 +65,8 @@ namespace FamilyTree.Modules.Person.ViewModels
             }
         }
 
-        private DateTime _dateOfDeath;
-        public DateTime DateOfDeath
+        private DateTime? _dateOfDeath;
+        public DateTime? DateOfDeath
         {
             get { return _dateOfDeath; }
             set
@@ -85,6 +85,13 @@ namespace FamilyTree.Modules.Person.ViewModels
                 SetProperty(ref _gender, value);
                 AsyncCommand.RaiseCanExecuteChanged(this, EventArgs.Empty);
             }
+        }
+
+        private bool _isDead;
+        public bool IsDead
+        {
+            get { return _isDead; }
+            set { SetProperty(ref _isDead, value); }
         }
 
         private Business.Person _person;
@@ -162,7 +169,8 @@ namespace FamilyTree.Modules.Person.ViewModels
                     DateOfBirth = DateOfBirth,
                     DateOfDeath = DateOfDeath,
                     Gender = Gender,
-                    ImagePath = ImagePath
+                    ImagePath = ImagePath,
+                    IsDead = IsDead
                 };
 
                 await _repository.ModifyAsync(person);
@@ -194,6 +202,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             DateOfDeath = Person.DateOfDeath;
             Gender = Person.Gender;
             ImagePath = Person.ImagePath;
+            IsDead = Person.IsDead;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

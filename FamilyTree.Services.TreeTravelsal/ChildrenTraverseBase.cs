@@ -102,7 +102,7 @@ namespace FamilyTree.Services.TreeTravelsal
                 else
                     Lines.Add(new Line()
                     {
-                        TopCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
+                        TopCoordinate = person.Node.BottomCoordinate,
                         LeftCoordinate = (person.Node.LeftCoordinate + person.Node.RigthCoordinate) * 0.5,
                         BottomCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
                         RigthCoordinate = (person.Node.LeftCoordinate + person.Node.RigthCoordinate) * 0.5
@@ -122,7 +122,7 @@ namespace FamilyTree.Services.TreeTravelsal
                         TopCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
                         LeftCoordinate = (person.Children.First().Node.LeftCoordinate + person.Children.First().Node.RigthCoordinate) * 0.5,
                         BottomCoordinate = person.Node.BottomCoordinate + (25 * 0.5),
-                        RigthCoordinate = person.Node.RigthCoordinate + (25 * 0.5)
+                        RigthCoordinate = (person.Node.RigthCoordinate + person.Node.LeftCoordinate) * 0.5
                     });
                 // sok lefelé
                 foreach (var child in person.Children)

@@ -6,8 +6,14 @@ namespace FamilyTree.Business
 {
     public class Person : BusinessBase
     {
+        private bool _isDead;
+        public bool IsDead
+        {
+            get { return _isDead; }
+            set { SetProperty(ref _isDead, value); }
+        }
+
         private string _firstName;
-        [JsonProperty("FirstName")]
         public string FirstName
         {
             get { return _firstName; }
@@ -15,24 +21,21 @@ namespace FamilyTree.Business
         }
 
         private string _lastName;
-        [JsonProperty("LastName")]
         public string LastName
         {
             get { return _lastName; }
             set { SetProperty(ref _lastName, value); }
         }
 
-        private DateTime _dateOfBirth;
-        [JsonProperty("DateOfBirth")]
-        public DateTime DateOfBirth
+        private DateTime? _dateOfBirth;
+        public DateTime? DateOfBirth
         {
             get { return _dateOfBirth; }
             set { SetProperty(ref _dateOfBirth, value); }
         }
 
-        private DateTime _dateOfDeath;
-        [JsonProperty("DateOfDeath")]
-        public DateTime DateOfDeath
+        private DateTime? _dateOfDeath;
+        public DateTime? DateOfDeath
         {
             get { return _dateOfDeath; }
             set { SetProperty(ref _dateOfDeath, value); }
@@ -47,7 +50,6 @@ namespace FamilyTree.Business
         }
 
         private GenderType _gender;
-        [JsonProperty("Gender")]
         public GenderType Gender
         {
             get { return _gender; }
