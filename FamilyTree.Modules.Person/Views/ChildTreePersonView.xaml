@@ -28,9 +28,6 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 ScrollViewer.CanContentScroll="True">
-                            <Canvas.RenderTransform>
-                                <ScaleTransform x:Name="st" />
-                            </Canvas.RenderTransform>
                         </Canvas>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
