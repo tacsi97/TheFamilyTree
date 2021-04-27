@@ -173,12 +173,12 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0"
-                           Text="Vezetéknév"
+                           Text="Keresztnév"
                            Style="{StaticResource description}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
                 <TextBlock Grid.Row="1"
-                           Text="Utónév"
+                           Text="Vezetéknév"
                            Style="{StaticResource description}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />

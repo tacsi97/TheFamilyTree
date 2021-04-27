@@ -36,7 +36,6 @@ namespace FamilyTree.ViewModels
         public DelegateCommand<string> NavigationCommand =>
             _navigationCommand ?? (_navigationCommand = new DelegateCommand<string>(ExecuteNavigationCommand));
 
-        public UselessCommand UselessCommand { get; set; }
         #endregion
 
         public MainWindowViewModel(IRegionManager regionManager, IApplicationCommand application, IDialogService dialogService)
@@ -54,14 +53,6 @@ namespace FamilyTree.ViewModels
                 throw new ArgumentNullException();
 
             _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath);
-        }
-
-        public void ExecuteUseless()
-        {
-            _dialogService.ShowDialog(DialogNames.NewTreeDialog, null, r =>
-            {
-
-            });
         }
     }
 }

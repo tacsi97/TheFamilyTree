@@ -1,6 +1,4 @@
-﻿using FamilyTree.Modules.ModuleName.ViewModels;
-using FamilyTree.Services.Interfaces;
-using Moq;
+﻿using Moq;
 using Prism.Regions;
 using Xunit;
 

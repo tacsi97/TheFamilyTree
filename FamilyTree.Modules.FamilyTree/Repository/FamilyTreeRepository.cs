@@ -13,16 +13,16 @@ namespace FamilyTree.Modules.FamilyTree.Repository
         {
         }
 
-        public override string RequestUriBase => Uris.BaseURI;
+        public override string RequestUriBase => string.Empty;
 
-        public override string PostUri => Uris.FamilyTreeURI;
+        public override string PostUri => string.Empty;
 
-        public override string GetUri => Path.Combine(Uris.FamilyTreeURI, "{0}");
+        public override string GetUri => string.Empty;
 
-        public override string PutUri => Uris.FamilyTreeURI;
+        public override string PutUri => string.Empty;
 
-        public override string DeleteUri => Path.Combine(Uris.FamilyTreeURI, "{0}");
+        public override string DeleteUri => string.Empty;
 
-        public override string GetAllUri => Uris.FamilyTreeURI;
+        public override string GetAllUri => string.Empty;
     }
 }

@@ -16,11 +16,11 @@ namespace FamilyTree.Modules.Person.Repository
         {
         }
 
-        public override string RequestUriBase => Uris.BaseURI;
-        public override string PostUri => Uris.PersonURI;
-        public override string GetUri => Path.Combine(Uris.PersonURI, "{0}");
-        public override string PutUri => Uris.PersonURI;
-        public override string DeleteUri => Path.Combine(Uris.PersonURI, "{0}");
-        public override string GetAllUri => Uris.PersonURI;
+        public override string RequestUriBase => string.Empty;
+        public override string PostUri => string.Empty;
+        public override string GetUri => string.Empty;
+        public override string PutUri => string.Empty;
+        public override string DeleteUri => string.Empty;
+        public override string GetAllUri => string.Empty;
     }
 }

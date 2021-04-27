@@ -24,8 +24,6 @@
     <ProjectReference Include="..\..\..\FamilyTree.Modules.Person\FamilyTree.Modules.Person.csproj" />
     <ProjectReference Include="..\..\..\FamilyTree.Services.Repository.Interfaces\FamilyTree.Services.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\..\..\FamilyTree.Services.Repository\FamilyTree.Services.Repository.csproj" />
-    <ProjectReference Include="..\..\Modules\FamilyTree.Modules.ModuleName\FamilyTree.Modules.ModuleName.csproj" />
-    <ProjectReference Include="..\..\Services\FamilyTree.Services\FamilyTree.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,11 @@
 ﻿using FamilyTree.Business;
+using FamilyTree.Services.TreeTravelsal.Interfaces;
 using System;
 using System.Collections.Generic;
 
 namespace FamilyTree.Services.TreeTravelsal
 {
-    public abstract class ParentTraverseBase
+    public abstract class ParentTraverseBase : ITreeTraversal<Business.Person>
     {
         #region Fields
 
@@ -26,7 +27,7 @@ namespace FamilyTree.Services.TreeTravelsal
             Lines = new List<Business.Line>();
         }
 
-        public void PostOrder(Person person)
+        public void Traverse(Person person)
         {
             if (person == null)
                 return;
@@ -42,11 +43,9 @@ namespace FamilyTree.Services.TreeTravelsal
             if (person.LeftmostChild != null && person.LeftmostChild.Node != null)
                 person.Node.TopCoordinate = person.LeftmostChild.Node.TopCoordinate - (person.Node.Height + 25);
 
-            // person.Mother.Node.LeftCoordinate = person.Node.LeftCoordinate - (person.Node.Width + 25) * 0.5;
-            PostOrder(person.Mother);
+            Traverse(person.Mother);
 
-            // person.Father.Node.LeftCoordinate = person.Node.LeftCoordinate + (person.Node.Width + 25) * 0.5;
-            PostOrder(person.Father);
+            Traverse(person.Father);
 
             Visit(person);
         }

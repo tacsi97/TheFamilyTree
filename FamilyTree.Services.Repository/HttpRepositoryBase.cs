@@ -61,7 +61,6 @@ namespace FamilyTree.Services.Repository
                 Encoding.UTF8,
                 MediaTypeNames.Application.Json);
 
-            // TODO: tranzakció vagy https://stackoverflow.com/questions/39190018/how-to-get-object-using-httpclient-with-response-ok-in-web-api
             var response = await _httpClient.PostAsync(Uri, data);
 
             if (!response.IsSuccessStatusCode)

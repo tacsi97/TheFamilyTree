@@ -68,7 +68,7 @@ namespace FamilyTree.Modules.Person.ViewModels
             _treeTravelsal.Lines.Clear();
             _treeTravelsal.LeftmostValue = 0;
             var root = new Node(SelectedPerson);
-            _treeTravelsal.PostOrder(root.Person);
+            _treeTravelsal.Traverse(root.Person);
             FillTreeElements(_treeTravelsal.Nodes);
             FillTreeElements(_treeTravelsal.Lines);
             Offset();

@@ -2,9 +2,7 @@
 {
     public interface ITreeTraversal<T>
     {
-        void PostOrder(T person);
-
-        void PreOrder(T person);
+        void Traverse(T person);
 
         void Visit(T person);
     }

@@ -50,6 +50,7 @@ namespace FamilyTree.Modules.Main.ViewModels
 
         void ExecuteSelectCommand(NavigationItem navigationItem)
         {
+            if (navigationItem == null) return;
             // TODO: IsExpanded változóhoz legyen kötve a child objektum lista láthatósága
             _applicationCommand.CompositeCommand.Execute(navigationItem.NavigationPath);
         }

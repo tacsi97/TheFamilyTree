@@ -20,7 +20,7 @@ namespace FamilyTree.Services.TreeTravelsal
             Lines = new ObservableCollection<Line>();
         }
 
-        public void PostOrder(Person person)
+        public void Traverse(Person person)
         {
             if (person == null)
                 return;
@@ -40,11 +40,11 @@ namespace FamilyTree.Services.TreeTravelsal
                 person.Children.ElementAt(i - 1).RightSibling = person.Children.ElementAt(i);
             }
 
-            PostOrder(person.LeftmostChild);
+            Traverse(person.LeftmostChild);
 
             Visit(person);
 
-            PostOrder(person.RightSibling);
+            Traverse(person.RightSibling);
         }
 
         public void PreOrder(Person person)
